@@ -3,56 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ŁK¹・INVICTUS | Official Elite Clan</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>ŁK¹・INVICTUS | Elite CODM Clan Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --gold: #dfb347;
             --gold-light: #f5dc82;
             --gold-dark: #9c7823;
-            --dark: #0a0a0a;
-            --darker: #040404;
-            --card-bg: #121212;
-            --border: #3d3112;
+            --dark: #070707;
+            --darker: #020202;
+            --card-bg: #101010;
+            --border: #33270e;
             --text: #eaeaea;
+            --danger: #b33939;
+            --success: #218c74;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
-        body { background-color: var(--darker); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(circle at 50% 10%, #1a1505 0%, #040404 80%); }
+        body { background-color: var(--darker); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; background-image: radial-gradient(circle at 50% 5%, #181203 0%, #020202 85%); }
         
-        header { background: linear-gradient(135deg, #000000, #181203); border-bottom: 2px solid var(--gold); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 20px rgba(223, 179, 71, 0.15); }
-        .logo-area { display: flex; align-items: center; gap: 10px; }
-        .logo-area h1 { font-size: 1.3rem; color: var(--gold); font-weight: 900; letter-spacing: 1.5px; text-shadow: 0 2px 5px rgba(223,179,71,0.3); }
+        header { background: linear-gradient(135deg, #000000, #141002); border-bottom: 2px solid var(--gold); padding: 15px 25px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 25px rgba(223, 179, 71, 0.2); }
+        .logo-area h1 { font-size: 1.4rem; color: var(--gold); font-weight: 900; letter-spacing: 2px; text-shadow: 0 2px 8px rgba(223,179,71,0.4); }
         
-        nav { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
-        nav button { background: rgba(223,179,71,0.05); border: 1px solid var(--border); color: var(--gold); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; white-space: nowrap; transition: 0.3s; }
-        nav button.active, nav button:hover { background: var(--gold); color: var(--dark); font-weight: bold; border-color: var(--gold); box-shadow: 0 0 10px rgba(223,179,71,0.4); }
+        nav { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+        nav button { background: rgba(223,179,71,0.05); border: 1px solid var(--border); color: var(--gold); padding: 8px 14px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; white-space: nowrap; transition: 0.3s; }
+        nav button.active, nav button:hover { background: var(--gold); color: var(--dark); font-weight: bold; border-color: var(--gold); box-shadow: 0 0 12px rgba(223,179,71,0.5); }
         
-        .container { max-width: 950px; margin: 25px auto; padding: 0 15px; width: 100%; flex: 1; }
-        .section { display: none; background: var(--card-bg); border: 1px solid var(--border); border-radius: 14px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.9); animation: fadeIn 0.4s ease-in-out; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; width: 100%; flex: 1; }
+        .section { display: none; background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 30px; box-shadow: 0 12px 35px rgba(0,0,0,0.9); animation: fadeIn 0.4s ease-in-out; }
         .section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
-        h2 { color: var(--gold); margin-bottom: 20px; font-size: 1.4rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        h2 { color: var(--gold); margin-bottom: 20px; font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 12px; display: flex; align-items: center; gap: 10px; }
         p { line-height: 1.8; margin-bottom: 15px; color: #b8b8b8; font-size: 0.95rem; }
         
-        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--dark); border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 1rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(223,179,71,0.2); }
-        .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(223,179,71,0.4); }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: var(--dark); border: none; padding: 12px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 10px; font-size: 1rem; transition: 0.3s; box-shadow: 0 4px 15px rgba(223,179,71,0.25); }
+        .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(223,179,71,0.45); }
         
-        .btn-danger { background: #8b0000; color: #fff; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
-        .btn-danger:hover { background: #a80000; }
+        .btn-danger { background: var(--danger); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; transition: 0.2s; }
+        .btn-danger:hover { background: #d63031; }
+        .btn-success { background: var(--success); color: #fff; border: none; padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: bold; }
 
-        input, textarea, select { width: 100%; padding: 12px; margin: 8px 0 16px 0; background: var(--dark); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 0.95rem; transition: 0.3s; }
-        input:focus, textarea:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 8px rgba(223,179,71,0.2); }
+        input, textarea, select { width: 100%; padding: 12px 15px; margin: 8px 0 16px 0; background: var(--dark); border: 1px solid var(--border); color: var(--text); border-radius: 8px; font-size: 0.95rem; transition: 0.3s; }
+        input:focus, textarea:focus, select:focus { border-color: var(--gold); outline: none; box-shadow: 0 0 10px rgba(223,179,71,0.25); }
         
-        .member-card { background: linear-gradient(145deg, #161616, #0e0e0e); border-left: 4px solid var(--gold); padding: 14px; margin-bottom: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(223,179,71,0.1); }
+        /* رنکینگ جدول اعضا */
+        .member-card { background: linear-gradient(145deg, #161616, #0b0b0b); border: 1px solid var(--border); border-left: 5px solid var(--gold); padding: 16px; margin-bottom: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .member-info h4 { color: var(--gold); font-size: 1.05rem; margin-bottom: 4px; }
+        .member-stats { display: flex; gap: 15px; font-size: 0.85rem; color: #aaa; }
+        .rank-badge { background: rgba(223,179,71,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.8rem; }
+
+        /* چت روم */
+        .chat-box { height: 320px; background: var(--dark); border: 1px solid var(--border); border-radius: 10px; padding: 15px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; }
+        .chat-msg { background: #171308; border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; }
+        .chat-msg .author { color: var(--gold); font-weight: bold; margin-left: 8px; }
+        .emoji-bar { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .emoji-btn { background: var(--dark); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; cursor: pointer; font-size: 1.1rem; transition: 0.2s; }
+        .emoji-btn:hover { background: var(--gold); transform: scale(1.1); }
+
+        /* پنل ادمین و لیدر */
+        .admin-badge { background: rgba(223,179,71,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: bold; display: inline-block; margin-bottom: 15px; }
+        .req-box { background: #141414; border: 1px dashed var(--gold); padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
         
-        .chat-box { height: 280px; background: var(--dark); border: 1px solid var(--border); border-radius: 8px; padding: 12px; overflow-y: auto; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
-        .chat-msg { background: #18150a; border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; font-size: 0.9rem; }
-        .chat-msg span { color: var(--gold); font-weight: bold; margin-left: 8px; }
-
-        .admin-badge { background: rgba(223,179,71,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; display: inline-block; margin-bottom: 15px; }
-
-        footer { text-align: center; padding: 20px; font-size: 0.85rem; color: #777; border-top: 1px solid var(--border); margin-top: auto; background: #050505; }
+        footer { text-align: center; padding: 20px; font-size: 0.85rem; color: #666; border-top: 1px solid var(--border); margin-top: auto; background: #030303; }
     </style>
 </head>
 <body>
@@ -62,244 +74,266 @@
             <h1>ŁK¹・INVICTUS</h1>
         </div>
         <nav id="navMenu">
-            <button onclick="switchTab('home')" class="active">خانه</button>
-            <button onclick="switchTab('roster')">اعضا</button>
-            <button onclick="switchTab('chat')">چت کلن</button>
-            <button onclick="switchTab('admin')">پنل ادمین</button>
+            <button onclick="switchTab('home')" class="active">خانه و معرفی</button>
+            <button onclick="switchTab('apply')">تست و استخدام</button>
+            <button onclick="switchTab('roster')">رنکینگ اعضا</button>
+            <button onclick="switchTab('chat')">تالار گفتگو</button>
+            <button onclick="switchTab('news')">اطلاعیه‌ها</button>
+            <button onclick="switchTab('admin')">ورود / پنل ادمین</button>
         </nav>
     </header>
 
     <div class="container" id="mainContainer">
-        <!-- خانه -->
+        
+        <!-- خانه و معرفی -->
         <div id="home" class="section active">
-            <h2 id="homeTitleDisplay">خوش آمدید به خانه قدرتمندترین کلن CODM</h2>
-            <div id="homeContentDisplay">
-                <p>ما متحدترین تیم Call of Duty Mobile هستیم. هدف ما صعود به صدر جدول و افتخارآفرینی در کلن وارها و مسابقات کاستوم است.</p>
-                <p><strong>شرایط ورود به خانواده ŁK¹:</strong></p>
-                <ul style="margin-right: 20px; color: #b0b0b0; line-height: 1.9;">
-                    <li>حداقل لول اکانت: ۳۰۰</li>
-                    <li>داشتن دیسیپلین بالا و فعالیت مستمر در کلن وار</li>
-                    <li>قبولی در تست ورودی حضوری توسط افسران کلن</li>
-                </ul>
-            </div>
-            <button class="btn-gold" onclick="switchTab('roster')">مشاهده لیست اعضا و رنکینگ</button>
+            <h2>🔥 خانه رسمی الیت کلن ŁK¹</h2>
+            <p>به سایت رسمی قدرتمندترین و متحدترین تیم Call of Duty Mobile خوش آمدید. ما برای پادشاهی و فتح صدر جدول کلن‌وارها ساخته شده‌ایم.</p>
+            <p><strong>شرایط اختصاصی ورود:</strong></p>
+            <ul style="margin-right: 20px; color: #b0b0b0; line-height: 2;">
+                <li>حداقل لول اکانت: ۳۰۰ با سابقه گیم‌پلی حرفه‌ای</li>
+                <li>داشتن دیسیپلین، اکتیویتی بالا و شرکت منظم در کلن‌وار</li>
+                <li>قبولی در تست ورودی آنلاین و حضوری توسط افسران و لیدرها</li>
+            </ul>
+            <button class="btn-gold" onclick="switchTab('apply')">همین الان درخواست تست بده!</button>
         </div>
 
-        <!-- اعضا -->
+        <!-- تست و استخدام -->
+        <div id="apply" class="section">
+            <h2>🎯 ثبت نام و درخواست تست ورودی</h2>
+            <p>اگر فکر می‌کنی لیاقت حضور در جمع اسطوره‌های ŁK¹ رو داری، فرم زیر رو پر کن تا درخواستت مستقیماً برای ادمین و لیدرها ارسال بشه.</p>
+            <div id="applyFormBox">
+                <input type="text" id="appName" placeholder="نام داخل بازی (IGN) مثلا ŁK¹・Ghost">
+                <input type="text" id="appLevel" placeholder="لول اکانت (حداقل ۳۰۰)">
+                <input type="text" id="appContact" placeholder="آیدی تلگرام یا روبیکا (مثلا @username)">
+                <textarea id="appBio" placeholder="توضیح کوتاه درباره سبک بازی (Sniper, Fragger, ...)" rows="3"></textarea>
+                <button class="btn-gold" onclick="submitApplication()">ارسال درخواست تست به لیدر و ادمین</button>
+            </div>
+            <div id="applySuccessMsg" style="display:none; color: var(--success); font-weight: bold; margin-top: 15px; text-align: center;">
+                درخواست شما با موفقیت ثبت شد! لیدر یا ادمین به زودی از طریق آیدی ارتباطی با شما تماس می‌گیرند. ✅
+            </div>
+        </div>
+
+        <!-- رنکینگ اعضا -->
         <div id="roster" class="section">
-            <h2>رنکینگ و اعضای کلن ŁK¹</h2>
-            <p>اسطوره ها و بازیکنان فیکس کلن اینویکتوس</p>
+            <h2>🏆 رنکینگ و امتیازات اتوماتیک اعضا</h2>
+            <p>رتبه‌بندی اعضا بر اساس امتیاز کلن‌وار، وین‌ریت و عملکرد در مسابقات به صورت خودکار محاسبه می‌شود.</p>
             <div id="membersList"></div>
         </div>
 
-        <!-- چت کلن -->
+        <!-- تالار گفتگو -->
         <div id="chat" class="section">
-            <h2>اتاق گفتگوی زنده کلن</h2>
-            <div class="chat-box" id="chatBox">
-                <div class="chat-msg"><span>سیستم:</span>به چت روم کلن ŁK¹ خوش آمدید!</div>
+            <h2>💬 تالار گفتگوی امن کلن</h2>
+            <div style="margin-bottom: 12px; font-size: 0.85rem; color: var(--gold);" id="chatUserStatus">
+                وضعیت: برای ارسال پیام باید با اکانت اختصاصی خود لاگین کنید.
             </div>
-            <input type="text" id="chatName" placeholder="نام یا آیدی شما در بازی...">
-            <textarea id="chatText" placeholder="پیام خود را بنویسید..." rows="2" style="resize:none;"></textarea>
-            <button class="btn-gold" onclick="sendChatMessage()">ارسال پیام</button>
+            <div class="chat-box" id="chatBox">
+                <div class="chat-msg"><span class="author">سیستم امنیتی:</span>به تالار گفتگو خوش آمدید. هویت افراد تایید شده است.</div>
+            </div>
+            
+            <div id="chatLoginPrompt">
+                <input type="text" id="chatUsername" placeholder="نام کاربری اعطا شده توسط ادمین...">
+                <input type="password" id="chatPassword" placeholder="رمز عبور شما...">
+                <button class="btn-gold" onclick="loginAndChatUser()">تایید هویت و ورود به چت</button>
+            </div>
+
+            <div id="chatControlArea" style="display:none;">
+                <div class="emoji-bar">
+                    <button class="emoji-btn" onclick="addEmoji('🔥')">🔥</button>
+                    <button class="emoji-btn" onclick="addEmoji('👑')">👑</button>
+                    <button class="emoji-btn" onclick="addEmoji('⚡')">⚡</button>
+                    <button class="emoji-btn" onclick="addEmoji('💀')">💀</button>
+                    <button class="emoji-btn" onclick="addEmoji('🏆')">🏆</button>
+                    <button class="emoji-btn" onclick="addEmoji('😎')">😎</button>
+                    <button class="emoji-btn" onclick="addEmoji('❤️')">❤️</button>
+                </div>
+                <textarea id="chatText" placeholder="پیام خود را بنویسید..." rows="2" style="resize:none;"></textarea>
+                <button class="btn-gold" onclick="sendChatMessage()">ارسال پیام امن</button>
+            </div>
         </div>
 
-        <!-- ادمین -->
+        <!-- اطلاعیه‌ها -->
+        <div id="news" class="section">
+            <h2>📢 اخبار و اطلاعیه‌های رسمی لیدرها</h2>
+            <div id="newsList"></div>
+        </div>
+
+        <!-- ادمین / لیدر -->
         <div id="admin" class="section">
-            <h2>پنل مدیریت کلن ŁK¹</h2>
-            <div id="adminLoginBox">
-                <p>برای دسترسی به ابزارهای مدیریتی، رمز عبور ادمین را وارد کنید:</p>
-                <input type="password" id="adminPass" placeholder="رمز عبور...">
-                <button class="btn-gold" onclick="checkAdmin()">ورود به پنل ادمین</button>
+            <h2>🛡️ پنل مدیریت و کنترل کلن</h2>
+            
+            <!-- فرم ورود ادمین و لیدر -->
+            <div id="loginSection">
+                <p>لطفاً اطلاعات کاربری خود را وارد کنید (ادمین کل یا لیدر):</p>
+                <input type="text" id="loginUser" placeholder="نام کاربری (مثلا Vexor)">
+                <input type="password" id="loginPass" placeholder="رمز عبور...">
+                <button class="btn-gold" onclick="performLogin()">ورود به پنل مدیریت</button>
             </div>
-            <div id="adminPanelBox" style="display: none;">
-                <span class="admin-badge">وضعیت: ادمین اصلی تایید شد ✅</span>
-                
-                <h3 style="color:var(--gold); margin: 15px 0 10px 0; font-size:1.1rem;">➕ افزودن عضو جدید به لیست</h3>
-                <input type="text" id="newMemberName" placeholder="نام بازیکن (مثلا ŁK¹・Ghost)">
-                <input type="text" id="newMemberRank" placeholder="رنک یا مقام (مثلا لیدر / افسر / استارتر)">
-                <button class="btn-gold" onclick="addNewMember()">ثبت عضو جدید</button>
 
-                <h3 style="color:var(--gold); margin: 25px 0 10px 0; font-size:1.1rem;">✏️ ویرایش متن صفحه اصلی</h3>
-                <input type="text" id="editHomeTitle" placeholder="عنوان جدید صفحه اصلی...">
-                <textarea id="editHomeDesc" placeholder="متن توضیحات جدید صفحه اصلی..." rows="3"></textarea>
-                <button class="btn-gold" onclick="updateHomeContent()">بروزرسانی صفحه اصلی</button>
+            <!-- پنل اصلی مدیران -->
+            <div id="dashboardSection" style="display:none;">
+                <span class="admin-badge" id="welcomeRoleBadge">خوش آمدید</span>
 
-                <h3 style="color:var(--gold); margin: 25px 0 10px 0; font-size:1.1rem;">📑 افزودن صفحه جدید به سایت</h3>
-                <input type="text" id="newTabTitle" placeholder="نام صفحه (مثلا قوانین، مسابقات و...)">
-                <input type="text" id="newTabId" placeholder="شناسه انگلیسی یکتا (مثلا rules)">
-                <textarea id="newTabContent" placeholder="محتوای متنی صفحه جدید..." rows="4"></textarea>
-                <button class="btn-gold" onclick="addNewCustomTab()">ساخت و اضافه کردن صفحه جدید</button>
-                
-                <div style="margin-top: 30px; border-top: 1px solid var(--border); padding-top: 15px;">
-                    <button class="btn-danger" onclick="logoutAdmin()">خروج از پنل ادمین</button>
+                <!-- مدیریت درخواست‌های تست (مشترک ادمین و لیدر) -->
+                <h3 style="color:var(--gold); margin: 20px 0 10px; font-size: 1.1rem;">📥 درخواست‌های تست ورودی جدید</h3>
+                <div id="pendingApplicationsList"></div>
+
+                <!-- پنل اختصاصی ادمین کل (Vexor) -->
+                <div id="superAdminTools" style="display:none; border-top: 1px solid var(--border); margin-top: 25px; padding-top: 20px;">
+                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">👑 ابزارهای ادمین کل (Vexor)</h3>
+                    
+                    <h4 style="font-size:0.95rem; color:#ccc; margin-top:10px;">ساخت اکانت کاربری (برای ممبر یا لیدر)</h4>
+                    <input type="text" id="newAccUser" placeholder="نام کاربری (Username)">
+                    <input type="text" id="newAccPass" placeholder="رمز عبور">
+                    <select id="newAccRole">
+                        <option value="ممبر">ممبر فیکس</option>
+                        <option value="لیدر">لیدر / افسر</option>
+                        <option value="ادمین">ادمین کل</option>
+                    </select>
+                    <button class="btn-gold" onclick="createNewUser()">ایجاد اکانت جدید در سیستم</button>
+
+                    <h4 style="font-size:0.95rem; color:#ccc; margin-top:20px;">ثبت یا آپدیت آمار پلیر در رنکینگ اتوماتیک</h4>
+                    <input type="text" id="rankPlayerName" placeholder="نام پلیر (مثلا ŁK¹・Matin)">
+                    <input type="number" id="rankPlayerScore" placeholder="امتیاز کلن وار">
+                    <input type="number" id="rankPlayerWinRate" placeholder="وین‌ریت (%) مثلا 85">
+                    <input type="text" id="rankPlayerRoleTitle" placeholder="مقام (مثلا لیدر اصلی / استارتر)">
+                    <button class="btn-gold" onclick="savePlayerRank()">ثبت و محاسبه رنک پلیر</button>
+                </div>
+
+                <!-- پنل ارسال اطلاعیه توسط لیدر یا ادمین -->
+                <div style="border-top: 1px solid var(--border); margin-top: 25px; padding-top: 20px;">
+                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">📢 ارسال اطلاعیه رسمی کلن</h3>
+                    <input type="text" id="newsTitleInput" placeholder="عنوان اطلاعیه...">
+                    <textarea id="newsDescInput" placeholder="متن کامل اطلاعیه..." rows="3"></textarea>
+                    <button class="btn-gold" onclick="publishNews()">انتشار اطلاعیه در سایت</button>
+                </div>
+
+                <div style="margin-top: 30px; text-align: left;">
+                    <button class="btn-danger" onclick="logoutSystem()">خروج از حساب مدیریتی</button>
                 </div>
             </div>
         </div>
+
     </div>
 
     <footer>
-        &copy; 2026 ŁK¹・INVICTUS. All Rights Reserved.
+        &copy; 2026 ŁK¹・INVICTUS. All Rights Reserved. Designed for Elite Gaming.
     </footer>
 
     <script>
-        // لود اطلاعات ذخیره شده از حافظه مرورگر
-        let members = JSON.parse(localStorage.getItem('lk1_members')) || [
-            { name: "ŁK¹・Matin", rank: "لیدر اصلی" },
-            { name: "ŁK¹・Shadow", rank: "کاپیتان کلن وار" }
+        // دیتابیس محلی هوشمند با اطلاعات پیشفرض کامل
+        let users = JSON.parse(localStorage.getItem('lk1_users')) || [
+            { user: "Vexor", pass: "reymysterio619", role: "ادمین" },
+            { user: "leader_matin", pass: "1385", role: "لیدر" }
         ];
 
-        let customTabs = JSON.parse(localStorage.getItem('lk1_tabs')) || [];
-        let homeData = JSON.parse(localStorage.getItem('lk1_home')) || {
-            title: "خوش آمدید به خانه قدرتمندترین کلن CODM",
-            content: "ما متحدترین تیم Call of Duty Mobile هستیم. هدف ما صعود به صدر جدول و افتخارآفرینی در کلن وارها و مسابقات کاستوم است."
-        };
+        let applications = JSON.parse(localStorage.getItem('lk1_apps')) || [];
+        
+        let members = JSON.parse(localStorage.getItem('lk1_members')) || [
+            { name: "ŁK¹・Matin", score: 9800, winRate: 92, role: "لیدر اصلی" },
+            { name: "ŁK¹・Shadow", score: 8900, winRate: 88, role: "کاپیتان کلن وار" },
+            { name: "ŁK¹・Ghost", score: 8400, winRate: 85, role: "استارتر فیکس" }
+        ];
+
+        let newsList = JSON.parse(localStorage.getItem('lk1_news')) || [
+            { title: "شروع کلن‌وارهای جدید فصل", desc: "از تمامی اعضا تقاضا می‌شود طبق زمان‌بندی در بازی حضور داشته باشند.", author: "Vexor" }
+        ];
+
+        let chatMessages = JSON.parse(localStorage.getItem('lk1_chats')) || [
+            { author: "Vexor (ادمین)", text: "سلام به همه اعضای خانواده بزرگ اینویکتوس! قدرت خودمون رو به همه نشون میدیم 🔥" }
+        ];
+
+        let currentActiveUser = null;
 
         function initSite() {
             renderMembers();
-            loadCustomTabsToDOM();
-            document.getElementById('editHomeTitle').value = homeData.title;
-            document.getElementById('editHomeDesc').value = homeData.content;
-            document.getElementById('homeTitleDisplay').innerText = homeData.title;
+            renderNews();
+            renderChat();
+            renderApplications();
         }
 
         function switchTab(tabId) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-            
-            const targetSection = document.getElementById(tabId);
-            if(targetSection) {
-                targetSection.classList.add('active');
-            }
+            const target = document.getElementById(tabId);
+            if(target) target.classList.add('active');
             event.currentTarget.classList.add('active');
         }
 
-        function checkAdmin() {
-            const pass = document.getElementById('adminPass').value;
-            if (pass === '1385') {
-                document.getElementById('adminLoginBox').style.display = 'none';
-                document.getElementById('adminPanelBox').style.display = 'block';
-            } else {
-                alert('رمز عبور اشتباه است!');
-            }
-        }
+        // بخش تست و استخدام
+        function submitApplication() {
+            const name = document.getElementById('appName').value;
+            const level = document.getElementById('appLevel').value;
+            const contact = document.getElementById('appContact').value;
+            const bio = document.getElementById('appBio').value;
 
-        function logoutAdmin() {
-            document.getElementById('adminPanelBox').style.display = 'none';
-            document.getElementById('adminLoginBox').style.display = 'block';
-            document.getElementById('adminPass').value = '';
-        }
-
-        function addNewMember() {
-            const name = document.getElementById('newMemberName').value;
-            const rank = document.getElementById('newMemberRank').value;
-            if(!name || !rank) {
-                alert('لطفا نام و رنک بازیکن را وارد کنید!');
+            if(!name || !level || !contact) {
+                alert('لطفاً فیلدهای ضروری (نام، لول و آیدی ارتباطی) را پر کنید!');
                 return;
             }
-            members.push({ name, rank });
+
+            applications.push({ name, level, contact, bio, date: new Date().toLocaleDateString('fa-IR') });
+            localStorage.setItem('lk1_apps', JSON.stringify(applications));
+
+            document.getElementById('appFormBox').style.display = 'none';
+            document.getElementById('appSuccessMsg').style.display = 'block';
+            renderApplications();
+        }
+
+        function renderApplications() {
+            const container = document.getElementById('pendingApplicationsList');
+            if(!container) return;
+            container.innerHTML = '';
+            if(applications.length === 0) {
+                container.innerHTML = '<p style="color:#777; font-size:0.9rem;">درخواست جدیدی ثبت نشده است.</p>';
+                return;
+            }
+            applications.forEach((app, index) => {
+                container.innerHTML += `
+                    <div class="req-box">
+                        <div>
+                            <strong style="color:var(--gold);">${app.name}</strong> (لول: ${app.level})<br>
+                            <span style="font-size:0.85rem; color:#aaa;">ارتباط: ${app.contact} | ${app.bio}</span>
+                        </div>
+                        <div>
+                            <button class="btn-success" onclick="approveApp(${index})">تایید و افزودن</button>
+                            <button class="btn-danger" onclick="deleteApp(${index})" style="margin-right:5px;">رد</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function approveApp(index) {
+            const app = applications[index];
+            members.push({ name: app.name, score: 5000, winRate: 75, role: "ممبر جدید (تست قبول شده)" });
             localStorage.setItem('lk1_members', JSON.stringify(members));
+            applications.splice(index, 1);
+            localStorage.setItem('lk1_apps', JSON.stringify(applications));
+            renderApplications();
             renderMembers();
-            document.getElementById('newMemberName').value = '';
-            document.getElementById('newMemberRank').value = '';
-            alert('عضو جدید با موفقیت به لیست اضافه شد!');
+            alert(`پلیر ${app.name} با موفقیت به عنوان عضو جدید تأیید و اضافه شد!`);
         }
 
+        function deleteApp(index) {
+            applications.splice(index, 1);
+            localStorage.setItem('lk1_apps', JSON.stringify(applications));
+            renderApplications();
+        }
+
+        // رنکینگ اتوماتیک
         function renderMembers() {
+            // مرتب‌سازی اتوماتیک بر اساس امتیاز (بیشترین امتیاز در صدر)
+            members.sort((a, b) => b.score - a.score);
             const list = document.getElementById('membersList');
+            if(!list) return;
             list.innerHTML = '';
-            members.forEach(m => {
-                list.innerHTML += `<div class="member-card"><div><strong>${m.name}</strong></div><div style="color: var(--gold); font-weight: bold;">${m.rank}</div></div>`;
-            });
-        }
-
-        function updateHomeContent() {
-            const title = document.getElementById('editHomeTitle').value;
-            const content = document.getElementById('editHomeDesc').value;
-            if(!title || !content) {
-                alert('فیلدها نباید خالی باشند!');
-                return;
-            }
-            homeData = { title, content };
-            localStorage.setItem('lk1_home', JSON.stringify(homeData));
-            document.getElementById('homeTitleDisplay').innerText = title;
-            alert('صفحه اصلی با موفقیت بروزرسانی شد!');
-        }
-
-        function addNewCustomTab() {
-            const title = document.getElementById('newTabTitle').value;
-            const id = document.getElementById('newTabId').value.trim().toLowerCase();
-            const content = document.getElementById('newTabContent').value;
-
-            if(!title || !id || !content) {
-                alert('لطفا همه اطلاعات صفحه جدید را پر کنید!');
-                return;
-            }
-
-            if(document.getElementById(id)) {
-                alert('این شناسه صفحه قبلاً وجود دارد!');
-                return;
-            }
-
-            const newTab = { title, id, content };
-            customTabs.push(newTab);
-            localStorage.setItem('lk1_tabs', JSON.stringify(customTabs));
-
-            // ایجاد دکمه منو
-            const nav = document.getElementById('navMenu');
-            const btn = document.createElement('button');
-            btn.setAttribute('onclick', `switchTab('${id}')`);
-            btn.innerText = title;
-            // قرار دادن قبل از دکمه ادمین
-            nav.insertBefore(btn, document.querySelector('button[onclick="switchTab(\'admin\')"]'));
-
-            // ایجاد بخش محتوا
-            const container = document.getElementById('mainContainer');
-            const section = document.createElement('div');
-            section.id = id;
-            section.className = 'section';
-            section.innerHTML = `<h2>${title}</h2><p>${content}</p>`;
-            container.insertBefore(section, document.getElementById('admin'));
-
-            document.getElementById('newTabTitle').value = '';
-            document.getElementById('newTabId').value = '';
-            document.getElementById('newTabContent').value = '';
-            alert('صفحه جدید با موفقیت ساخته شد و به منو اضافه شد!');
-        }
-
-        function loadCustomTabsToDOM() {
-            const nav = document.getElementById('navMenu');
-            const container = document.getElementById('mainContainer');
-            const adminSection = document.getElementById('admin');
-
-            customTabs.forEach(t => {
-                // دکمه منو
-                const btn = document.createElement('button');
-                btn.setAttribute('onclick', `switchTab('${t.id}')`);
-                btn.innerText = t.title;
-                nav.insertBefore(btn, document.querySelector('button[onclick="switchTab(\'admin\')"]'));
-
-                // بخش محتوا
-                const section = document.createElement('div');
-                section.id = t.id;
-                section.className = 'section';
-                section.innerHTML = `<h2>${t.title}</h2><p>${t.content}</p>`;
-                container.insertBefore(section, adminSection);
-            });
-        }
-
-        function sendChatMessage() {
-            const name = document.getElementById('chatName').value || 'عضو کلن';
-            const text = document.getElementById('chatText').value;
-            if(!text) return;
-            const box = document.getElementById('chatBox');
-            box.innerHTML += `<div class="chat-msg"><span>${name}:</span>${text}</div>`;
-            document.getElementById('chatText').value = '';
-            box.scrollTop = box.scrollHeight;
-        }
-
-        // اجرای اولیه بارگذاری
-        initSite();
-    </script>
-</body>
-</html>
-    
+            members.forEach((m, idx) => {
+                let badgeColor = idx === 0 ? '👑 جایگاه اول' : `رتبه ${idx + 1}`;
+                list.innerHTML += `
+                    <div class="member-card">
+                        <div class="member-info">
+                            <h4>${m.name} <span style="font-size:0.8rem; color:var(--gold);">(${m.role})</span></h4>
+                            <div class="member-stats">
+                                <span>امتیاز کلن‌وار: <strong>${m.score}</strong></span>
+                
