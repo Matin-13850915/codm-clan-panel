@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ورود ممبر | ŁK¹ • INVICTUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title"><h1>ورود اعضای کلن</h1><span>پنل اختصاصی ممبرها</span></div>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn">🏠 خانه</a>
+            <a href="ranking.html" class="btn">📊 رتبه‌بندی</a>
+            <a href="chat.html" class="btn">💬 تالار گفتگو</a>
+            <a href="apply.html" class="btn">📝 ثبت‌نام تست</a>
+            <a href="member_login.html" class="btn active">🔑 ورود ممبر</a>
+            <a href="leader_panel.html" class="btn">⚔️ پنل لیدر</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="panel-card" id="loginBox">
+            <h2 class="hero-title" style="font-size:18px; text-align:center;">🔑 ورود ممبر به سایت</h2>
+            <div class="form-group"><label>نام کاربری</label><input type="text" id="mUser" class="form-control" placeholder="username"></div>
+            <div class="form-group"><label>رمز عبور</label><input type="password" id="mPass" class="form-control" placeholder="password"></div>
+            <button onclick="memberLogin()" class="btn-submit">ورود</button>
+        </div>
+        <div class="panel-card" id="memberPanel" style="display:none; text-align:center;">
+            <h2 class="hero-title" style="font-size:18px;" id="welcomeMsg">خوش آمدید!</h2>
+            <p class="hero-desc">شما به عنوان ممبر وارد شدید و مجاز به چت در تالار گفتگو هستید.</p>
+            <div style="display:flex; gap:10px; justify-content:center;">
+                <a href="chat.html" class="btn" style="background:var(--gold-primary); color:#000; font-weight:bold;">💬 ورود به تالار گفتگو</a>
+                <button onclick="localStorage.removeItem('logged_member'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        function memberLogin() {
+            let u = document.getElementById('mUser').value.trim();
+            let p = document.getElementById('mPass').value.trim();
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            let found = members.find(m => m.username === u && m.password === p);
+            if(found) {
+                localStorage.setItem('logged_member', u);
+                alert("ورود موفقیت‌آمیز بود!");
+                showDashboard(u);
+            } else { alert("نام کاربری یا رمز عبور اشتباه است!"); }
+        }
+        function showDashboard(name) {
+            document.getElementById('loginBox').style.display = 'none';
+            document.getElementById('memberPanel').style.display = 'block';
+            document.getElementById('welcomeMsg').innerText = "سلام " + name + " عزیز!";
+        }
+        window.onload = function() {
+            let saved = localStorage.getItem('logged_member');
+            if(saved) showDashboard(saved);
+        }
+    </script>
+</body>
+</html>
