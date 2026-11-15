@@ -26,7 +26,7 @@
     <div class="main-container">
         <div class="panel-card">
             <h2 class="hero-title" style="font-size: 18px;">📝 فرم ثبت‌نام تست</h2>
-            <p class="hero-desc">اطلاعات اکانت خود را وارد کنید تا مستقیماً به پنل لیدر و ادمین ارسال شود.</p>
+            <p class="hero-desc">اطلاعات اکانت خود را وارد کنید تا مستقیماً به بخش اعلان تست در پنل لیدر و ادمین ارسال شود.</p>
             <div class="form-group"><label>نام در گیم (با تگ)</label><input type="text" id="applyName" class="form-control" placeholder="ŁK¹ • Player"></div>
             <div class="form-group"><label>کالاف یوآیدی (UID)</label><input type="text" id="applyUid" class="form-control" placeholder="12345678"></div>
             <div class="grid-cards" style="margin-bottom:12px;">
@@ -46,7 +46,7 @@
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             apps.push({ name, uid, level, rank });
             localStorage.setItem('clan_applications', JSON.stringify(apps));
-            alert("درخواست شما با موفقیت ثبت شد!");
+            alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!");
             window.location.href = 'index.html';
         }
     </script>
