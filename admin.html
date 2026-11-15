@@ -26,9 +26,9 @@
     <div class="main-container">
         <div class="panel-card" id="aLoginBox">
             <h2 class="hero-title" style="font-size:18px; text-align:center;">🛡️ ورود ادمین (Vexor)</h2>
-            <div class="form-group"><label>نام کاربری</label><input type="text" id="aUser" class="form-control" placeholder="vexor"></div>
-            <div class="form-group"><label>رمز عبور</label><input type="password" id="aPass" class="form-control" placeholder="matinmnt"></div>
-            <button onclick="aLogin()" class="btn-submit">ورود به پنل ادمین</button>
+            <div class="form-group"><label>نام کاربری</label><input type="text" id="aUser" class="form-control" placeholder="نام کاربری..."></div>
+            <div class="form-group"><label>رمز عبور</label><input type="password" id="aPass" class="form-control" placeholder="رمز عبور..."></div>
+            <button onclick="aLogin()" class="btn-submit">ورود به پنل مدیریت</button>
         </div>
         
         <div class="panel-card" id="aDash" style="display:none;">
@@ -41,6 +41,11 @@
                 <button onclick="toggleChat()" class="btn" style="flex:1; background:var(--gold-primary); color:#000; font-weight:bold;">🔒 قفل / 🔓 باز کردن تالار</button>
                 <button onclick="editNotice()" class="btn" style="flex:1;">📢 ویرایش اطلاعیه</button>
             </div>
+
+            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:8px;">📢 اعلان درخواست‌های تست عضویت</h3>
+            <div id="adminApps" style="font-size:12px; color:var(--text-muted); margin-bottom:20px; background:rgba(0,0,0,0.3); padding:10px; border-radius:8px;"></div>
+
+            <hr style="border-color:rgba(243,186,47,0.2); margin-bottom:15px;">
 
             <h3 id="formTitle" style="font-size:14px; color:var(--gold-light); margin-bottom:8px;">➕ افزودن ممبر جدید</h3>
             <input type="hidden" id="editIndex" value="-1">
@@ -95,6 +100,49 @@
             document.getElementById('aLoginBox').style.display = 'none';
             document.getElementById('aDash').style.display = 'block';
             loadATable();
+            loadAdminApps();
+        }
+        function loadAdminApps() {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            let box = document.getElementById('adminApps');
+            box.innerHTML = '';
+            if(apps.length === 0) { box.innerHTML = "📢 در حال حاضر هیچ درخواست تست جدیدی وجود ندارد."; return; }
+            apps.forEach((a, i) => {
+                box.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; border-bottom:1px dashed rgba(243,186,47,0.2); padding-bottom:6px;">
+                        <div><b>${a.name}</b> (UID: ${a.uid}) - لول: ${a.level}</div>
+                        <div>
+                            <button onclick="adminApp(${i})" class="btn" style="background:var(--success-color); color:#fff; border:none; padding:2px 6px;">تایید</button>
+                            <button onclick="adminRej(${i})" class="btn" style="background:var(--danger-color); color:#fff; border:none; padding:2px 6px; margin-right:4px;">رد</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function adminApp(i) {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            members.push({ 
+                name: apps[i].name, 
+                level: apps[i].level, 
+                rank: apps[i].rank, 
+                uid: apps[i].uid, 
+                role: 'ممبر عادی', 
+                username: 'user_'+Math.floor(Math.random()*1000), 
+                password: '123', 
+                multiResults:['win','win','win','win','win','win','win','win','win','win'], 
+                battleResults:['win','win','win','win','win','win','win','win','win','win'] 
+            });
+            localStorage.setItem('clan_members', JSON.stringify(members));
+            apps.splice(i, 1);
+            localStorage.setItem('clan_applications', JSON.stringify(apps));
+            alert("تایید شد!"); showADash();
+        }
+        function adminRej(i) {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            apps.splice(i, 1);
+            localStorage.setItem('clan_applications', JSON.stringify(apps));
+            alert("رد شد."); showADash();
         }
         function saveMember() {
             let name = document.getElementById('addName').value.trim();
@@ -198,4 +246,5 @@
         }
     </script>
 </body>
-</html>
+                    </html>
+                    
