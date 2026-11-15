@@ -52,6 +52,7 @@ body {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    align-items: center;
 }
 .nav-links a {
     color: #ccc;
@@ -64,6 +65,12 @@ body {
 .nav-links a:hover, .nav-links a.active {
     background: #ffb703;
     color: #000;
+    font-weight: bold;
+}
+.btn-login-nav {
+    background: #332701;
+    color: #ffb703 !important;
+    border: 1px solid #ffb703;
     font-weight: bold;
 }
 .container {
@@ -150,12 +157,6 @@ body {
     max-width: 300px;
     margin: 0 auto;
 }
-.admin-panel-section {
-    background: #141414;
-    border: 1px solid #332701;
-    border-radius: 16px;
-    padding: 20px;
-}
 .panel-header-bar {
     display: flex;
     justify-content: space-between;
@@ -181,8 +182,8 @@ body {
     font-weight: bold;
 }
 .panel-card {
-    background: #1a1a1a;
-    border: 1px solid #2b2b2b;
+    background: #141414;
+    border: 1px solid #332701;
     border-radius: 12px;
     padding: 15px;
     margin-bottom: 20px;
