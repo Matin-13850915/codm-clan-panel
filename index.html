@@ -7,20 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- نوار اطلاع‌رسانی پویا (قابل ویرایش توسط ادمین/لیدر) -->
-    <div class="top-notice" id="topNoticeBar">
-        📢 عضوگیری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
-    </div>
-
-    <!-- هدر سایت -->
+    <div class="top-notice" id="topNoticeBar">📢 عضوگیری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!</div>
     <header>
         <div class="logo-area">
             <div class="clan-logo">ŁK¹</div>
-            <div class="clan-title">
-                <h1>ŁK¹ • INVICTUS</h1>
-                <span>ELITE CODM CLAN</span>
-            </div>
+            <div class="clan-title"><h1>ŁK¹ • INVICTUS</h1><span>ELITE CODM CLAN</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn active">🏠 خانه</a>
@@ -28,53 +19,35 @@
             <a href="wars.html" class="btn">⚔️ وارها</a>
             <a href="chat.html" class="btn">💬 تالار گفتگو</a>
             <a href="apply.html" class="btn">📝 ثبت‌نام تست</a>
-            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین/لیدر</a>
+            <a href="member_login.html" class="btn">🔑 ورود ممبر</a>
+            <a href="leader_panel.html" class="btn">⚔️ پنل لیدر</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
         </div>
     </header>
-
-    <!-- محتوای صفحه خانه -->
     <div class="main-container">
-        <div class="hero-card" id="homeHeroContent">
-            <div class="server-status">
-                <span class="status-dot"></span>
-                پورتال رسمی کلن • ارتباط زنده با سرور
-            </div>
-
+        <div class="panel-card">
+            <div class="server-status"><span class="status-dot"></span>پورتال رسمی کلن • ارتباط زنده با سرور</div>
             <h2 class="hero-title">ŁK¹ • INVICTUS</h2>
-            <div class="hero-subtitle">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
+            <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
             <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
-
-            <!-- کپی تگ کلن -->
-            <div class="copy-box" style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <div style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
                     <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن</div>
                     <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">ŁK¹ •</div>
                 </div>
                 <button onclick="navigator.clipboard.writeText('ŁK¹'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
             </div>
-
             <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">⚔️ درخواست تست عضویت</a>
         </div>
-
         <div class="grid-cards">
-            <div class="mini-card">
-                <h3>🏆 LEGENDARY</h3>
-                <p>رنگ و سطح کلن</p>
-            </div>
-            <div class="mini-card">
-                <h3>👥 اعضای فعال</h3>
-                <p>تست‌شده و حرفه‌ای</p>
-            </div>
+            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">🏆 LEGENDARY</h3><p style="font-size:11px; color:var(--text-muted);">رنگ و سطح کلن</p></div>
+            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">👥 اعضای فعال</h3><p style="font-size:11px; color:var(--text-muted);">تست‌شده و حرفه‌ای</p></div>
         </div>
     </div>
-
     <script>
-        // بارگذاری اطلاعیه و متن خانه سفارشی اگر توسط ادمین ویرایش شده باشد
         window.onload = function() {
-            let customNotice = localStorage.getItem('clan_notice');
-            if(customNotice) {
-                document.getElementById('topNoticeBar').innerText = customNotice;
-            }
+            let n = localStorage.getItem('clan_notice');
+            if(n) document.getElementById('topNoticeBar').innerText = n;
         }
     </script>
 </body>
