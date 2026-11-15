@@ -20,10 +20,10 @@
 body {
     background-color: var(--bg-color);
     color: var(--text-main);
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
-/* نوار اطلاع‌رسانی */
+/* نوار اطلاع‌رسانی بالای صفحه */
 .top-notice {
     background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary));
     color: #000;
@@ -33,11 +33,11 @@ body {
     padding: 8px 10px;
 }
 
-/* هدر */
+/* هدر و ناوبری دقیقاً مطابق عکس */
 header {
     background: var(--card-bg);
     border-bottom: 1px solid rgba(243, 186, 47, 0.2);
-    padding: 15px 20px;
+    padding: 12px 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -48,53 +48,54 @@ header {
 .logo-area {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
 }
 
 .clan-logo {
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-    border-radius: 10px;
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     color: #000;
-    font-size: 18px;
-    box-shadow: 0 0 15px rgba(243, 186, 47, 0.3);
+    font-size: 16px;
+    box-shadow: 0 0 12px rgba(243, 186, 47, 0.3);
 }
 
 .clan-title h1 {
-    font-size: 16px;
+    font-size: 15px;
     color: var(--gold-primary);
 }
 
 .clan-title span {
-    font-size: 11px;
+    font-size: 10px;
     color: var(--text-muted);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .nav-buttons {
     display: flex;
-    gap: 8px;
+    gap: 6px;
     flex-wrap: wrap;
+    align-items: center;
 }
 
 .btn {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid rgba(243, 186, 47, 0.3);
     color: var(--text-main);
-    padding: 8px 14px;
+    padding: 6px 12px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12px;
     cursor: pointer;
     text-decoration: none;
     transition: 0.3s;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
 }
 
 .btn:hover, .btn.active {
@@ -109,7 +110,7 @@ header {
     color: var(--gold-primary);
 }
 
-/* کانتینرها */
+/* کانتینرها و کارت‌ها */
 .main-container {
     max-width: 650px;
     margin: 20px auto;
@@ -135,7 +136,7 @@ header {
     border-radius: 20px;
     font-size: 12px;
     color: var(--text-muted);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .status-dot {
@@ -147,20 +148,20 @@ header {
 }
 
 .hero-title {
-    font-size: 26px;
+    font-size: 24px;
     color: var(--gold-primary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     font-weight: 900;
 }
 
 .hero-subtitle {
     font-size: 14px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
 }
 
 .hero-desc {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 20px;
@@ -168,25 +169,25 @@ header {
 
 /* فرم‌ها و اینپوت‌ها */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
     text-align: right;
 }
 
 .form-group label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: var(--gold-light);
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
 .form-control {
     width: 100%;
     background: rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(243, 186, 47, 0.3);
-    border-radius: 10px;
-    padding: 12px;
+    border-radius: 8px;
+    padding: 10px;
     color: var(--text-main);
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .form-control:focus {
@@ -200,9 +201,9 @@ header {
     color: #000;
     font-weight: bold;
     padding: 12px;
-    border-radius: 10px;
+    border-radius: 8px;
     border: none;
-    font-size: 15px;
+    font-size: 14px;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -221,12 +222,12 @@ header {
 .clan-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 12px;
     text-align: center;
 }
 
 .clan-table th, .clan-table td {
-    padding: 12px 10px;
+    padding: 10px 8px;
     border-bottom: 1px solid rgba(243, 186, 47, 0.15);
 }
 
@@ -245,18 +246,17 @@ header {
     background: var(--card-bg);
     border: 1px solid rgba(243, 186, 47, 0.2);
     border-radius: 15px;
-    padding: 20px 15px;
+    padding: 18px 15px;
     text-align: center;
 }
 
 .mini-card h3 {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--gold-primary);
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .mini-card p {
-    font-size: 12px;
+    font-size: 11px;
     color: var(--text-muted);
-  }
-      
+}
