@@ -3,163 +3,476 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ŁK¹・INVICTUS | Elite CODM Clan Portal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <title>سوپر پنل مدیریت و تالار گفتگو حرفه‌ای</title>
+    <style>
+        :root {
+            --bg-color: #0b1120;
+            --card-bg: #1e293b;
+            --input-bg: #0f172a;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #3b82f6;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --purple: #8b5cf6;
+            --border: #334155;
+        }
+        body.light-mode {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --input-bg: #f8fafc;
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --border: #cbd5e1;
+        }
+        * { box-sizing: border-box; }
+        body { font-family: Tahoma, sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; padding: 20px; transition: 0.3s; }
+        .wrapper { max-width: 1150px; margin: auto; }
+        
+        /* هدر بالا */
+        .top-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 20px; background: var(--card-bg); padding: 15px 25px; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .top-header h1 { margin: 0; font-size: 20px; color: var(--primary); }
+        .header-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+        
+        .btn { padding: 8px 14px; border: none; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: bold; transition: 0.2s; display: inline-flex; align-items: center; gap: 5px; }
+        .btn:hover { opacity: 0.85; transform: translateY(-1px); }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-success { background: var(--success); color: white; }
+        .btn-danger { background: var(--danger); color: white; }
+        .btn-warning { background: var(--warning); color: #000; }
+        .btn-purple { background: var(--purple); color: white; }
+        .btn-secondary { background: #64748b; color: white; }
+
+        /* کارت‌های آماری */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .stat-card { background: var(--card-bg); padding: 18px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
+        .stat-card h3 { margin: 0 0 8px 0; font-size: 13px; color: var(--text-muted); }
+        .stat-card span { font-size: 22px; font-weight: bold; color: var(--primary); }
+
+        /* چیدمان دو ستونه برای دسکتاپ */
+        .main-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .main-grid { grid-template-columns: 1fr; } }
+
+        .card { background: var(--card-bg); padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid var(--border); box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+        .card h2 { margin-top: 0; border-bottom: 2px solid var(--border); padding-bottom: 10px; font-size: 16px; color: var(--primary); display: flex; justify-content: space-between; align-items: center; }
+
+        /* فرم‌ها و ورودی‌ها */
+        input, select { padding: 10px; background: var(--input-bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text-color); font-family: inherit; font-size: 13px; }
+        .add-member-form { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+        .add-member-form input { flex: 1; min-width: 150px; }
+        .search-box { width: 100%; margin-bottom: 12px; }
+
+        /* جدول ممبرها */
+        .table-responsive { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid var(--border); padding: 10px; text-align: center; font-size: 13px; }
+        th { background: rgba(59, 130, 246, 0.15); color: var(--primary); }
+        .badge { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .role-admin { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+        .role-leader { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+        .role-member { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+
+        /* اطلاعیه و پیام سنجاق شده */
+        .announcement-box { background: rgba(245, 158, 11, 0.15); border: 1px solid var(--warning); padding: 12px; border-radius: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+        .pinned-box { background: rgba(139, 92, 246, 0.15); border: 1px solid var(--purple); padding: 10px 12px; border-radius: 8px; margin-bottom: 12px; display: none; justify-content: space-between; align-items: center; font-size: 13px; }
+
+        /* تالار گفتگو */
+        .chat-box { border: 1px solid var(--border); height: 320px; border-radius: 8px; overflow-y: auto; padding: 12px; background: var(--input-bg); margin-bottom: 12px; }
+        .chat-msg { background: var(--card-bg); padding: 10px 12px; border-radius: 8px; margin-bottom: 10px; border: 1px solid var(--border); }
+        .chat-msg-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; font-size: 12px; }
+        .chat-msg-body { font-size: 14px; line-height: 1.5; word-break: break-word; }
+        .chat-actions { display: flex; gap: 4px; }
+        .chat-actions button { padding: 3px 7px; font-size: 11px; }
+        .chat-input-area { display: flex; gap: 8px; }
+        .chat-input-area input { flex: 1; }
+
+        /* لاگ فعالیت‌ها */
+        .log-box { max-height: 180px; overflow-y: auto; background: var(--input-bg); padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; }
+        .log-item { padding: 6px 0; border-bottom: 1px dashed var(--border); color: var(--text-muted); }
+        .log-item:last-child { border-bottom: none; }
+    </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <h1>ŁK¹・INVICTUS</h1>
-        </div>
-        <nav>
-            <button onclick="switchTab('home')" class="nav-btn active" data-target="home">خانه</button>
-            <button onclick="switchTab('apply')" class="nav-btn" data-target="apply">تست و استخدام</button>
-            <button onclick="switchTab('roster')" class="nav-btn" data-target="roster">رنکینگ اعضا</button>
-            <button onclick="switchTab('chat')" class="nav-btn" data-target="chat">تالار گفتگو</button>
-            <button onclick="switchTab('news')" class="nav-btn" data-target="news">اطلاعیه‌ها</button>
-            <button onclick="switchTab('admin')" class="nav-btn" data-target="admin">پنل ادمین</button>
-        </nav>
-    </header>
+<div class="wrapper">
 
-    <div class="container">
+    <!-- هدر اصلی -->
+    <div class="top-header">
+        <h1>🛡️ سوپر پنل مدیریت و تالار گفتگو</h1>
+        <div class="header-actions">
+            <button onclick="toggleTheme()" class="btn btn-secondary">🌓 تغییر تم</button>
+            <button onclick="exportData()" class="btn btn-purple">📥 دانلود بکاپ دیتا</button>
+            <button onclick="refreshData()" class="btn btn-success">🔄 رفرش کل سایت</button>
+        </div>
+    </div>
+
+    <!-- آمار زنده -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>کل ممبرها</h3>
+            <span id="statMembers">0</span>
+        </div>
+        <div class="stat-card">
+            <h3>ادمین‌ها و لیدرها</h3>
+            <span id="statStaff" style="color: var(--warning);">0</span>
+        </div>
+        <div class="stat-card">
+            <h3>کاربران بن شده</h3>
+            <span id="statBanned" style="color: var(--danger);">0</span>
+        </div>
+        <div class="stat-card">
+            <h3>پیام‌های تالار</h3>
+            <span id="statMessages" style="color: var(--success);">0</span>
+        </div>
+    </div>
+
+    <div class="main-grid">
         
-        <!-- خانه -->
-        <div id="home" class="section active">
-            <h2 id="homeTitleDisplay">🔥 خانه رسمی الیت کلن ŁK¹</h2>
-            <div id="homeDescDisplay">
-                <p>به پورتال رسمی و حرفه‌ای قدرتمندترین تیم Call of Duty Mobile خوش آمدید.</p>
-                <p><strong>شرایط ورود:</strong></p>
-                <ul style="margin-right: 20px; color: #b0b0b0; line-height: 1.9;">
-                    <li>حداقل لول اکانت: ۳۰۰</li>
-                    <li>دیسیپلین بالا و حضور منظم در کلن‌وار</li>
-                    <li>قبولی در تست ورودی حضوری</li>
-                </ul>
-            </div>
-            <button class="btn-gold" onclick="switchTab('apply')">شروع ثبت‌نام و درخواست تست</button>
-        </div>
-
-        <!-- تست و استخدام -->
-        <div id="apply" class="section">
-            <h2>🎯 فرم درخواست تست ورودی</h2>
-            <p>مشخصات خود را وارد کنید تا مستقیماً برای ادمین و لیدرها ارسال شود.</p>
-            <div id="applyFormBox">
-                <input type="text" id="appName" placeholder="نام داخل بازی (مثلا ŁK¹・Ghost)">
-                <input type="text" id="appLevel" placeholder="لول اکانت">
-                <input type="text" id="appContact" placeholder="آیدی تلگرام یا روبیکا (مثلا @id)">
-                <textarea id="appBio" placeholder="سبک بازی و توضیحات..." rows="3"></textarea>
-                <button class="btn-gold" onclick="submitApplication()">ارسال درخواست تست</button>
-            </div>
-            <div id="appSuccessMsg" style="display:none; color: var(--success); font-weight: bold; margin-top: 15px; text-align: center;">
-                درخواست شما ثبت شد! لیدر یا ادمین با شما ارتباط می‌گیرند. ✅
-            </div>
-        </div>
-
-        <!-- رنکینگ اعضا -->
-        <div id="roster" class="section">
-            <h2>🏆 رنکینگ اتوماتیک اعضا</h2>
-            <p>امتیازات و وین‌ریت اعضا به صورت خودکار مرتب شده است.</p>
-            <div id="membersList"></div>
-        </div>
-
-        <!-- تالار گفتگو -->
-        <div id="chat" class="section">
-            <h2>💬 تالار گفتگوی امن کلن</h2>
-            <div style="margin-bottom: 10px; font-size: 0.85rem; color: var(--gold);" id="chatUserStatus">
-                وضعیت: لطفاً برای چت کردن وارد حساب خود شوید.
-            </div>
-            
-            <div id="chatLoginPrompt">
-                <input type="text" id="chatUsername" placeholder="نام کاربری...">
-                <input type="password" id="chatPassword" placeholder="رمز عبور...">
-                <button class="btn-gold" onclick="loginAndChatUser()">ورود به چت</button>
-            </div>
-
-            <div id="chatControlArea" style="display:none;">
-                <div class="chat-box" id="chatBox"></div>
-                <div class="emoji-bar">
-                    <button class="emoji-btn" onclick="addEmoji('🔥')">🔥</button>
-                    <button class="emoji-btn" onclick="addEmoji('👑')">👑</button>
-                    <button class="emoji-btn" onclick="addEmoji('⚡')">⚡</button>
-                    <button class="emoji-btn" onclick="addEmoji('💀')">💀</button>
-                    <button class="emoji-btn" onclick="addEmoji('🏆')">🏆</button>
-                    <button class="emoji-btn" onclick="addEmoji('😎')">😎</button>
-                </div>
-                <textarea id="chatText" placeholder="پیام خود را بنویسید..." rows="2" style="resize:none;"></textarea>
-                <button class="btn-gold" onclick="sendChatMessage()">ارسال پیام</button>
-            </div>
-        </div>
-
-        <!-- اطلاعیه‌ها -->
-        <div id="news" class="section">
-            <h2>📢 اخبار و اطلاعیه‌های رسمی</h2>
-            <div id="newsList"></div>
-        </div>
-
-        <!-- ادمین -->
-        <div id="admin" class="section">
-            <h2>🛡️ پنل مدیریت کلن</h2>
-            
-            <div id="loginSection">
-                <p>لطفاً اطلاعات ورود مدیریتی خود را وارد کنید (ادمین: Vexor):</p>
-                <input type="text" id="loginUser" placeholder="نام کاربری...">
-                <input type="password" id="loginPass" placeholder="رمز عبور...">
-                <button class="btn-gold" onclick="performLogin()">ورود به پنل</button>
-            </div>
-
-            <div id="dashboardSection" style="display:none;">
-                <span class="admin-badge" id="welcomeRoleBadge">خوش آمدید</span>
-
-                <h3 style="color:var(--gold); margin: 15px 0 10px; font-size: 1.1rem;">📥 درخواست‌های تست ورودی</h3>
-                <div id="pendingApplicationsList"></div>
-
-                <div style="border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
-                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">✏️ ویرایش محتوای صفحه خانه</h3>
-                    <input type="text" id="editHomeTitle" placeholder="عنوان جدید خانه...">
-                    <textarea id="editHomeDesc" placeholder="متن جدید صفحه خانه..." rows="3"></textarea>
-                    <button class="btn-gold" onclick="updateHomeContent()">بروزرسانی صفحه خانه</button>
-                </div>
-
-                <div id="superAdminTools" style="display:none; border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
-                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">👑 ابزارهای ادمین کل (Vexor)</h3>
-                    
-                    <input type="text" id="newAccUser" placeholder="ساخت یوزرنیم جدید...">
-                    <input type="text" id="newAccPass" placeholder="رمز عبور...">
-                    <select id="newAccRole">
-                        <option value="ممبر">ممبر فیکس</option>
-                        <option value="لیدر">لیدر / افسر</option>
-                        <option value="ادمین">ادمین کل</option>
+        <!-- ستون راست: مدیریت ممبرها و لاگ‌ها -->
+        <div>
+            <div class="card">
+                <h2>👥 مدیریت پیشرفته ممبرها</h2>
+                
+                <!-- افزودن ممبر جدید -->
+                <div class="add-member-form">
+                    <input type="text" id="newMemberName" placeholder="نام ممبر جدید...">
+                    <select id="newMemberRole">
+                        <option value="member">ممبر عادی 👤</option>
+                        <option value="leader">لیدر ⭐</option>
+                        <option value="admin">ادمین 👑</option>
                     </select>
-                    <button class="btn-gold" onclick="createNewUser()">ایجاد اکانت در سیستم</button>
-
-                    <h4 style="font-size:0.9rem; color:#ccc; margin-top:15px;">ثبت امتیاز و مدیریت رنک پلیر</h4>
-                    <input type="text" id="rankPlayerName" placeholder="نام پلیر...">
-                    <input type="number" id="rankPlayerScore" placeholder="امتیاز کلن‌وار...">
-                    <input type="number" id="rankPlayerWinRate" placeholder="وین‌ریت (%) مثلا 85...">
-                    <input type="text" id="rankPlayerRoleTitle" placeholder="مقام (مثلا استارتر)...">
-                    <button class="btn-gold" onclick="savePlayerRank()">ثبت یا ویرایش رنک پلیر</button>
+                    <button onclick="addMember()" class="btn btn-primary">➕ افزودن ممبر</button>
                 </div>
 
-                <div style="border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
-                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">📢 ارسال اطلاعیه جدید</h3>
-                    <input type="text" id="newsTitleInput" placeholder="عنوان اطلاعیه...">
-                    <textarea id="newsDescInput" placeholder="متن اطلاعیه..." rows="2"></textarea>
-                    <button class="btn-gold" onclick="publishNews()">انتشار اطلاعیه</button>
+                <!-- جستجو -->
+                <input type="text" id="searchMember" onkeyup="renderMembers()" placeholder="🔍 جستجوی زنده نام یا نقش ممبر..." class="search-box">
+
+                <!-- جدول ممبرها -->
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>نام ممبر</th>
+                                <th>نقش</th>
+                                <th>وضعیت</th>
+                                <th>عملیات مدیریت</th>
+                            </tr>
+                        </thead>
+                        <tbody id="membersTableBody"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- تاریخچه فعالیت‌های مدیران -->
+            <div class="card">
+                <h2>
+                    <span>📜 گزارش فعالیت‌های سیستم (Audit Log)</span>
+                    <button onclick="clearLogs()" class="btn btn-secondary" style="font-size: 11px; padding: 4px 8px;">پاکسازی گزارش</button>
+                </h2>
+                <div class="log-box" id="auditLogBox"></div>
+            </div>
+        </div>
+
+        <!-- ستون چپ: تالار گفتگو و اطلاعیه‌ها -->
+        <div>
+            <div class="card">
+                <h2>
+                    <span>💬 تالار گفتگو و مدیریت</span>
+                    <button id="lockChatBtn" onclick="toggleChatLock()" class="btn btn-warning">🔓 قفل کردن تالار</button>
+                </h2>
+
+                <!-- فرم ارسال اطلاعیه -->
+                <div style="display: flex; gap: 6px; margin-bottom: 12px;">
+                    <input type="text" id="newAnnouncementText" placeholder="نوشتن اطلاعیه جدید مدیر..." style="flex: 1;">
+                    <button onclick="postAnnouncement()" class="btn btn-warning">انتشار 📢</button>
                 </div>
 
-                <div style="margin-top: 25px; text-align: left;">
-                    <button class="btn-danger" onclick="logoutSystem()">خروج از حساب</button>
+                <!-- باکس اطلاعیه -->
+                <div id="announcementArea" class="announcement-box">
+                    <span id="announcementContent"></span>
+                    <button onclick="deleteAnnouncement()" class="btn btn-danger" style="padding: 4px 8px;">حذف ❌</button>
+                </div>
+
+                <!-- پیام سنجاق شده -->
+                <div id="pinnedArea" class="pinned-box">
+                    <span id="pinnedContent"></span>
+                    <button onclick="unpinMessage()" class="btn btn-secondary" style="padding: 4px 8px;">برداشتن سنجاق</button>
+                </div>
+
+                <!-- کادر پیام‌ها -->
+                <div class="chat-box" id="chatBox"></div>
+
+                <!-- ارسال پیام با پشتیبانی کامل ایموجی -->
+                <div class="chat-input-area">
+                    <input type="text" id="chatMessage" onkeypress="if(event.key==='Enter') sendMessage()" placeholder="پیام بنویسید (ایموجی کیبورد فعال 😃❤️)...">
+                    <button onclick="sendMessage()" class="btn btn-primary">ارسال 🚀</button>
                 </div>
             </div>
         </div>
 
     </div>
+</div>
 
-    <footer>
-        &copy; 2026 ŁK¹・INVICTUS. All Rights Reserved.
-    </footer>
+<script>
+// داده‌های پیش‌فرض (در صورت نبودن اطلاعات ذخیره شده در مرورگر)
+const defaultData = {
+    members: [
+        { id: 1, name: "علی رضایی", role: "admin", banned: false, banDuration: "" },
+        { id: 2, name: "رضا کریمی", role: "leader", banned: false, banDuration: "" },
+        { id: 3, name: "سارا محمدی", role: "member", banned: false, banDuration: "" }
+    ],
+    messages: [
+        { id: 101, sender: "علی رضایی (ادمین)", text: "سلام به همه بچه‌های گل! خوش اومدید 👋😃", time: "14:30" },
+        { id: 102, sender: "سارا محمدی", text: "درود بر همگی، چه پنل خفنی شده ❤️🔥", time: "14:32" }
+    ],
+    announcement: "لطفاً قوانین تالار گفتگو را رعایت کنید و آزادانه از ایموجی‌های کیبورد استفاده کنید! 😊✨",
+    pinnedMessage: null,
+    chatLocked: false,
+    logs: [
+        "سیستم مدیریت پیشرفته با موفقیت راه‌اندازی شد."
+    ]
+};
 
-    <script src="script.js"></script>
-</body>
-</html>
+// بارگذاری دیتا از LocalStorage
+let appData = JSON.parse(localStorage.getItem('superAdminPanelData')) || defaultData;
+
+// کلمات ممنوعه نمونه برای فیلتر هوشمند
+const badWords = ["فحش", "تبلیغ", "اسپم"];
+
+function saveData() {
+    localStorage.setItem('superAdminPanelData', JSON.stringify(appData));
+    updateStats();
+}
+
+function addLog(actionText) {
+    const now = new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' });
+    appData.logs.unshift(`[${now}] ${actionText}`);
+    if (appData.logs.length > 30) appData.logs.pop();
+    saveData();
+    renderLogs();
+}
+
+// ۱. رفرش سایت بدون از دست رفتن اطلاعات
+function refreshData() {
+    addLog("کل اطلاعات سایت به‌روزرسانی (رفرش) شد.");
+    location.reload();
+}
+
+// ۲. تغییر تم تیره و روشن
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+}
+
+// ۳. رندر کردن لیست ممبرها و سرچ
+function renderMembers() {
+    const search = document.getElementById('searchMember').value.toLowerCase();
+    const tbody = document.getElementById('membersTableBody');
+    tbody.innerHTML = "";
+
+    appData.members.forEach(m => {
+        if (!m.name.toLowerCase().includes(search) && !m.role.toLowerCase().includes(search)) return;
+
+        let roleBadge = "";
+        if (m.role === 'admin') roleBadge = `<span class="badge role-admin">ادمین 👑</span>`;
+        else if (m.role === 'leader') roleBadge = `<span class="badge role-leader">لیدر ⭐</span>`;
+        else roleBadge = `<span class="badge role-member">ممبر 👤</span>`;
+
+        let statusHtml = m.banned 
+            ? `<span style="color: var(--danger); font-weight: bold;">بن (${m.banDuration}) ⛔</span>` 
+            : `<span style="color: var(--success);">فعال ✅</span>`;
+
+        let banBtnHtml = m.banned
+            ? `<button onclick="toggleBan(${m.id})" class="btn btn-success" style="padding:4px 8px;">رفع بن 🔓</button>`
+            : `<button onclick="toggleBan(${m.id})" class="btn btn-secondary" style="padding:4px 8px;">بن ⛔</button>`;
+
+        tbody.innerHTML += `
+            <tr>
+                <td><b>${escapeHtml(m.name)}</b></td>
+                <td>${roleBadge}</td>
+                <td>${statusHtml}</td>
+                <td>
+                    <button onclick="changeRole(${m.id})" class="btn btn-purple" style="padding:4px 8px;" title="تغییر نقش">نقش 🔄</button>
+                    <button onclick="editMember(${m.id})" class="btn btn-warning" style="padding:4px 8px;">ویرایش ✏️</button>
+                    ${banBtnHtml}
+                    <button onclick="deleteMember(${m.id})" class="btn btn-danger" style="padding:4px 8px;">حذف 🗑️</button>
+                </td>
+            </tr>
+        `;
+    });
+    updateStats();
+}
+
+// ۴. افزودن ممبر جدید
+function addMember() {
+    const nameInput = document.getElementById('newMemberName');
+    const roleInput = document.getElementById('newMemberRole');
+    const name = nameInput.value.trim();
+
+    if (!name) {
+        alert("لطفاً نام ممبر را وارد کنید!");
+        return;
+    }
+
+    appData.members.push({
+        id: Date.now(),
+        name: name,
+        role: roleInput.value,
+        banned: false,
+        banDuration: ""
+    });
+
+    nameInput.value = "";
+    addLog(`ممبر جدید «${name}» به سیستم اضافه شد.`);
+    renderMembers();
+}
+
+// ۵. ویرایش ممبر
+function editMember(id) {
+    const member = appData.members.find(m => m.id === id);
+    if (!member) return;
+
+    const newName = prompt("نام جدید ممبر را وارد کنید:", member.name);
+    if (newName && newName.trim() !== "") {
+        const oldName = member.name;
+        member.name = newName.trim();
+        addLog(`نام ممبر «${oldName}» به «${member.name}» ویرایش شد.`);
+        renderMembers();
+    }
+}
+
+// ۶. تغییر نقش ممبر (ادمین، لیدر، ممبر)
+function changeRole(id) {
+    const member = appData.members.find(m => m.id === id);
+    if (!member) return;
+
+    const roles = ['member', 'leader', 'admin'];
+    const nextRole = roles[(roles.indexOf(member.role) + 1) % roles.length];
+    member.role = nextRole;
+    addLog(`نقش کاربر «${member.name}» به ${nextRole} تغییر یافت.`);
+    renderMembers();
+}
+
+// ۷. حذف ممبر
+function deleteMember(id) {
+    const member = appData.members.find(m => m.id === id);
+    if (!member) return;
+
+    if (confirm(`آیا از حذف کامل «${member.name}» مطمئن هستید؟`)) {
+        appData.members = appData.members.filter(m => m.id !== id);
+        addLog(`ممبر «${member.name}» توسط مدیر حذف شد.`);
+        renderMembers();
+    }
+}
+
+// ۸. بن و رفع بن ممبر با مدت دلخواه
+function toggleBan(id) {
+    const member = appData.members.find(m => m.id === id);
+    if (!member) return;
+
+    if (!member.banned) {
+        const duration = prompt(`مدت زمان بن برای «${member.name}» را بنویسید (مثلاً: ۲۴ ساعت، ۷ روز، دائمی):`, "۲۴ ساعت");
+        if (duration) {
+            member.banned = true;
+            member.banDuration = duration;
+            addLog(`کاربر «${member.name}» به مدت (${duration}) بن شد.`);
+            renderMembers();
+        }
+    } else {
+        if (confirm(`آیا می‌خواهید «${member.name}» را رفع بن کنید؟`)) {
+            member.banned = false;
+            member.banDuration = "";
+            addLog(`کاربر «${member.name}» رفع بن شد.`);
+            renderMembers();
+        }
+    }
+}
+
+// ۹. مدیریت اطلاعیه‌ها
+function renderAnnouncement() {
+    const area = document.getElementById('announcementArea');
+    if (appData.announcement) {
+        area.style.display = 'flex';
+        document.getElementById('announcementContent').innerHTML = `📢 <b>اطلاعیه:</b> ${escapeHtml(appData.announcement)}`;
+    } else {
+        area.style.display = 'none';
+    }
+}
+
+function postAnnouncement() {
+    const input = document.getElementById('newAnnouncementText');
+    const text = input.value.trim();
+    if (!text) return;
+
+    appData.announcement = text;
+    input.value = "";
+    addLog("اطلاعیه جدید در تالار گفتگو منتشر شد.");
+    renderAnnouncement();
+}
+
+function deleteAnnouncement() {
+    if (confirm("اطلاعیه توسط ادمین/لیدر حذف شود؟")) {
+        appData.announcement = null;
+        addLog("اطلاعیه تالار توسط ادمین حذف شد.");
+        renderAnnouncement();
+    }
+}
+
+// ۱۰. پین (سنجاق) کردن پیام در تالار
+function renderPinned() {
+    const area = document.getElementById('pinnedArea');
+    if (appData.pinnedMessage) {
+        area.style.display = 'flex';
+        document.getElementById('pinnedContent').innerHTML = `📌 <b>سنجاق شده:</b> ${escapeHtml(appData.pinnedMessage)}`;
+    } else {
+        area.style.display = 'none';
+    }
+}
+
+function pinMessage(id) {
+    const msg = appData.messages.find(m => m.id === id);
+    if (msg) {
+        appData.pinnedMessage = `${msg.sender}: ${msg.text}`;
+        addLog(`یک پیام توسط مدیر سنجاق (Pin) شد.`);
+        renderPinned();
+    }
+}
+
+function unpinMessage() {
+    appData.pinnedMessage = null;
+    addLog("سنجاق پیام برداشته شد.");
+    renderPinned();
+}
+
+// ۱۱. قفل کردن تالار گفتگو
+function toggleChatLock() {
+    appData.chatLocked = !appData.chatLocked;
+    updateChatLockUI();
+    addLog(appData.chatLocked ? "تالار گفتگو توسط ادمین قفل شد 🔒" : "قفل تالار گفتگو باز شد 🔓");
+}
+
+function updateChatLockUI() {
+    const btn = document.getElementById('lockChatBtn');
+    const input = document.getElementById('chatMessage');
+    if (appData.chatLocked) {
+        btn.innerHTML = "🔒 باز کردن تالار";
+        btn.className = "btn btn-danger";
+        input.placeholder = "⛔ تالار موقتاً قفل است (ارسال فقط برای مدیر مجاز است)...";
+    } else {
+        btn.innerHTML = "🔓 قفل کردن تالار";
+        btn.className = "btn btn-warning";
+        input.placeholder = "پیام بنویسید (ایموجی کیبورد فعال 😃❤️)...";
+    }
+}
+
+// ۱۲. رندر پیام‌های چت، ارسال با ایموجی و حذف توسط ادمین/لیدر
+function renderMessages() {
+    const chatBox = document.getElementById('chatBox');
+    chatBox.innerHTML = "";
+
+    appData.messages.forEach(msg => {
+        chatBox.innerHTML += `
+            <div class="chat-msg">
+                <div class="chat-msg-header">
+                    <b style="color: var(--primary);">${escapeHtml(msg.sender)} <small style="color:var(--text-muted)">(${msg.time})</small></b>
+                    <div class="chat-actions">
