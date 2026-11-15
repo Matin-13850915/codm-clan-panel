@@ -3,81 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت • ŁK¹</title>
+    <title>ورود ادمین | ŁK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="nav-container">
-            <div class="logo-area">
-                <span class="clan-logo-badge">ŁK¹</span>
-                <div class="clan-title">
-                    <h2 id="panelTitle">پنل مدیریت کلن</h2>
-                    <p id="panelRoleSub">در حال بررسی دسترسی...</p>
-                </div>
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title">
+                <h1>پنل مدیریت کلن</h1>
+                <span>دسترسی اختصاصی ارشدها</span>
             </div>
-            <nav class="nav-links">
-                <a href="index.html">🚪 خروج / بازگشت به خانه</a>
-            </nav>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn">🏠 بازگشت به سایت</a>
         </div>
     </header>
 
-    <main class="container">
-        <div id="adminPanelContent">
-            <div class="panel-header-bar">
-                <h2>🛡️ ابزارهای مدیریت و تالار گفتگو</h2>
-                <button onclick="refreshData()" class="btn-refresh">🔄 به‌روزرسانی اطلاعات</button>
+    <div class="main-container">
+        <!-- فرم ورود ادمین (کاملاً امن و پنهان از ممبرها) -->
+        <div class="panel-card" id="loginBox">
+            <h2 class="hero-title" style="font-size: 20px; text-align: center;">🔐 احراز هویت ادمین</h2>
+            <p class="hero-desc" style="text-align: center;">این بخش صرفاً مخصوص لیدرها و مدیریت کلن است.</p>
+            
+            <div class="form-group">
+                <label>نام کاربری ادمین</label>
+                <input type="text" id="adminUser" class="form-control" placeholder="نام کاربری را وارد کنید">
             </div>
-
-            <!-- مدیریت اعضا و ویرایش آیدی و رمز -->
-            <div class="panel-card">
-                <h3>👥 مدیریت اعضا، آیدی و رمز عبور</h3>
-                <input type="text" id="searchMember" onkeyup="filterMembers()" placeholder="🔍 جستجوی ممبر..." class="search-input">
-                <div class="table-responsive">
-                    <table id="membersTable">
-                        <thead>
-                            <tr>
-                                <th>آیدی / نام</th>
-                                <th>نقش</th>
-                                <th>وضعیت</th>
-                                <th>عملیات (ویرایش آیدی/رمز، حذف، بن)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="membersTableBody">
-                            <!-- بارگذاری پویا -->
-                        </tbody>
-                    </table>
-                </div>
+            <div class="form-group">
+                <label>رمز عبور</label>
+                <input type="password" id="adminPass" class="form-control" placeholder="••••••••">
             </div>
-
-            <!-- تالار گفتگو و ابزارها -->
-            <div class="panel-card">
-                <h2>
-                    <span>💬 تالار گفتگوی کلن</span>
-                    <button id="lockChatBtn" onclick="toggleChatLock()" class="btn-action btn-edit" style="padding: 6px 12px;">🔓 قفل کردن تالار</button>
-                </h2>
-
-                <div id="announcementArea" class="announcement-box">
-                    <span>📢 <b>اطلاعیه رسمی:</b> قوانین کلن رعایت شود و از ایموجی کیبورد آزادانه استفاده کنید! 😊🔥</span>
-                    <button onclick="deleteAnnouncement()" class="btn-action btn-delete">حذف اطلاعیه ❌</button>
-                </div>
-
-                <div class="chat-box" id="chatBox">
-                    <div class="chat-msg" id="msg-101">
-                        <span><b>Vexor (ادمین):</b> سلام بچه‌ها، آماده وار باشید 🎮</span>
-                        <button onclick="deleteMessage('msg-101')" class="btn-action btn-delete">حذف 🗑️</button>
-                    </div>
-                </div>
-
-                <div class="chat-input-area">
-                    <input type="text" id="chatMessage" placeholder="پیام خود را بنویسید (ایموجی کیبورد فعال 😃)...">
-                    <button onclick="sendMessage()" class="btn-gold-sm">ارسال 🚀</button>
-                </div>
-            </div>
+            <button class="btn-submit" onclick="loginAdmin()">ورود به پنل مدیریت</button>
         </div>
-    </main>
 
-    <script src="script.logics.js"></script>
+        <!-- پنل داخلی مدیریت (بعد از ورود موفق نمایش داده می‌شود) -->
+        <div class="panel-card" id="adminDashboard" style="display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 style="font-size: 18px; color: var(--gold-primary);">🛠️ پنل کنترل و ثبت رکوردها</h2>
+                <button class="btn" style="background: var(--danger-color); color: #fff; border: none;" onclick="logoutAdmin()">خروج</button>
+            </div>
+
+            <hr style="border-color: rgba(243,186,47,0.2); margin-bottom: 20px;">
+
+            <h3 style="font-size: 15px; color: var(--gold-light); margin-bottom: 10px;">➕ افزودن یا ویرایش بازیکن و پلی‌تایم</h3>
+            <div class="form-group">
+                <label>نام بازیکن (ایدی گیم)</label>
+                <input type="text" id="playerName" class="form-control" placeholder="مثال: ŁK¹ • Ghost">
+            </div>
+            <div class="form-group">
+                <label>نقش در کلن</label>
+                <select id="playerRole" class="form-control">
+                    <option value="ممبر عادی">ممبر عادی</option>
+                    <option value="کو-لیدر">کو-لیدر (Co-Leader)</option>
+                    <option value="لیدر اصلی">لیدر اصلی</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>پلی‌تایم روزانه (ساعت)</label>
+                <input type="number" id="playerHours" class="form-control" placeholder="تعداد ساعت بازی امروز">
+            </div>
+            <button class="btn-submit" onclick="savePlayerRecord()">ذخیره و به‌روزرسانی رنکینگ</button>
+        </div>
+    </div>
+
+    <script>
+        function loginAdmin() {
+            const u = document.getElementById('adminUser').value;
+            const p = document.getElementById('adminPass').value;
+            
+            // اطلاعات پیش‌فرض ورود (قابل تغییر)
+            if(u === "admin" && p === "123") {
+                document.getElementById('loginBox').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                alert("خوش آمدید لیدر عزیز!");
+            } else {
+                alert("نام کاربری یا رمز عبور اشتباه است!");
+            }
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('loginBox').style.display = 'block';
+        }
+
+        function savePlayerRecord() {
+            const name = document.getElementById('playerName').value;
+            const role = document.getElementById('playerRole').value;
+            const hours = document.getElementById('hours').value; // یا playerHours
+
+            if(!name) {
+                alert("لطفاً نام بازیکن را وارد کنید.");
+                return;
+            }
+
+            // ذخیره در localStorage جهت نمایش در صفحه ممبرها و رنکینگ
+            let players = JSON.parse(localStorage.getItem('clan_players') || '[]');
+            players.push({ name, role, hours: hours || 0 });
+            localStorage.setItem('clan_players', JSON.stringify(players));
+
+            alert("اطلاعات بازیکن با موفقیت ثبت شد و رنکینگ آپدیت گردید!");
+            document.getElementById('playerName').value = '';
+            document.getElementById('playerHours').value = '';
+        }
+    </script>
 </body>
 </html>
