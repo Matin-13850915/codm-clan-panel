@@ -1,10 +1,22 @@
-// ۱. تابع رفرش اطلاعات صفحه
+// ۱. بررسی رمز عبور ورود ادمین / لیدر
+function checkLogin() {
+    let pass = document.getElementById('adminPassword').value;
+    if (pass === "admin" || pass === "1234") { // رمز عبور قابل تغییر
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('adminPanelContent').style.display = 'block';
+        alert("✅ با موفقیت به پنل مدیریت وارد شدید!");
+    } else {
+        alert("❌ رمز عبور اشتباه است! (رمز پیش‌فرض: admin)");
+    }
+}
+
+// ۲. رفرش اطلاعات صفحه
 function refreshData() {
     alert("✨ اطلاعات پنل و تالار گفتگو با موفقیت به‌روزرسانی شد!");
     location.reload();
 }
 
-// ۲. تابع جستجوی زنده اعضا در جدول
+// ۳. جستجوی زنده اعضا در جدول
 function filterMembers() {
     let input = document.getElementById('searchMember');
     let filter = input.value.toLowerCase();
@@ -20,7 +32,7 @@ function filterMembers() {
     }
 }
 
-// ۳. ویرایش ممبر
+// ۴. ویرایش ممبر
 function editMember(id) {
     let row = document.querySelector(`tr[data-id='${id}']`);
     let nameCell = row.getElementsByTagName('td')[0];
@@ -31,7 +43,7 @@ function editMember(id) {
     }
 }
 
-// ۴. حذف ممبر از جدول
+// ۵. حذف ممبر از جدول
 function deleteMember(id) {
     if (confirm("⚠️ آیا از حذف این ممبر اطمینان دارید؟")) {
         document.querySelector(`tr[data-id='${id}']`).remove();
@@ -39,7 +51,7 @@ function deleteMember(id) {
     }
 }
 
-// ۵. سیستم بن کردن با مدت زمان دلخواه و رفع بن
+// ۶. سیستم بن کردن با مدت زمان دلخواه و رفع بن
 function toggleBan(id) {
     let btn = document.getElementById(`banBtn-${id}`);
     let statusSpan = document.getElementById(`status-${id}`);
@@ -64,7 +76,7 @@ function toggleBan(id) {
     }
 }
 
-// ۶. حذف اطلاعیه توسط ادمین/لیدر
+// ۷. حذف اطلاعیه توسط ادمین/لیدر
 function deleteAnnouncement() {
     if (confirm("❌ اطلاعیه حذف شود؟")) {
         document.getElementById('announcementArea').style.display = 'none';
@@ -72,7 +84,7 @@ function deleteAnnouncement() {
     }
 }
 
-// ۷. حذف پیام در تالار گفتگو توسط ادمین/لیدر
+// ۸. حذف پیام در تالار گفتگو توسط ادمین/لیدر
 function deleteMessage(msgId) {
     if (confirm("🗑️ پیام توسط ادمین حذف شود؟")) {
         document.getElementById(msgId).remove();
@@ -80,7 +92,7 @@ function deleteMessage(msgId) {
     }
 }
 
-// ۸. ارسال پیام با پشتیبانی کامل از ایموجی‌های کیبورد
+// ۹. ارسال پیام با پشتیبانی کامل از ایموجی‌های کیبورد
 function sendMessage() {
     let input = document.getElementById('chatMessage');
     let text = input.value.trim();
@@ -102,4 +114,4 @@ function sendMessage() {
 // تابع امنیتی برای جلوگیری از تگ‌های اضافی
 function escapeHtml(text) {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-            }
+}
