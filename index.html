@@ -33,7 +33,7 @@
             <div class="status-indicator"><span class="dot"></span> پورتال رسمی کلن</div>
             <h1>ŁK¹ • INVICTUS</h1>
             <h2>شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</h2>
-            <p>تجمع بازیکنان نخبه و رقابتی. از طریق دکمه‌های زیر وارد پنل خود شوید یا درخواست تست دهید.</p>
+            <p>تجمع بازیکنان نخبه و رقابتی. از طریق درگاه‌های زیر با آیدی و رمز وارد پنل خود شوید.</p>
             
             <div class="clan-tag-box">
                 <span>کپی سریع تگ کلن</span>
@@ -41,25 +41,10 @@
                 <button class="btn-copy" onclick="alert('تگ کلن کپی شد!')">📋</button>
             </div>
 
-            <!-- بخش درگاه‌های ورود و تست (سبک و مرتب) -->
+            <!-- درگاه‌های ورود جداگانه -->
             <div class="login-options-grid">
                 <button onclick="openModal('memberLoginModal')" class="btn-gold-outline">👤 ورود ممبر کلن</button>
-                <button onclick="location.href='admin.html'" class="btn-gold">🛡️ ورود لیدر و ادمین</button>
-                <button onclick="alert('فرم درخواست تست عضویت باز شد.')" class="btn-gold-dark">⚔️ درخواست تست</button>
-            </div>
-        </section>
-    </main>
-
-    <!-- مودال ساده ورود ممبر کلن -->
-    <div id="memberLoginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('memberLoginModal')">&times;</span>
-            <h3 style="color: #ffb703;">👤 ورود اعضای کلن</h3>
-            <input type="text" placeholder="شناسه یا نام کاربری..." class="search-input" style="margin-bottom: 10px;">
-            <button onclick="alert('خوش آمدید ممبر عزیز!')" class="btn-gold" style="width:100%;">ورود به تالار ممبرها</button>
-        </div>
-    </div>
-
-    <script src="script.logics.js"></script>
-</body>
-</html>
+                <button onclick="openModal('leaderLoginModal')" class="btn-gold-dark">⭐ ورود لیدر کلن</button>
+                <button onclick="openModal('adminLoginModal')" class="btn-gold">🛡️ ورود ادمین کلن</button>
+                <button onclick="alert('فرم درخواست تست عضویت
+                    
