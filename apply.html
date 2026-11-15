@@ -31,7 +31,7 @@
             <div class="form-group"><label>کالاف یوآیدی (UID)</label><input type="text" id="applyUid" class="form-control" placeholder="12345678"></div>
             <div class="grid-cards" style="margin-bottom:12px;">
                 <div class="form-group" style="margin-bottom:0;"><label>لول</label><input type="number" id="applyLevel" class="form-control" placeholder="150"></div>
-                <div class="form-group" style="margin-bottom:0;"><label>رنک مولتی/بتل</label><input type="text" id="applyRank" class="form-control" placeholder="Legendary"></div>
+                <div class="form-group" style="margin-bottom:0;"><label>آیدی تلگرام یا روبیکا</label><input type="text" id="applyRank" class="form-control" placeholder="@username"></div>
             </div>
             <button onclick="submitApp()" class="btn-submit">ارسال درخواست تست</button>
         </div>
@@ -62,7 +62,7 @@
                     body: JSON.stringify(record)
                 });
 
-                alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!");
+                alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!منتظر پیام ما باشید");
                 window.location.href = 'index.html';
             } catch(e) {
                 alert("خطا در ارسال درخواست به سرور ابری!");
