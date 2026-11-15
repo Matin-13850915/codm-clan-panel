@@ -3,196 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت و ارشدها | ŁK¹ • INVICTUS</title>
+    <title>پنل ادمین | ŁK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <header>
         <div class="logo-area">
             <div class="clan-logo">ŁK¹</div>
-            <div class="clan-title">
-                <h1>پنل کنترل ارشدها</h1>
-                <span>مدیریت پیشرفته کلن</span>
-            </div>
+            <div class="clan-title"><h1>پنل مدیریت کل ادمین</h1><span>دسترسی کامل Vexor</span></div>
         </div>
-        <div class="nav-buttons">
-            <a href="index.html" class="btn">🏠 خانه</a>
-            <a href="admin.html" class="btn btn-admin active">🛡️ پنل مدیریت</a>
-        </div>
+        <div class="nav-buttons"><a href="index.html" class="btn">🏠 خانه</a></div>
     </header>
-
     <div class="main-container">
-        <!-- 1. صفحه ورود ادمین / لیدر -->
-        <div class="panel-card" id="loginBox">
-            <h2 class="hero-title" style="font-size: 18px; text-align: center;">🔐 ورود ارشدهای کلن</h2>
-            <p class="hero-desc" style="text-align: center;">ادمین اصلی (vexor) یا لیدرهای کلن وارد شوند.</p>
-            
-            <div class="form-group">
-                <label>نام کاربری</label>
-                <input type="text" id="loginUser" class="form-control" placeholder="نام کاربری...">
-            </div>
-            <div class="form-group">
-                <label>رمز عبور</label>
-                <input type="password" id="loginPass" class="form-control" placeholder="••••••">
-            </div>
-            <button onclick="performLogin()" class="btn-submit">ورود به پنل</button>
+        <div class="panel-card" id="adminLoginBox">
+            <h2 class="hero-title" style="font-size:18px; text-align:center;">🛡️ ورود ادمین اصلی (Vexor)</h2>
+            <div class="form-group"><label>نام کاربری</label><input type="text" id="aUser" class="form-control" placeholder="vexor"></div>
+            <div class="form-group"><label>رمز عبور</label><input type="password" id="aPass" class="form-control" placeholder="••••••"></div>
+            <button onclick="adminLogin()" class="btn-submit">ورود به پنل مدیریت</button>
         </div>
-
-        <!-- 2. داشبورد ادمین اصلی (vexor) -->
         <div class="panel-card" id="adminDashboard" style="display:none;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="font-size: 16px; color: var(--gold-primary);">👑 پنل مدیریت کل ادمین (Vexor)</h2>
-                <button onclick="logout()" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
+                <h2 style="font-size:16px; color:var(--gold-primary);">👑 پنل کنترل Vexor</h2>
+                <button onclick="localStorage.removeItem('admin_logged'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
             </div>
             <hr style="border-color:rgba(243,186,47,0.2); margin-bottom:15px;">
-
-            <!-- تنظیمات کلی و قفل چت -->
-            <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 8px;">⚙️ تنظیمات عمومی تالار و سایت</h3>
             <div style="display:flex; gap:10px; margin-bottom:15px;">
-                <button onclick="toggleChatLock()" class="btn" style="flex:1; background:var(--gold-primary); color:#000; font-weight:bold;">🔒 قفل / 🔓 باز کردن تالار گفتگو</button>
-                <button onclick="editClanNotice()" class="btn" style="flex:1;">📢 ویرایش متن اطلاعیه بالای سایت</button>
+                <button onclick="toggleChatLock()" class="btn" style="flex:1; background:var(--gold-primary); color:#000; font-weight:bold;">🔒 قفل / 🔓 باز کردن تالار</button>
+                <button onclick="editNotice()" class="btn" style="flex:1;">📢 ویرایش اطلاعیه سایت</button>
             </div>
-
-            <!-- فرم افزودن ممبر جدید توسط ادمین -->
-            <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 8px;">➕ افزودن ممبر یا لیدر جدید</h3>
-            <div class="form-group">
-                <label>نام و تگ در گیم</label>
-                <input type="text" id="addName" class="form-control" placeholder="مثال: ŁK¹ • Ghost">
+            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:8px;">➕ افزودن ممبر یا لیدر جدید با یوزر و پسورد</h3>
+            <div class="form-group"><label>نام و تگ در گیم</label><input type="text" id="addName" class="form-control" placeholder="ŁK¹ • Name"></div>
+            <div class="grid-cards" style="margin-bottom:0;">
+                <div class="form-group"><label>یوزر اکانت سایت</label><input type="text" id="addUName" class="form-control" placeholder="username"></div>
+                <div class="form-group"><label>پسورد اکانت سایت</label><input type="text" id="addUPass" class="form-control" placeholder="password"></div>
             </div>
             <div class="grid-cards" style="margin-bottom:0;">
                 <div class="form-group"><label>لول</label><input type="number" id="addLevel" class="form-control" placeholder="150"></div>
-                <div class="form-group"><label>رنک بتل/مولتی</label><input type="text" id="addRank" class="form-control" placeholder="Legendary"></div>
+                <div class="form-group"><label>رنک مولتی/بتل</label><input type="text" id="addRank" class="form-control" placeholder="Legendary"></div>
             </div>
             <div class="grid-cards" style="margin-bottom:0;">
-                <div class="form-group"><label>تعداد لجند مولتی/بتل</label><input type="number" id="addLegendCount" class="form-control" placeholder="5"></div>
+                <div class="form-group"><label>تعداد لجند</label><input type="number" id="addLegend" class="form-control" placeholder="5"></div>
                 <div class="form-group"><label>کالاف یوآیدی (UID)</label><input type="text" id="addUid" class="form-control" placeholder="12345678"></div>
             </div>
-            <div class="form-group">
-                <label>نقش در کلن</label>
-                <select id="addRole" class="form-control">
-                    <option value="ممبر عادی">ممبر عادی</option>
-                    <option value="لیدر">لیدر</option>
-                </select>
-            </div>
-            <button onclick="addNewMember()" class="btn-submit">ذخیره و افزودن به رنکینگ کلن</button>
-        </div>
-
-        <!-- 3. داشبورد اختصاصی لیدرها -->
-        <div class="panel-card" id="leaderDashboard" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="font-size: 16px; color: var(--gold-primary);">⚔️ پنل مدیریت لیدرها (تست و تایید)</h2>
-                <button onclick="logout()" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
-            </div>
-            <hr style="border-color:rgba(243,186,47,0.2); margin-bottom:15px;">
-
-            <h3 style="font-size: 14px; color: var(--gold-light); margin-bottom: 8px;">📝 درخواست‌های تست عضویت در انتظار</h3>
-            <div id="applicationsContainer" style="font-size: 12px; color: var(--text-muted);">
-                <!-- بارگذاری درخواست‌ها -->
+            <div class="form-group"><label>نقش</label><select id="addRole" class="form-control"><option value="ممبر عادی">ممبر عادی</option><option value="لیدر">لیدر</option></select></div>
+            <button onclick="saveNewMember()" class="btn-submit">ثبت و ذخیره عضو</button>
+            
+            <hr style="border-color:rgba(243,186,47,0.2); margin:20px 0;">
+            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:8px;">🔍 جستجو و مدیریت ممبرها</h3>
+            <div class="form-group"><input type="text" id="searchAdminMember" class="form-control" placeholder="جستجوی نام..." onkeyup="filterAdminMembers()"></div>
+            <div class="table-responsive">
+                <table class="clan-table">
+                    <thead><tr><th>نام</th><th>یوزر</th><th>نقش</th><th>عملیات</th></tr></thead>
+                    <tbody id="adminMembersTable"></tbody>
+                </table>
             </div>
         </div>
     </div>
-
     <script>
-        function performLogin() {
-            let u = document.getElementById('loginUser').value.trim();
-            let p = document.getElementById('loginPass').value.trim();
-
+        function adminLogin() {
+            let u = document.getElementById('aUser').value.trim();
+            let p = document.getElementById('aPass').value.trim();
             if(u === "vexor" && p === "matinmnt") {
-                localStorage.setItem('logged_role', 'admin');
-                document.getElementById('loginBox').style.display = 'none';
+                localStorage.setItem('admin_logged', 'true');
+                document.getElementById('adminLoginBox').style.display = 'none';
                 document.getElementById('adminDashboard').style.display = 'block';
-            } else if(u === "leader" && p === "1234") { // رمز نمونه برای لیدرها
-                localStorage.setItem('logged_role', 'leader');
-                document.getElementById('loginBox').style.display = 'none';
-                document.getElementById('leaderDashboard').style.display = 'block';
-                loadApplications();
+                loadAdminTable();
             } else {
-                alert("نام کاربری یا رمز عبور اشتباه است!");
+                alert("نام کاربری یا رمز عبور ادمین اشتباه است!");
             }
         }
-
-        function logout() {
-            localStorage.removeItem('logged_role');
-            location.reload();
-        }
-
-        function toggleChatLock() {
-            let current = localStorage.getItem('chat_locked') === 'true';
-            localStorage.setItem('chat_locked', !current);
-            alert(!current ? "تالار گفتگو قفل شد!" : "تالار گفتگو باز شد!");
-        }
-
-        function editClanNotice() {
-            let newText = prompt("متن جدید اطلاعیه بالای سایت را وارد کنید:");
-            if(newText) {
-                localStorage.setItem('clan_notice', newText);
-                alert("اطلاعیه آپدیت شد!");
-            }
-        }
-
-        function addNewMember() {
+        function saveNewMember() {
             let name = document.getElementById('addName').value.trim();
+            let username = document.getElementById('addUName').value.trim();
+            let password = document.getElementById('addUPass').value.trim();
             let level = document.getElementById('addLevel').value.trim();
             let rank = document.getElementById('addRank').value.trim();
-            let legendCount = document.getElementById('addLegendCount').value.trim();
+            let legendCount = document.getElementById('addLegend').value.trim();
             let uid = document.getElementById('addUid').value.trim();
             let role = document.getElementById('addRole').value;
-
-            if(!name) { alert("نام بازیکن الزامی است."); return; }
-
+            if(!name || !username) { alert("نام و یوزر الزامی است."); return; }
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            members.push({ name, level, rank, legendCount, uid, role });
+            members.push({ name, username, password, level, rank, legendCount, uid, role, multiResults:['win','win','win','win','win','win','win','win','win','win'], battleResults:['win','win','win','win','win','win','win','win','win','win'] });
             localStorage.setItem('clan_members', JSON.stringify(members));
-
-            alert("عضو جدید با موفقیت اضافه شد!");
-            document.getElementById('addName').value = '';
-            document.getElementById('addUid').value = '';
+            alert("عضو با موفقیت ثبت شد!");
+            loadAdminTable();
         }
-
-        function loadApplications() {
-            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
-            let container = document.getElementById('applicationsContainer');
-            container.innerHTML = '';
-
-            if(apps.length === 0) {
-                container.innerHTML = "درخواست تستی وجود ندارد.";
-                return;
-            }
-
-            apps.forEach((a, index) => {
-                container.innerHTML += `
-                    <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
-                        <div>
-                            <b>${a.name}</b> (UID: ${a.uid})<br>
-                            لول: ${a.level} | رنک: ${a.rank}
-                        </div>
-                        <div>
-                            <button onclick="approveApp(${index})" class="btn" style="background:var(--success-color); color:#fff; border:none;">تایید</button>
-                            <button onclick="rejectApp(${index})" class="btn" style="background:var(--danger-color); color:#fff; border:none; margin-right:5px;">رد</button>
-                        </div>
-                    </div>
+        function loadAdminTable() {
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            let tbody = document.getElementById('adminMembersTable');
+            tbody.innerHTML = '';
+            if(members.length === 0) { tbody.innerHTML = `<tr><td colspan="4">عضوی ثبت نشده است.</td></tr>`; return; }
+            members.forEach((m, i) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${m.name}</td>
+                        <td>${m.username || '-'}</td>
+                        <td>${m.role}</td>
+                        <td>
+                            <button onclick="deleteMember(${i})" class="btn" style="background:var(--danger-color); color:#fff; border:none; padding:3px 6px;">حذف</button>
+                        </td>
+                    </tr>
                 `;
             });
         }
-
-        function approveApp(index) {
-            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
-            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            members.push({ name: apps[index].name, level: apps[index].level, rank: apps[index].rank, uid: apps[index].uid, role: 'ممبر عادی' });
-            localStorage.setItem('clan_members', JSON.stringify(members));
-            apps.splice(index, 1);
-            localStorage.setItem('clan_applications', JSON.stringify(apps));
-            alert("درخواست تایید و بازیکن به کلن اضافه شد!");
-            loadApplications();
+        function deleteMember(i) {
+            if(confirm("حذف شود؟")) {
+                let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+                members.splice(i, 1);
+                localStorage.setItem('clan_members', JSON.stringify(members));
+                loadAdminTable();
+            }
         }
-
-        function rejectApp(index) {
-            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
-            apps.splice(index, 1);
-            localStorage.setItem('clan_applications', JSON.stringify(apps));
-            alert("درخواست رد شد.");
-            loadApplications();
+        function toggleChatLock() {
+            let cur = localStorage.getItem('chat_locked') === 'true';
+            localStorage.setItem('chat_locked', !cur);
+            alert(!cur ? "تالار قفل شد!" : "تالار باز شد!");
+        }
+        function editNotice() {
+            let t = prompt("متن جدید اطلاعیه:");
+            if(t) localStorage.setItem('clan_notice', t);
+        }
+        window.onload = function() {
+            if(localStorage.getItem('admin_logged') === 'true') {
+                document.getElementById('adminLoginBox').style.display = 'none';
+                document.getElementById('adminDashboard').style.display = 'block';
+                loadAdminTable();
+            }
         }
     </script>
 </body>
