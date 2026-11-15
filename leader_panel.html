@@ -38,7 +38,7 @@
             <div id="lApps" style="font-size:12px; color:var(--text-muted); margin-bottom:25px;"></div>
             <hr style="border-color:rgba(243,186,47,0.2); margin-bottom:20px;">
             <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:10px;">🚫 مدیریت بن ۳۰ دقیقه‌ای چت ممبرها</h3>
-            <div class="form-group"><label>نام ممبر (یا نام کاربری اکانت)</label><input type="text" id="banMemberUser" class="form-control" placeholder="نام ممبر..."></div>
+            <div class="form-group"><label>نام ممبر</label><input type="text" id="banMemberUser" class="form-control" placeholder="نام ممبر..."></div>
             <div style="display:flex; gap:10px;">
                 <button onclick="banMemberChat(30)" class="btn" style="flex:1; background:var(--danger-color); color:#fff; border:none; padding:10px;">بن ۳۰ دقیقه‌ای</button>
                 <button onclick="unbanMemberChat()" class="btn" style="flex:1; background:var(--success-color); color:#fff; border:none; padding:10px;">رفع بن</button>
@@ -46,22 +46,53 @@
         </div>
     </div>
     <script>
-        function lLogin() {
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function saveCloudData() {
+            try {
+                let payload = {
+                    clan_members: JSON.parse(localStorage.getItem('clan_members') || '[]'),
+                    clan_applications: JSON.parse(localStorage.getItem('clan_applications') || '[]'),
+                    clan_wars: JSON.parse(localStorage.getItem('clan_wars') || '[]'),
+                    chat_messages: JSON.parse(localStorage.getItem('chat_messages') || '[]'),
+                    chat_bans: JSON.parse(localStorage.getItem('chat_bans') || '{}'),
+                    chat_locked: localStorage.getItem('chat_locked') === 'true',
+                    clan_notice: localStorage.getItem('clan_notice') || ''
+                };
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
+                    body: JSON.stringify(payload)
+                });
+            } catch(e) {}
+        }
+
+        async function lLogin() {
             let u = document.getElementById('lUser').value.trim();
             let p = document.getElementById('lPass').value.trim();
             
-            // بررسی لیدرهایی که توسط ادمین ساخته شده‌اند یا لیدر پیش‌فرض
-            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            let foundLeader = members.find(m => m.username === u && m.password === p && m.role === 'لیدر');
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                let members = (data.record && data.record.clan_members) ? data.record.clan_members : [];
+                let foundLeader = members.find(m => m.username === u && m.password === p && m.role === 'لیدر');
 
-            if((u === "leader" && p === "1234") || foundLeader) {
-                localStorage.setItem('leader_logged', 'true');
-                localStorage.setItem('logged_role', 'leader');
-                localStorage.setItem('logged_member', foundLeader ? foundLeader.name : 'لیدر اصلی');
-                showLDash();
-            } else { alert("اطلاعات ورود لیدر اشتباه است!"); }
+                if((u === "leader" && p === "1234") || foundLeader) {
+                    localStorage.setItem('leader_logged', 'true');
+                    localStorage.setItem('logged_role', 'leader');
+                    localStorage.setItem('logged_member', foundLeader ? foundLeader.name : 'لیدر اصلی');
+                    if(data.record) {
+                        if(data.record.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(data.record.clan_applications));
+                        if(data.record.clan_members) localStorage.setItem('clan_members', JSON.stringify(data.record.clan_members));
+                    }
+                    showLDash();
+                } else { alert("اطلاعات ورود لیدر اشتباه است!"); }
+            } catch(e) {
+                alert("خطا در اتصال به سرور ابری!");
+            }
         }
-        function showLDash() {
+        async function showLDash() {
             document.getElementById('lLoginBox').style.display = 'none';
             document.getElementById('lDash').style.display = 'block';
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
@@ -80,12 +111,11 @@
                 `;
             });
         }
-        function apApp(i) {
+        async function apApp(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            let newMemberName = apps[i].name;
             members.push({ 
-                name: newMemberName, 
+                name: apps[i].name, 
                 level: apps[i].level, 
                 rank: apps[i].rank, 
                 uid: apps[i].uid, 
@@ -98,28 +128,32 @@
             localStorage.setItem('clan_members', JSON.stringify(members));
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
+            await saveCloudData();
             alert("تایید شد و کاربر به کلن اضافه گردید!"); showLDash();
         }
-        function reApp(i) {
+        async function reApp(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
+            await saveCloudData();
             alert("درخواست رد شد."); showLDash();
         }
-        function banMemberChat(mins) {
+        async function banMemberChat(mins) {
             let uname = document.getElementById('banMemberUser').value.trim();
             if(!uname) { alert("نام ممبر را وارد کنید."); return; }
             let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
             banList[uname] = new Date().getTime() + (mins * 60 * 1000);
             localStorage.setItem('chat_bans', JSON.stringify(banList));
+            await saveCloudData();
             alert("کاربر " + uname + " بن شد.");
         }
-        function unbanMemberChat() {
+        async function unbanMemberChat() {
             let uname = document.getElementById('banMemberUser').value.trim();
             let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
             if(banList[uname]) {
                 delete banList[uname];
                 localStorage.setItem('chat_bans', JSON.stringify(banList));
+                await saveCloudData();
                 alert("رفع بن شد.");
             } else { alert("این کاربر بن نبود."); }
         }
