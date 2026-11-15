@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>رتبه‌بندی کلن | łK¹ • INVICTUS</title>
+    <title>رتبه‌بندی کلن | IK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="logo-area">
-            <div class="clan-logo">łK¹</div>
+            <div class="clan-logo">IK¹</div>
             <div class="clan-title"><h1>رتبه‌بندی اعضای کلن</h1><span>لیدربرد رسمی (امتیازات مسابقات)</span></div>
         </div>
         <div class="nav-buttons">
@@ -30,8 +30,8 @@
             <div class="form-group"><input type="text" id="searchMember" class="form-control" placeholder="🔍 جستجوی بازیکن..." onkeyup="filterRanking()"></div>
             <div class="table-responsive">
                 <table class="clan-table">
-                    <thead><tr><th>رتبه</th><th>نام و تگ</th><th>نقش</th><th>لول / آیدی تلگرام یا روبیکا</th><th>امتیاز کل</th></tr></thead>
-                    <tbody id="rankingTableBody"></tbody>
+                    <thead><tr><th>رتبه</th><th>نام و تگ</th><th>نقش</th><th>لول / رنک</th><th>امتیاز کل</th></tr></thead>
+                    <tbody id="rankingTableBody"><tr><td colspan="5" style="color:var(--text-muted);">در حال دریافت اطلاعات از سرور ابری...</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -47,23 +47,24 @@
         const BIN_ID = "6af9c49eac6210605a89891b";
         const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
 
-        async function loadCloudData(callback) {
+        async function loadRankingFromCloud() {
+            let tbody = document.getElementById('rankingTableBody');
             try {
                 let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
                 let data = await res.json();
                 if (data && data.record && data.record.clan_members) {
-                    localStorage.setItem('clan_members', JSON.stringify(data.record.clan_members));
+                    let members = data.record.clan_members;
+                    localStorage.setItem('clan_members', JSON.stringify(members));
+                    renderRanking(members);
+                } else {
+                    renderRanking(JSON.parse(localStorage.getItem('clan_members') || '[]'));
                 }
-            } catch(e) {}
-            if(callback) callback();
+            } catch(e) {
+                renderRanking(JSON.parse(localStorage.getItem('clan_members') || '[]'));
+            }
         }
 
-        window.onload = function() {
-            loadCloudData(() => { loadRanking(); });
-        }
-
-        function loadRanking() {
-            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+        function renderRanking(members) {
             let tbody = document.getElementById('rankingTableBody');
             tbody.innerHTML = '';
             if(members.length === 0) {
@@ -87,6 +88,7 @@
                 `;
             });
         }
+
         function calcPts(results) {
             if(!results) return 0;
             let pts = 0;
@@ -96,6 +98,7 @@
             });
             return pts;
         }
+
         function showDetails(m) {
             let mw = (m.multiResults || []).filter(r=>r==='win').length;
             let ml = (m.multiResults || []).filter(r=>r==='lose').length;
@@ -115,12 +118,18 @@
             `;
             document.getElementById('playerModal').style.display = 'flex';
         }
+
         function filterRanking() {
             let kw = document.getElementById('searchMember').value.toLowerCase();
             let rows = document.getElementById('rankingTableBody').getElementsByTagName('tr');
             for(let r of rows) {
+                if(r.innerText.includes('در حال دریافت') || r.innerText.includes('ثبت نشده')) continue;
                 r.style.display = r.innerText.toLowerCase().includes(kw) ? '' : 'none';
             }
+        }
+
+        window.onload = function() {
+            loadRankingFromCloud();
         }
     </script>
 </body>
