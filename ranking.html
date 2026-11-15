@@ -44,7 +44,24 @@
         </div>
     </div>
     <script>
-        window.onload = function() { loadRanking(); }
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function loadCloudData(callback) {
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                if (data && data.record && data.record.clan_members) {
+                    localStorage.setItem('clan_members', JSON.stringify(data.record.clan_members));
+                }
+            } catch(e) {}
+            if(callback) callback();
+        }
+
+        window.onload = function() {
+            loadCloudData(() => { loadRanking(); });
+        }
+
         function loadRanking() {
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
             let tbody = document.getElementById('rankingTableBody');
