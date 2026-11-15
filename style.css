@@ -33,15 +33,13 @@ body {
     padding: 8px 10px;
 }
 
-/* هدر و ناوبری دقیقاً مطابق عکس */
+/* تنظیم دقیق نوار ناوبری و منوها برای موبایل */
 header {
     background: var(--card-bg);
     border-bottom: 1px solid rgba(243, 186, 47, 0.2);
-    padding: 12px 15px;
+    padding: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 10px;
 }
 
@@ -49,66 +47,26 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-}
-
-.clan-logo {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: #000;
-    font-size: 16px;
-    box-shadow: 0 0 12px rgba(243, 186, 47, 0.3);
-}
-
-.clan-title h1 {
-    font-size: 15px;
-    color: var(--gold-primary);
-}
-
-.clan-title span {
-    font-size: 10px;
-    color: var(--text-muted);
-    letter-spacing: 0.5px;
+    width: 100%;
+    justify-content: space-between;
 }
 
 .nav-buttons {
     display: flex;
-    gap: 6px;
+    gap: 5px;
     flex-wrap: wrap;
-    align-items: center;
+    width: 100%;
+    justify-content: center;
 }
 
-.btn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(243, 186, 47, 0.3);
-    color: var(--text-main);
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 12px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: 0.3s;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+.nav-buttons .btn {
+    font-size: 11px;
+    padding: 5px 8px;
+    flex: 1 1 auto;
+    text-align: center;
+    justify-content: center;
 }
 
-.btn:hover, .btn.active {
-    background: var(--gold-primary);
-    color: #000;
-    border-color: var(--gold-primary);
-}
-
-.btn-admin {
-    background: rgba(243, 186, 47, 0.15);
-    border-color: var(--gold-primary);
-    color: var(--gold-primary);
-}
 
 /* کانتینرها و کارت‌ها */
 .main-container {
