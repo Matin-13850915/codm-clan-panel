@@ -37,17 +37,36 @@
         </div>
     </div>
     <script>
-        function submitApp() {
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function submitApp() {
             let name = document.getElementById('applyName').value.trim();
             let uid = document.getElementById('applyUid').value.trim();
             let level = document.getElementById('applyLevel').value.trim();
             let rank = document.getElementById('applyRank').value.trim();
             if(!name || !uid) { alert("نام و یوآیدی الزامی است."); return; }
-            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
-            apps.push({ name, uid, level, rank });
-            localStorage.setItem('clan_applications', JSON.stringify(apps));
-            alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!");
-            window.location.href = 'index.html';
+
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                let record = data.record || {};
+                let apps = record.clan_applications || [];
+                
+                apps.push({ name, uid, level, rank });
+                record.clan_applications = apps;
+
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
+                    body: JSON.stringify(record)
+                });
+
+                alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!");
+                window.location.href = 'index.html';
+            } catch(e) {
+                alert("خطا در ارسال درخواست به سرور ابری!");
+            }
         }
     </script>
 </body>
