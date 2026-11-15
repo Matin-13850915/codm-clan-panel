@@ -15,6 +15,7 @@
         <div class="nav-buttons">
             <a href="index.html" class="btn">🏠 خانه</a>
             <a href="ranking.html" class="btn">📊 رتبه‌بندی</a>
+            <a href="wars.html" class="btn">⚔️ وارها</a>
             <a href="chat.html" class="btn">💬 تالار گفتگو</a>
             <a href="apply.html" class="btn">📝 ثبت‌نام تست</a>
             <a href="member_login.html" class="btn active">🔑 ورود ممبر</a>
@@ -25,8 +26,8 @@
     <div class="main-container">
         <div class="panel-card" id="loginBox">
             <h2 class="hero-title" style="font-size:18px; text-align:center;">🔑 ورود ممبر به سایت</h2>
-            <div class="form-group"><label>نام کاربری</label><input type="text" id="mUser" class="form-control" placeholder="username"></div>
-            <div class="form-group"><label>رمز عبور</label><input type="password" id="mPass" class="form-control" placeholder="password"></div>
+            <div class="form-group"><label>نام کاربری</label><input type="text" id="mUser" class="form-control" placeholder="نام کاربری..."></div>
+            <div class="form-group"><label>رمز عبور</label><input type="password" id="mPass" class="form-control" placeholder="رمز عبور..."></div>
             <button onclick="memberLogin()" class="btn-submit">ورود</button>
         </div>
         <div class="panel-card" id="memberPanel" style="display:none; text-align:center;">
@@ -46,6 +47,7 @@
             let found = members.find(m => m.username === u && m.password === p);
             if(found) {
                 localStorage.setItem('logged_member', u);
+                localStorage.setItem('logged_role', found.role === 'لیدر' ? 'leader' : 'member');
                 alert("ورود موفقیت‌آمیز بود!");
                 showDashboard(u);
             } else { alert("نام کاربری یا رمز عبور اشتباه است!"); }
@@ -61,4 +63,5 @@
         }
     </script>
 </body>
-</html>
+            </html>
+            
