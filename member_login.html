@@ -35,7 +35,7 @@
             <p class="hero-desc">شما به عنوان ممبر وارد شدید و مجاز به چت در تالار گفتگو هستید.</p>
             <div style="display:flex; gap:10px; justify-content:center;">
                 <a href="chat.html" class="btn" style="background:var(--gold-primary); color:#000; font-weight:bold;">💬 ورود به تالار گفتگو</a>
-                <button onclick="localStorage.removeItem('logged_member'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
+                <button onclick="localStorage.removeItem('logged_member'); localStorage.removeItem('logged_role'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
             </div>
         </div>
     </div>
@@ -46,10 +46,10 @@
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
             let found = members.find(m => m.username === u && m.password === p);
             if(found) {
-                localStorage.setItem('logged_member', u);
+                localStorage.setItem('logged_member', found.name);
                 localStorage.setItem('logged_role', found.role === 'لیدر' ? 'leader' : 'member');
                 alert("ورود موفقیت‌آمیز بود!");
-                showDashboard(u);
+                showDashboard(found.name);
             } else { alert("نام کاربری یا رمز عبور اشتباه است!"); }
         }
         function showDashboard(name) {
@@ -63,5 +63,4 @@
         }
     </script>
 </body>
-            </html>
-            
+</html>
