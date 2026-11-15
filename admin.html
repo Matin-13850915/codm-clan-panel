@@ -87,10 +87,47 @@
         </div>
     </div>
     <script>
-        function aLogin() {
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function saveCloudData() {
+            try {
+                let payload = {
+                    clan_members: JSON.parse(localStorage.getItem('clan_members') || '[]'),
+                    clan_applications: JSON.parse(localStorage.getItem('clan_applications') || '[]'),
+                    clan_wars: JSON.parse(localStorage.getItem('clan_wars') || '[]'),
+                    chat_messages: JSON.parse(localStorage.getItem('chat_messages') || '[]'),
+                    chat_bans: JSON.parse(localStorage.getItem('chat_bans') || '{}'),
+                    chat_locked: localStorage.getItem('chat_locked') === 'true',
+                    clan_notice: localStorage.getItem('clan_notice') || ''
+                };
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
+                    body: JSON.stringify(payload)
+                });
+            } catch(e) {}
+        }
+
+        async function aLogin() {
             let u = document.getElementById('aUser').value.trim();
             let p = document.getElementById('aPass').value.trim();
             if(u === "vexor" && p === "matinmnt") {
+                try {
+                    let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                    let data = await res.json();
+                    if(data && data.record) {
+                        let rec = data.record;
+                        if(rec.clan_members) localStorage.setItem('clan_members', JSON.stringify(rec.clan_members));
+                        if(rec.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(rec.clan_applications));
+                        if(rec.clan_wars) localStorage.setItem('clan_wars', JSON.stringify(rec.clan_wars));
+                        if(rec.chat_messages) localStorage.setItem('chat_messages', JSON.stringify(rec.chat_messages));
+                        if(rec.chat_bans) localStorage.setItem('chat_bans', JSON.stringify(rec.chat_bans));
+                        localStorage.setItem('chat_locked', rec.chat_locked ? 'true' : 'false');
+                        if(rec.clan_notice) localStorage.setItem('clan_notice', rec.clan_notice);
+                    }
+                } catch(e) {}
+
                 localStorage.setItem('admin_logged', 'true');
                 localStorage.setItem('logged_role', 'admin');
                 showADash();
@@ -119,12 +156,11 @@
                 `;
             });
         }
-        function adminApp(i) {
+        async function adminApp(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            let newMemberName = apps[i].name;
             members.push({ 
-                name: newMemberName, 
+                name: apps[i].name, 
                 level: apps[i].level, 
                 rank: apps[i].rank, 
                 uid: apps[i].uid, 
@@ -137,15 +173,17 @@
             localStorage.setItem('clan_members', JSON.stringify(members));
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
+            await saveCloudData();
             alert("تایید شد!"); showADash();
         }
-        function adminRej(i) {
+        async function adminRej(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
+            await saveCloudData();
             alert("رد شد."); showADash();
         }
-        function saveMember() {
+        async function saveMember() {
             let name = document.getElementById('addName').value.trim();
             let username = document.getElementById('addUName').value.trim();
             let password = document.getElementById('addUPass').value.trim();
@@ -159,6 +197,103 @@
             let editIdx = parseInt(document.getElementById('editIndex').value);
 
             if(!name || !username) { alert("نام و یوزر اکانت سایت الزامی است."); return; }
+
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            if(editIdx === -1) {
+                members.push({ name, username, password, level, rank, legendCount, uid, role, multiResults, battleResults });
+            } else {
+                members[editIdx] = { name, username, password, level, rank, legendCount, uid, role, multiResults, battleResults };
+                document.getElementById('editIndex').value = -1;
+                document.getElementById('formTitle').innerText = "➕ افزودن ممبر جدید";
+            }
+            localStorage.setItem('clan_members', JSON.stringify(members));
+            await saveCloudData();
+            alert("با موفقیت در سرور ابری ذخیره شد!");
+            loadATable();
+            clearForm();
+        }
+        function loadATable() {
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            let tbody = document.getElementById('aTable');
+            tbody.innerHTML = '';
+            if(members.length === 0) { tbody.innerHTML = `<tr><td colspan="4">عضوی ثبت نشده است.</td></tr>`; return; }
+            members.forEach((m, i) => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${m.name}</td>
+                        <td>${m.username || '-'}</td>
+                        <td>${m.role}</td>
+                        <td>
+                            <button onclick="editM(${i})" class="btn" style="background:var(--gold-primary); color:#000; padding:3px 6px;">ویرایش</button>
+                            <button onclick="delM(${i})" class="btn" style="background:var(--danger-color); color:#fff; padding:3px 6px; margin-right:4px;">حذف</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+        function editM(i) {
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            let m = members[i];
+            document.getElementById('addName').value = m.name;
+            document.getElementById('addUName').value = m.username || '';
+            document.getElementById('addUPass').value = m.password || '';
+            document.getElementById('addLevel').value = m.level || '';
+            document.getElementById('addRank').value = m.rank || '';
+            document.getElementById('addLegend').value = m.legendCount || '';
+            document.getElementById('addUid').value = m.uid || '';
+            document.getElementById('addRole').value = m.role;
+            document.getElementById('multiRes').value = (m.multiResults || []).join(',');
+            document.getElementById('battleRes').value = (m.battleResults || []).join(',');
+            document.getElementById('editIndex').value = i;
+            document.getElementById('formTitle').innerText = "✏️ ویرایش ممبر: " + m.name;
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+        async function delM(i) {
+            if(confirm("آیا از حذف این عضو اطمینان دارید؟")) {
+                let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+                members.splice(i, 1);
+                localStorage.setItem('clan_members', JSON.stringify(members));
+                await saveCloudData();
+                loadATable();
+            }
+        }
+        function clearForm() {
+            document.getElementById('addName').value = '';
+            document.getElementById('addUName').value = '';
+            document.getElementById('addUPass').value = '';
+            document.getElementById('addLevel').value = '';
+            document.getElementById('addRank').value = '';
+            document.getElementById('addLegend').value = '';
+            document.getElementById('addUid').value = '';
+        }
+        async function toggleChat() {
+            let cur = localStorage.getItem('chat_locked') === 'true';
+            localStorage.setItem('chat_locked', !cur);
+            await saveCloudData();
+            alert(!cur ? "تالار گفتگو قفل شد!" : "تالار گفتگو باز شد!");
+        }
+        async function editNotice() {
+            let t = prompt("متن جدید اطلاعیه بالای سایت را وارد کنید:");
+            if(t) {
+                localStorage.setItem('clan_notice', t);
+                await saveCloudData();
+                alert("اطلاعیه آپدیت شد!");
+            }
+        }
+        function filterAdmin() {
+            let kw = document.getElementById('searchAdmin').value.toLowerCase();
+            let rows = document.getElementById('aTable').getElementsByTagName('tr');
+            for(let r of rows) {
+                r.style.display = r.innerText.toLowerCase().includes(kw) ? '' : 'none';
+            }
+        }
+        window.onload = function() {
+            if(localStorage.getItem('admin_logged') === 'true') showADash();
+        }
+    </script>
+</body>
+</html>
+است."); return; }
 
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
             if(editIdx === -1) {
