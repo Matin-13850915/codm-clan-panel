@@ -8,12 +8,12 @@
 </head>
 <body>
 
-    <!-- نوار اطلاع‌رسانی بالای صفحه -->
-    <div class="top-notice">
+    <!-- نوار اطلاع‌رسانی پویا (قابل ویرایش توسط ادمین/لیدر) -->
+    <div class="top-notice" id="topNoticeBar">
         📢 عضوگیری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
     </div>
 
-    <!-- هدر و ناوبری -->
+    <!-- هدر سایت -->
     <header>
         <div class="logo-area">
             <div class="clan-logo">ŁK¹</div>
@@ -24,14 +24,17 @@
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn active">🏠 خانه</a>
-            <a href="members.html" class="btn">👥 ممبرها و رنکینگ</a>
-            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
+            <a href="ranking.html" class="btn">📊 رتبه‌بندی</a>
+            <a href="wars.html" class="btn">⚔️ وارها</a>
+            <a href="chat.html" class="btn">💬 تالار گفتگو</a>
+            <a href="apply.html" class="btn">📝 ثبت‌نام تست</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین/لیدر</a>
         </div>
     </header>
 
-    <!-- محتوای اصلی -->
+    <!-- محتوای صفحه خانه -->
     <div class="main-container">
-        <div class="hero-card">
+        <div class="hero-card" id="homeHeroContent">
             <div class="server-status">
                 <span class="status-dot"></span>
                 پورتال رسمی کلن • ارتباط زنده با سرور
@@ -42,18 +45,17 @@
             <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
 
             <!-- کپی تگ کلن -->
-            <div class="copy-box">
+            <div class="copy-box" style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
-                    <div class="copy-label">کپی سریع تگ کلن</div>
-                    <div class="tag-value">ŁK¹ • INVICTUS</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن</div>
+                    <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">ŁK¹ •</div>
                 </div>
-                <button class="copy-btn" onclick="copyTag()">کپی تگ</button>
+                <button onclick="navigator.clipboard.writeText('ŁK¹'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
             </div>
 
-            <button class="btn-apply" onclick="alert('جهت تست عضویت به ربات یا پشتیبان کلن پیام دهید.')">⚔️ درخواست تست عضویت</button>
+            <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">⚔️ درخواست تست عضویت</a>
         </div>
 
-        <!-- کارت‌های پایین -->
         <div class="grid-cards">
             <div class="mini-card">
                 <h3>🏆 LEGENDARY</h3>
@@ -67,9 +69,12 @@
     </div>
 
     <script>
-        function copyTag() {
-            navigator.clipboard.writeText("ŁK¹");
-            alert("تگ کلن با موفقیت کپی شد!");
+        // بارگذاری اطلاعیه و متن خانه سفارشی اگر توسط ادمین ویرایش شده باشد
+        window.onload = function() {
+            let customNotice = localStorage.getItem('clan_notice');
+            if(customNotice) {
+                document.getElementById('topNoticeBar').innerText = customNotice;
+            }
         }
     </script>
 </body>
