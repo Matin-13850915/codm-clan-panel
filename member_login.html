@@ -40,17 +40,26 @@
         </div>
     </div>
     <script>
-        function memberLogin() {
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function memberLogin() {
             let u = document.getElementById('mUser').value.trim();
             let p = document.getElementById('mPass').value.trim();
-            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
-            let found = members.find(m => m.username === u && m.password === p);
-            if(found) {
-                localStorage.setItem('logged_member', found.name);
-                localStorage.setItem('logged_role', found.role === 'لیدر' ? 'leader' : 'member');
-                alert("ورود موفقیت‌آمیز بود!");
-                showDashboard(found.name);
-            } else { alert("نام کاربری یا رمز عبور اشتباه است!"); }
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                let members = (data.record && data.record.clan_members) ? data.record.clan_members : [];
+                let found = members.find(m => m.username === u && m.password === p);
+                if(found) {
+                    localStorage.setItem('logged_member', found.name);
+                    localStorage.setItem('logged_role', found.role === 'لیدر' ? 'leader' : 'member');
+                    alert("ورود موفقیت‌آمیز بود!");
+                    showDashboard(found.name);
+                } else { alert("نام کاربری یا رمز عبور اشتباه است!"); }
+            } catch(e) {
+                alert("خطا در اتصال به سرور ابری!");
+            }
         }
         function showDashboard(name) {
             document.getElementById('loginBox').style.display = 'none';
