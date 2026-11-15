@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <!-- هدر اصلی سایت (تم اصلی محفوظ) -->
+    <!-- هدر اصلی سایت -->
     <header class="main-header">
         <div class="announcement-bar">
             📢 عضویگری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
@@ -22,11 +22,10 @@
                 </div>
             </div>
             <nav class="nav-links">
-                <a href="#" class="active">🏠 خانه</a>
+                <a href="index.html" class="active">🏠 خانه</a>
                 <a href="#">⭐ رتبه‌بندی</a>
                 <a href="#">🎯 وارها و ایونت‌ها</a>
-                <a href="#">👥 پنل ادمین</a>
-                <a href="#">➕ ثبت‌نام تست</a>
+                <a href="admin.html" class="btn-login-nav">🔐 ورود به پنل ادمین / لیدر</a>
             </nav>
         </div>
     </header>
@@ -48,84 +47,7 @@
             </div>
             <button class="btn-gold">⚔️ درخواست تست عضویت</button>
         </section>
-
-        <!-- پنل مدیریت ادمین و تالار گفتگو (تم اصلی طلایی/مشکی) -->
-        <section class="admin-panel-section">
-            <div class="panel-header-bar">
-                <h2>🛡️ پنل مدیریت و تالار گفتگوی کلن</h2>
-                <button onclick="refreshData()" class="btn-refresh">🔄 به‌روزرسانی اطلاعات</button>
-            </div>
-
-            <!-- بخش مدیریت ممبرها -->
-            <div class="panel-card">
-                <h3>👥 مدیریت اعضا و ممبرها</h3>
-                <input type="text" id="searchMember" onkeyup="filterMembers()" placeholder="🔍 جستجوی نام ممبر..." class="search-input">
-
-                <div class="table-responsive">
-                    <table id="membersTable">
-                        <thead>
-                            <tr>
-                                <th>نام ممبر</th>
-                                <th>وضعیت</th>
-                                <th>عملیات (ویرایش، حذف، بن)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr data-id="1">
-                                <td>علی ŁK¹</td>
-                                <td><span id="status-1" style="color: #28a745;">فعال ✅</span></td>
-                                <td>
-                                    <button onclick="editMember(1)" class="btn-action btn-edit">ویرایش ✏️</button>
-                                    <button onclick="deleteMember(1)" class="btn-action btn-delete">حذف 🗑️</button>
-                                    <button id="banBtn-1" onclick="toggleBan(1)" class="btn-action btn-ban">بن ⛔</button>
-                                </td>
-                            </tr>
-                            <tr data-id="2">
-                                <td>رضا King</td>
-                                <td><span id="status-2" style="color: #28a745;">فعال ✅</span></td>
-                                <td>
-                                    <button onclick="editMember(2)" class="btn-action btn-edit">ویرایش ✏️</button>
-                                    <button onclick="deleteMember(2)" class="btn-action btn-delete">حذف 🗑️</button>
-                                    <button id="banBtn-2" onclick="toggleBan(2)" class="btn-action btn-ban">بن ⛔</button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- بخش تالار گفتگو و اطلاعیه‌ها -->
-            <div class="panel-card">
-                <h3>💬 تالار گفتگوی کلن و اطلاعیه‌ها</h3>
-
-                <!-- اطلاعیه قابل حذف توسط ادمین -->
-                <div id="announcementArea" class="announcement-box">
-                    <span>📢 <b>اطلاعیه لیدر:</b> لطفاً احترام همدیگر را نگه دارید و برای ارسال ایموجی از کیبورد گوشی استفاده کنید! 😊🔥</span>
-                    <button onclick="deleteAnnouncement()" class="btn-action btn-delete">حذف اطلاعیه ❌</button>
-                </div>
-
-                <!-- کادر پیام‌ها -->
-                <div class="chat-box" id="chatBox">
-                    <div class="chat-msg" id="msg-101">
-                        <span><b>علی ŁK¹:</b> بچه‌ها ساعت ۸ شب کاستوم داریم! 🎮🔥</span>
-                        <button onclick="deleteMessage('msg-101')" class="btn-action btn-delete">حذف پیام 🗑️</button>
-                    </div>
-                    <div class="chat-msg" id="msg-102">
-                        <span><b>رضا King:</b> پایه‌ام، بترکونیم 😎💪</span>
-                        <button onclick="deleteMessage('msg-102')" class="btn-action btn-delete">حذف پیام 🗑️</button>
-                    </div>
-                </div>
-
-                <!-- ارسال پیام با پشتیبانی ایموجی -->
-                <div class="chat-input-area">
-                    <input type="text" id="chatMessage" placeholder="پیام خود را بنویسید (کیبورد ایموجی فعال 😃)...">
-                    <button onclick="sendMessage()" class="btn-gold-sm">ارسال 🚀</button>
-                </div>
-            </div>
-        </section>
     </main>
 
-    <!-- اتصال فایل جاوااسکریپت -->
-    <script src="script.logics.js"></script>
 </body>
 </html>
