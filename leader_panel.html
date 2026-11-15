@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پنل لیدرها | ŁK¹ • INVICTUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title"><h1>پنل مدیریت لیدرها</h1><span>مدیریت تست‌ها و نظارت چت</span></div>
+        </div>
+        <div class="nav-buttons"><a href="index.html" class="btn">🏠 خانه</a></div>
+    </header>
+    <div class="main-container">
+        <div class="panel-card" id="leaderLoginBox">
+            <h2 class="hero-title" style="font-size:18px; text-align:center;">⚔️ ورود لیدر کلن</h2>
+            <div class="form-group"><label>نام کاربری لیدر</label><input type="text" id="lUser" class="form-control" placeholder="نام کاربری..."></div>
+            <div class="form-group"><label>رمز عبور</label><input type="password" id="lPass" class="form-control" placeholder="••••••"></div>
+            <button onclick="leaderLogin()" class="btn-submit">ورود به پنل لیدر</button>
+        </div>
+        <div class="panel-card" id="leaderDashboard" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h2 style="font-size:16px; color:var(--gold-primary);">⚔️ درخواست‌های تست عضویت</h2>
+                <button onclick="localStorage.removeItem('leader_logged'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
+            </div>
+            <div id="leaderAppsContainer" style="font-size:12px; color:var(--text-muted);"></div>
+        </div>
+    </div>
+    <script>
+        function leaderLogin() {
+            let u = document.getElementById('lUser').value.trim();
+            let p = document.getElementById('lPass').value.trim();
+            if(u === "leader" && p === "1234") {
+                localStorage.setItem('leader_logged', 'true');
+                document.getElementById('leaderLoginBox').style.display = 'none';
+                document.getElementById('leaderDashboard').style.display = 'block';
+                loadApps();
+            } else {
+                alert("اطلاعات ورود لیدر اشتباه است!");
+            }
+        }
+        function loadApps() {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            let box = document.getElementById('leaderAppsContainer');
+            box.innerHTML = '';
+            if(apps.length === 0) { box.innerHTML = "درخواستی وجود ندارد."; return; }
+            apps.forEach((a, i) => {
+                box.innerHTML += `
+                    <div style="background:rgba(0,0,0,0.3); padding:10px; border-radius:8px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                        <div><b>${a.name}</b> (UID: ${a.uid})<br>لول: ${a.level} | رنک: ${a.rank}</div>
+                        <div>
+                            <button onclick="approveApp(${i})" class="btn" style="background:var(--success-color); color:#fff; border:none;">تایید</button>
+                            <button onclick="rejectApp(${i})" class="btn" style="background:var(--danger-color); color:#fff; border:none; margin-right:5px;">رد</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        function approveApp(i) {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            members.push({ name: apps[i].name, level: apps[i].level, rank: apps[i].rank, uid: apps[i].uid, role: 'ممبر عادی', username: 'user_'+Math.floor(Math.random()*1000), password: '123' });
+            localStorage.setItem('clan_members', JSON.stringify(members));
+            apps.splice(i, 1);
+            localStorage.setItem('clan_applications', JSON.stringify(apps));
+            alert("تایید شد!");
+            loadApps();
+        }
+        function rejectApp(i) {
+            let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            apps.splice(i, 1);
+            localStorage.setItem('clan_applications', JSON.stringify(apps));
+            alert("رد شد.");
+            loadApps();
+        }
+        window.onload = function() {
+            if(localStorage.getItem('leader_logged') === 'true') {
+                document.getElementById('leaderLoginBox').style.display = 'none';
+                document.getElementById('leaderDashboard').style.display = 'block';
+                loadApps();
+            }
+        }
+    </script>
+</body>
+</html>
