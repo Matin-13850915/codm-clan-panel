@@ -1,0 +1,42 @@
+:root {
+    --bg-color: #0b0b0e;
+    --card-bg: #141419;
+    --gold-primary: #f3ba2f;
+    --gold-light: #ffdf7e;
+    --gold-dark: #b8860b;
+    --text-main: #ffffff;
+    --text-muted: #9ca3af;
+    --danger-color: #ef4444;
+    --success-color: #22c55e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: Tahoma, sans-serif; }
+body { background-color: var(--bg-color); color: var(--text-main); padding-bottom: 50px; }
+.top-notice { background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary)); color: #000; font-size: 13px; font-weight: bold; text-align: center; padding: 8px 10px; }
+header { background: var(--card-bg); border-bottom: 1px solid rgba(243, 186, 47, 0.2); padding: 10px; display: flex; flex-direction: column; gap: 10px; }
+.logo-area { display: flex; align-items: center; gap: 10px; width: 100%; justify-content: space-between; }
+.clan-logo { width: 40px; height: 40px; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: #000; font-size: 16px; box-shadow: 0 0 12px rgba(243, 186, 47, 0.3); }
+.clan-title h1 { font-size: 15px; color: var(--gold-primary); }
+.clan-title span { font-size: 10px; color: var(--text-muted); }
+.nav-buttons { display: flex; gap: 5px; flex-wrap: wrap; width: 100%; justify-content: center; }
+.nav-buttons .btn { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(243, 186, 47, 0.3); color: var(--text-main); padding: 5px 8px; border-radius: 6px; font-size: 11px; cursor: pointer; text-decoration: none; transition: 0.3s; display: inline-flex; align-items: center; gap: 4px; flex: 1 1 auto; justify-content: center; text-align: center; }
+.nav-buttons .btn:hover, .nav-buttons .btn.active { background: var(--gold-primary); color: #000; border-color: var(--gold-primary); }
+.nav-buttons .btn-admin { background: rgba(243, 186, 47, 0.15); border-color: var(--gold-primary); color: var(--gold-primary); }
+.main-container { max-width: 650px; margin: 20px auto; padding: 0 15px; }
+.panel-card { background: var(--card-bg); border: 1px solid rgba(243, 186, 47, 0.25); border-radius: 20px; padding: 25px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: 20px; }
+.server-status { display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(243, 186, 47, 0.3); padding: 6px 15px; border-radius: 20px; font-size: 12px; color: var(--text-muted); margin-bottom: 15px; }
+.status-dot { width: 8px; height: 8px; background-color: var(--success-color); border-radius: 50%; box-shadow: 0 0 8px var(--success-color); }
+.hero-title { font-size: 24px; color: var(--gold-primary); margin-bottom: 8px; font-weight: 900; }
+.hero-desc { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin-bottom: 20px; }
+.form-group { margin-bottom: 12px; text-align: right; }
+.form-group label { display: block; font-size: 12px; color: var(--gold-light); margin-bottom: 5px; }
+.form-control { width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(243, 186, 47, 0.3); border-radius: 8px; padding: 10px; color: var(--text-main); font-size: 13px; }
+.form-control:focus { border-color: var(--gold-primary); outline: none; }
+.btn-submit { width: 100%; background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark)); color: #000; font-weight: bold; padding: 12px; border-radius: 8px; border: none; font-size: 14px; cursor: pointer; transition: 0.3s; }
+.btn-submit:hover { opacity: 0.9; }
+.table-responsive { width: 100%; overflow-x: auto; margin-top: 15px; }
+.clan-table { width: 100%; border-collapse: collapse; font-size: 12px; text-align: center; }
+.clan-table th, .clan-table td { padding: 10px 8px; border-bottom: 1px solid rgba(243, 186, 47, 0.15); }
+.clan-table th { color: var(--gold-primary); background: rgba(243, 186, 47, 0.05); }
+.grid-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+.mini-card { background: var(--card-bg); border: 1px solid rgba(243, 186, 47, 0.2); border-radius: 15px; padding: 18px 15px; text-align: center; }
+            
