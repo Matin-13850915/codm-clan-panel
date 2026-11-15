@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رتبه‌بندی کلن | ŁK¹ • INVICTUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title"><h1>رتبه‌بندی اعضای کلن</h1><span>لیدربرد رسمی (امتیازات مسابقات)</span></div>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn">🏠 خانه</a>
+            <a href="ranking.html" class="btn active">📊 رتبه‌بندی</a>
+            <a href="wars.html" class="btn">⚔️ وارها</a>
+            <a href="chat.html" class="btn">💬 تالار گفتگو</a>
+            <a href="apply.html" class="btn">📝 ثبت‌نام تست</a>
+            <a href="member_login.html" class="btn">🔑 ورود ممبر</a>
+            <a href="leader_panel.html" class="btn">⚔️ پنل لیدر</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="panel-card">
+            <h2 class="hero-title" style="font-size: 18px;">🏆 لیدربرد و آمار کلن</h2>
+            <p class="hero-desc">فرمول امتیازدهی: هر برد ۳+ | مساوی/خروج ۰ | هر باخت ۱- (بر اساس ۱۰ بازی آخر مولتی و بتل)</p>
+            <div class="form-group"><input type="text" id="searchMember" class="form-control" placeholder="🔍 جستجوی بازیکن..." onkeyup="filterRanking()"></div>
+            <div class="table-responsive">
+                <table class="clan-table">
+                    <thead><tr><th>رتبه</th><th>نام و تگ</th><th>نقش</th><th>لول / رنک</th><th>امتیاز کل</th></tr></thead>
+                    <tbody id="rankingTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="playerModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:1000; justify-content:center; align-items:center;">
+        <div style="background:var(--card-bg); border:1px solid var(--gold-primary); padding:20px; border-radius:15px; width:90%; max-width:400px; text-align:right;">
+            <h3 id="modalName" style="color:var(--gold-primary); margin-bottom:10px;">جزئیات بازیکن</h3>
+            <div id="modalDetails" style="font-size:12px; line-height:1.8; color:var(--text-muted);"></div>
+            <button onclick="document.getElementById('playerModal').style.display='none'" class="btn-submit" style="margin-top:15px;">بستن</button>
+        </div>
+    </div>
+    <script>
+        window.onload = function() { loadRanking(); }
+        function loadRanking() {
+            let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
+            let tbody = document.getElementById('rankingTableBody');
+            tbody.innerHTML = '';
+            if(members.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" style="color:var(--text-muted);">هنوز بازیکنی ثبت نشده است.</td></tr>`;
+                return;
+            }
+            members.forEach(m => {
+                m.totalScore = calcPts(m.multiResults) + calcPts(m.battleResults);
+            });
+            members.sort((a, b) => b.totalScore - a.totalScore);
+            members.forEach((m, index) => {
+                let rankIcon = index === 0 ? '🥇' : (index === 1 ? '🥈' : (index === 2 ? '🥉' : index + 1));
+                tbody.innerHTML += `
+                    <tr style="cursor:pointer;" onclick='showDetails(${JSON.stringify(m)})'>
+                        <td>${rankIcon}</td>
+                        <td style="color:var(--gold-light); font-weight:bold;">${m.name}</td>
+                        <td>${m.role}</td>
+                        <td>${m.level || '-'} / ${m.rank || '-'}</td>
+                        <td style="color:var(--gold-primary); font-weight:bold;">${m.totalScore} امتیاز</td>
+                    </tr>
+                `;
+            });
+        }
+        function calcPts(results) {
+            if(!results) return 0;
+            let pts = 0;
+            results.forEach(r => {
+                if(r === 'win') pts += 3;
+                else if(r === 'lose') pts -= 1;
+            });
+            return pts;
+        }
+        function showDetails(m) {
+            let mw = (m.multiResults || []).filter(r=>r==='win').length;
+            let ml = (m.multiResults || []).filter(r=>r==='lose').length;
+            let md = (m.multiResults || []).filter(r=>r==='draw'||r==='quit').length;
+            let bw = (m.battleResults || []).filter(r=>r==='win').length;
+            let bl = (m.battleResults || []).filter(r=>r==='lose').length;
+            let bd = (m.battleResults || []).filter(r=>r==='draw'||r==='quit').length;
+
+            document.getElementById('modalName').innerText = m.name + ' (' + m.role + ')';
+            document.getElementById('modalDetails').innerHTML = `
+                🆔 یوآیدی: <b>${m.uid || 'ثبت نشده'}</b><br>
+                ⭐ لول: ${m.level || '-'} | رنک: ${m.rank || '-'}<br>
+                🎯 تعداد لجند: ${m.legendCount || '0'}<br>
+                <hr style="border-color:rgba(243,186,47,0.2); margin:8px 0;">
+                🎮 <b>۱۰ دست آخر مولتی:</b> برد: ${mw} | باخت: ${ml} | مساوی/خروج: ${md}<br>
+                🛡️ <b>۱۰ دست آخر بتل:</b> برد: ${bw} | باخت: ${bl} | مساوی/خروج: ${bd}
+            `;
+            document.getElementById('playerModal').style.display = 'flex';
+        }
+        function filterRanking() {
+            let kw = document.getElementById('searchMember').value.toLowerCase();
+            let rows = document.getElementById('rankingTableBody').getElementsByTagName('tr');
+            for(let r of rows) {
+                r.style.display = r.innerText.toLowerCase().includes(kw) ? '' : 'none';
+            }
+        }
+    </script>
+</body>
+</html>
