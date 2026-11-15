@@ -26,7 +26,7 @@
     </header>
     <div class="main-container">
         <div class="panel-card">
-            <div class="server-status"><span class="status-dot"></span>پورتال رسمی کلن • ارتباط زنده با سرور</div>
+            <div class="server-status"><span class="status-dot"></span>پورتال رسمی کلن • سرور ابری آنلاین</div>
             <h2 class="hero-title">ŁK¹ • INVICTUS</h2>
             <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
             <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
@@ -45,9 +45,28 @@
         </div>
     </div>
     <script>
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function loadCloudData(callback) {
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
+                    headers: { "X-Master-Key": API_KEY }
+                });
+                let data = await res.json();
+                if (data && data.record) {
+                    let rec = data.record;
+                    if(rec.clan_notice) localStorage.setItem('clan_notice', rec.clan_notice);
+                }
+            } catch(e) {}
+            if(callback) callback();
+        }
+
         window.onload = function() {
-            let n = localStorage.getItem('clan_notice');
-            if(n) document.getElementById('topNoticeBar').innerText = n;
+            loadCloudData(() => {
+                let n = localStorage.getItem('clan_notice');
+                if(n) document.getElementById('topNoticeBar').innerText = n;
+            });
         }
     </script>
 </body>
