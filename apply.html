@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>درخواست تست عضویت | łK¹・INVICTUS</title>
+    <title>درخواست تست عضویت | IK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="logo-area">
-            <div class="clan-logo">łK¹</div>
-            <div class="clan-title"><h1>درخواست تست عضویت</h1><span>پیوستن به ارتش łK¹</span></div>
+            <div class="clan-logo">IK¹</div>
+            <div class="clan-title"><h1>درخواست تست عضویت</h1><span>پیوستن به ارتش IK¹</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn">🏠 خانه</a>
@@ -27,11 +27,11 @@
         <div class="panel-card">
             <h2 class="hero-title" style="font-size: 18px;">📝 فرم ثبت‌نام تست</h2>
             <p class="hero-desc">اطلاعات اکانت خود را وارد کنید تا مستقیماً به بخش اعلان تست در پنل لیدر و ادمین ارسال شود.</p>
-            <div class="form-group"><label>نام در گیم (با تگ)</label><input type="text" id="applyName" class="form-control" placeholder="ŁK¹ • Player"></div>
+            <div class="form-group"><label>نام در گیم (با تگ)</label><input type="text" id="applyName" class="form-control" placeholder="IK¹ • Player"></div>
             <div class="form-group"><label>کالاف یوآیدی (UID)</label><input type="text" id="applyUid" class="form-control" placeholder="12345678"></div>
             <div class="grid-cards" style="margin-bottom:12px;">
                 <div class="form-group" style="margin-bottom:0;"><label>لول</label><input type="number" id="applyLevel" class="form-control" placeholder="150"></div>
-                <div class="form-group" style="margin-bottom:0;"><label>آیدی تلگرام یا روبیکا</label><input type="text" id="applyRank" class="form-control" placeholder="@username"></div>
+                <div class="form-group" style="margin-bottom:0;"><label>رنک مولتی/بتل</label><input type="text" id="applyRank" class="form-control" placeholder="Legendary"></div>
             </div>
             <button onclick="submitApp()" class="btn-submit">ارسال درخواست تست</button>
         </div>
@@ -62,7 +62,7 @@
                     body: JSON.stringify(record)
                 });
 
-                alert("درخواست شما با موفقیت ثبت و به پنل لیدر/ادمین ارسال شد!منتظر پیام ما باشید");
+                alert("درخواست شما با موفقیت ثبت و به سرور ابری ارسال شد!");
                 window.location.href = 'index.html';
             } catch(e) {
                 alert("خطا در ارسال درخواست به سرور ابری!");
