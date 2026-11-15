@@ -44,13 +44,48 @@
         </div>
     </div>
     <script>
+        const BIN_ID = "6af9c49eac6210605a89891b";
+        const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
+
+        async function loadCloudData(callback) {
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                if (data && data.record && data.record.clan_wars) {
+                    localStorage.setItem('clan_wars', JSON.stringify(data.record.clan_wars));
+                }
+            } catch(e) {}
+            if(callback) callback();
+        }
+
+        async function saveCloudData() {
+            try {
+                let payload = {
+                    clan_members: JSON.parse(localStorage.getItem('clan_members') || '[]'),
+                    clan_applications: JSON.parse(localStorage.getItem('clan_applications') || '[]'),
+                    clan_wars: JSON.parse(localStorage.getItem('clan_wars') || '[]'),
+                    chat_messages: JSON.parse(localStorage.getItem('chat_messages') || '[]'),
+                    chat_bans: JSON.parse(localStorage.getItem('chat_bans') || '{}'),
+                    chat_locked: localStorage.getItem('chat_locked') === 'true',
+                    clan_notice: localStorage.getItem('clan_notice') || ''
+                };
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
+                    body: JSON.stringify(payload)
+                });
+            } catch(e) {}
+        }
+
         window.onload = function() {
-            loadWars();
-            let role = localStorage.getItem('logged_role');
-            if(role === 'admin' || role === 'leader') {
-                document.getElementById('adminWarBox').style.display = 'block';
-                document.getElementById('thAction').style.display = '';
-            }
+            loadCloudData(() => {
+                loadWars();
+                let role = localStorage.getItem('logged_role');
+                if(role === 'admin' || role === 'leader') {
+                    document.getElementById('adminWarBox').style.display = 'block';
+                    document.getElementById('thAction').style.display = '';
+                }
+            });
         }
         function loadWars() {
             let wars = JSON.parse(localStorage.getItem('clan_wars') || '[{"date":"1404/09/20","enemy":"PERSIAN LEGEND","result":"برد (Win)","desc":"اختلاف اسکور بالا"}]');
@@ -70,7 +105,7 @@
                 `;
             });
         }
-        function addWar() {
+        async function addWar() {
             let date = document.getElementById('warDate').value.trim();
             let enemy = document.getElementById('warEnemy').value.trim();
             let result = document.getElementById('warResult').value;
@@ -79,14 +114,16 @@
             let wars = JSON.parse(localStorage.getItem('clan_wars') || '[]');
             wars.push({ date, enemy, result, desc });
             localStorage.setItem('clan_wars', JSON.stringify(wars));
-            alert("وار ثبت شد!");
+            await saveCloudData();
+            alert("وار ثبت شد و روی سرور ابری قرار گرفت!");
             loadWars();
         }
-        function deleteWar(i) {
+        async function deleteWar(i) {
             if(confirm("حذف شود؟")) {
                 let wars = JSON.parse(localStorage.getItem('clan_wars') || '[]');
                 wars.splice(i, 1);
                 localStorage.setItem('clan_wars', JSON.stringify(wars));
+                await saveCloudData();
                 loadWars();
             }
         }
