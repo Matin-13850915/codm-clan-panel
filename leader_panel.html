@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل لیدرها | łK¹ • INVICTUS</title>
+    <title>پنل لیدرها | IK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <div class="logo-area">
-            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-logo">IK¹</div>
             <div class="clan-title"><h1>پنل مدیریت لیدرها</h1><span>اعلان تست‌ها و بن چت</span></div>
         </div>
         <div class="nav-buttons">
@@ -92,9 +92,18 @@
                 alert("خطا در اتصال به سرور ابری!");
             }
         }
+
         async function showLDash() {
             document.getElementById('lLoginBox').style.display = 'none';
             document.getElementById('lDash').style.display = 'block';
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                if(data && data.record && data.record.clan_applications) {
+                    localStorage.setItem('clan_applications', JSON.stringify(data.record.clan_applications));
+                }
+            } catch(e) {}
+
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             let box = document.getElementById('lApps');
             box.innerHTML = '';
@@ -111,6 +120,7 @@
                 `;
             });
         }
+
         async function apApp(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             let members = JSON.parse(localStorage.getItem('clan_members') || '[]');
@@ -131,6 +141,7 @@
             await saveCloudData();
             alert("تایید شد و کاربر به کلن اضافه گردید!"); showLDash();
         }
+
         async function reApp(i) {
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             apps.splice(i, 1);
@@ -138,6 +149,7 @@
             await saveCloudData();
             alert("درخواست رد شد."); showLDash();
         }
+
         async function banMemberChat(mins) {
             let uname = document.getElementById('banMemberUser').value.trim();
             if(!uname) { alert("نام ممبر را وارد کنید."); return; }
@@ -147,6 +159,7 @@
             await saveCloudData();
             alert("کاربر " + uname + " بن شد.");
         }
+
         async function unbanMemberChat() {
             let uname = document.getElementById('banMemberUser').value.trim();
             let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
@@ -157,6 +170,7 @@
                 alert("رفع بن شد.");
             } else { alert("این کاربر بن نبود."); }
         }
+
         window.onload = function() {
             if(localStorage.getItem('leader_logged') === 'true') showLDash();
         }
