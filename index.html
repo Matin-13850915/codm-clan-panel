@@ -3,88 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ŁK¹ • INVICTUS - Elite Codm Clan</title>
+    <title>ŁK¹ • INVICTUS | کلن رسمی کالاف دیوتی موبایل</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="main-header">
-        <div class="announcement-bar">
-            📢 عضویگری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
-        </div>
-        <div class="nav-container">
-            <div class="logo-area">
-                <span class="clan-logo-badge">ŁK¹</span>
-                <div class="clan-title">
-                    <h2>ŁK¹ • INVICTUS</h2>
-                    <p>ELITE CODM CLAN</p>
-                </div>
+    <!-- نوار اطلاع‌رسانی بالای صفحه -->
+    <div class="top-notice">
+        📢 عضوگیری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
+    </div>
+
+    <!-- هدر و ناوبری -->
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title">
+                <h1>ŁK¹ • INVICTUS</h1>
+                <span>ELITE CODM CLAN</span>
             </div>
-            <nav class="nav-links">
-                <a href="index.html" class="active">🏠 خانه</a>
-                <a href="#">⭐ رتبه‌بندی</a>
-                <a href="#">🎯 وارها و ایونت‌ها</a>
-            </nav>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn active">🏠 خانه</a>
+            <a href="members.html" class="btn">👥 ممبرها و رنکینگ</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
         </div>
     </header>
 
-    <main class="container">
-        <section class="hero-section">
-            <div class="status-indicator"><span class="dot"></span> پورتال رسمی کلن</div>
-            <h1>ŁK¹ • INVICTUS</h1>
-            <h2>شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</h2>
-            <p>تجمع بازیکنان نخبه و رقابتی. از طریق درگاه‌های زیر با آیدی و رمز وارد پنل خود شوید.</p>
-            
-            <div class="clan-tag-box">
-                <span>کپی سریع تگ کلن</span>
-                <code>ŁK¹ • </code>
-                <button class="btn-copy" onclick="alert('تگ کلن کپی شد!')">📋</button>
+    <!-- محتوای اصلی -->
+    <div class="main-container">
+        <div class="hero-card">
+            <div class="server-status">
+                <span class="status-dot"></span>
+                پورتال رسمی کلن • ارتباط زنده با سرور
             </div>
 
-            <!-- درگاه‌های ورود جداگانه -->
-            <div class="login-options-grid">
-                <button onclick="openModal('memberLoginModal')" class="btn-gold-outline">👤 ورود ممبر کلن</button>
-                <button onclick="openModal('leaderLoginModal')" class="btn-gold-dark">⭐ ورود لیدر کلن</button>
-                <button onclick="openModal('adminLoginModal')" class="btn-gold">🛡️ ورود ادمین کلن</button>
-                <button onclick="alert('فرم درخواست تست عضویت باز شد.')" class="btn-gold-outline">⚔️ درخواست تست</button>
+            <h2 class="hero-title">ŁK¹ • INVICTUS</h2>
+            <div class="hero-subtitle">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
+            <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
+
+            <!-- کپی تگ کلن -->
+            <div class="copy-box">
+                <div>
+                    <div class="copy-label">کپی سریع تگ کلن</div>
+                    <div class="tag-value">ŁK¹ • INVICTUS</div>
+                </div>
+                <button class="copy-btn" onclick="copyTag()">کپی تگ</button>
             </div>
-        </section>
-    </main>
 
-    <!-- مودال ورود ممبر -->
-    <div id="memberLoginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('memberLoginModal')">&times;</span>
-            <h3 style="color: #ffb703;">👤 ورود ممبر کلن</h3>
-            <input type="text" id="memberUser" placeholder="آیدی ممبر..." class="search-input" style="margin-bottom: 10px;">
-            <input type="password" id="memberPass" placeholder="رمز عبور..." class="search-input" style="margin-bottom: 15px;">
-            <button onclick="loginPortal('member')" class="btn-gold" style="width:100%;">ورود</button>
+            <button class="btn-apply" onclick="alert('جهت تست عضویت به ربات یا پشتیبان کلن پیام دهید.')">⚔️ درخواست تست عضویت</button>
+        </div>
+
+        <!-- کارت‌های پایین -->
+        <div class="grid-cards">
+            <div class="mini-card">
+                <h3>🏆 LEGENDARY</h3>
+                <p>رنگ و سطح کلن</p>
+            </div>
+            <div class="mini-card">
+                <h3>👥 اعضای فعال</h3>
+                <p>تست‌شده و حرفه‌ای</p>
+            </div>
         </div>
     </div>
 
-    <!-- مودال ورود لیدر -->
-    <div id="leaderLoginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('leaderLoginModal')">&times;</span>
-            <h3 style="color: #ffb703;">⭐ ورود لیدر کلن</h3>
-            <input type="text" id="leaderUser" placeholder="آیدی لیدر..." class="search-input" style="margin-bottom: 10px;">
-            <input type="password" id="leaderPass" placeholder="رمز عبور لیدر..." class="search-input" style="margin-bottom: 15px;">
-            <button onclick="loginPortal('leader')" class="btn-gold" style="width:100%;">ورود به پنل لیدر</button>
-        </div>
-    </div>
-
-    <!-- مودال ورود ادمین -->
-    <div id="adminLoginModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeModal('adminLoginModal')">&times;</span>
-            <h3 style="color: #ffb703;">🛡️ ورود ادمین کلن</h3>
-            <input type="text" id="adminUser" placeholder="آیدی (Vexor)..." class="search-input" style="margin-bottom: 10px;">
-            <input type="password" id="adminPass" placeholder="رمز عبور (matin2006)..." class="search-input" style="margin-bottom: 15px;">
-            <button onclick="loginPortal('admin')" class="btn-gold" style="width:100%;">ورود به پنل ادمین</button>
-        </div>
-    </div>
-
-    <script src="script.logics.js"></script>
+    <script>
+        function copyTag() {
+            navigator.clipboard.writeText("ŁK¹");
+            alert("تگ کلن با موفقیت کپی شد!");
+        }
+    </script>
 </body>
-    </html>
-    
+</html>
