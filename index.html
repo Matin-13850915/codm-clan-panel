@@ -46,5 +46,45 @@
                 <button onclick="openModal('memberLoginModal')" class="btn-gold-outline">👤 ورود ممبر کلن</button>
                 <button onclick="openModal('leaderLoginModal')" class="btn-gold-dark">⭐ ورود لیدر کلن</button>
                 <button onclick="openModal('adminLoginModal')" class="btn-gold">🛡️ ورود ادمین کلن</button>
-                <button onclick="alert('فرم درخواست تست عضویت
-                    
+                <button onclick="alert('فرم درخواست تست عضویت باز شد.')" class="btn-gold-outline">⚔️ درخواست تست</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- مودال ورود ممبر -->
+    <div id="memberLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('memberLoginModal')">&times;</span>
+            <h3 style="color: #ffb703;">👤 ورود ممبر کلن</h3>
+            <input type="text" id="memberUser" placeholder="آیدی ممبر..." class="search-input" style="margin-bottom: 10px;">
+            <input type="password" id="memberPass" placeholder="رمز عبور..." class="search-input" style="margin-bottom: 15px;">
+            <button onclick="loginPortal('member')" class="btn-gold" style="width:100%;">ورود</button>
+        </div>
+    </div>
+
+    <!-- مودال ورود لیدر -->
+    <div id="leaderLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('leaderLoginModal')">&times;</span>
+            <h3 style="color: #ffb703;">⭐ ورود لیدر کلن</h3>
+            <input type="text" id="leaderUser" placeholder="آیدی لیدر..." class="search-input" style="margin-bottom: 10px;">
+            <input type="password" id="leaderPass" placeholder="رمز عبور لیدر..." class="search-input" style="margin-bottom: 15px;">
+            <button onclick="loginPortal('leader')" class="btn-gold" style="width:100%;">ورود به پنل لیدر</button>
+        </div>
+    </div>
+
+    <!-- مودال ورود ادمین -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('adminLoginModal')">&times;</span>
+            <h3 style="color: #ffb703;">🛡️ ورود ادمین کلن</h3>
+            <input type="text" id="adminUser" placeholder="آیدی (Vexor)..." class="search-input" style="margin-bottom: 10px;">
+            <input type="password" id="adminPass" placeholder="رمز عبور (matin2006)..." class="search-input" style="margin-bottom: 15px;">
+            <button onclick="loginPortal('admin')" class="btn-gold" style="width:100%;">ورود به پنل ادمین</button>
+        </div>
+    </div>
+
+    <script src="script.logics.js"></script>
+</body>
+    </html>
+    
