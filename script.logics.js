@@ -1,22 +1,30 @@
-// ۱. بررسی رمز عبور ورود ادمین / لیدر
+// باز و بسته کردن مودال‌های صفحه اصلی
+function openModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+// بررسی لاگین ادمین و لیدر
 function checkLogin() {
     let pass = document.getElementById('adminPassword').value;
-    if (pass === "admin" || pass === "1234") { // رمز عبور قابل تغییر
+    if (pass === "admin" || pass === "1234") {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('adminPanelContent').style.display = 'block';
-        alert("✅ با موفقیت به پنل مدیریت وارد شدید!");
+        alert("✅ ورود موفقیت‌آمیز به پنل لیدر/ادمین!");
     } else {
-        alert("❌ رمز عبور اشتباه است! (رمز پیش‌فرض: admin)");
+        alert("❌ رمز عبور اشتباه است!");
     }
 }
 
-// ۲. رفرش اطلاعات صفحه
+// رفرش اطلاعات
 function refreshData() {
-    alert("✨ اطلاعات پنل و تالار گفتگو با موفقیت به‌روزرسانی شد!");
+    alert("✨ اطلاعات با موفقیت به‌روزرسانی شد!");
     location.reload();
 }
 
-// ۳. جستجوی زنده اعضا در جدول
+// جستجوی ممبرها
 function filterMembers() {
     let input = document.getElementById('searchMember');
     let filter = input.value.toLowerCase();
@@ -32,41 +40,41 @@ function filterMembers() {
     }
 }
 
-// ۴. ویرایش ممبر
+// ویرایش ممبر
 function editMember(id) {
     let row = document.querySelector(`tr[data-id='${id}']`);
     let nameCell = row.getElementsByTagName('td')[0];
-    let newName = prompt("نام جدید ممبر را وارد کنید:", nameCell.textContent);
+    let newName = prompt("نام جدید ممبر:", nameCell.textContent);
     if (newName && newName.trim() !== "") {
         nameCell.textContent = newName.trim();
-        alert("✅ نام ممبر با موفقیت ویرایش شد.");
+        alert("✅ ویرایش شد.");
     }
 }
 
-// ۵. حذف ممبر از جدول
+// حذف ممبر
 function deleteMember(id) {
-    if (confirm("⚠️ آیا از حذف این ممبر اطمینان دارید؟")) {
+    if (confirm("آیا از حذف این ممبر مطمئن هستید؟")) {
         document.querySelector(`tr[data-id='${id}']`).remove();
-        alert("🗑️ ممبر حذف شد.");
+        alert("🗑️ حذف شد.");
     }
 }
 
-// ۶. سیستم بن کردن با مدت زمان دلخواه و رفع بن
+// بن و رفع بن
 function toggleBan(id) {
     let btn = document.getElementById(`banBtn-${id}`);
     let statusSpan = document.getElementById(`status-${id}`);
 
     if (btn.classList.contains('btn-ban')) {
-        let duration = prompt("مدت زمان بن کاربر را وارد کنید (مثلاً: ۲۴ ساعت، ۷ روز یا دائمی):", "۲۴ ساعت");
+        let duration = prompt("مدت زمان بن (مثلاً ۲۴ ساعت یا دائمی):", "۲۴ ساعت");
         if (duration) {
             btn.textContent = "رفع بن 🔓";
             btn.className = "btn-action btn-unban";
             statusSpan.textContent = "بن شده ⛔ (" + duration + ")";
             statusSpan.style.color = "#dc3545";
-            alert("🚫 کاربر به مدت (" + duration + ") از تالار گفتگو بن شد.");
+            alert("🚫 کاربر بن شد.");
         }
     } else {
-        if (confirm("🔓 آیا می‌خواهید کاربر را رفع بن کنید؟")) {
+        if (confirm("رفع بن کاربر؟")) {
             btn.textContent = "بن ⛔";
             btn.className = "btn-action btn-ban";
             statusSpan.textContent = "فعال ✅";
@@ -76,23 +84,21 @@ function toggleBan(id) {
     }
 }
 
-// ۷. حذف اطلاعیه توسط ادمین/لیدر
+// حذف اطلاعیه
 function deleteAnnouncement() {
-    if (confirm("❌ اطلاعیه حذف شود؟")) {
+    if (confirm("اطلاعیه حذف شود؟")) {
         document.getElementById('announcementArea').style.display = 'none';
-        alert("اطلاعیه برداشته شد.");
     }
 }
 
-// ۸. حذف پیام در تالار گفتگو توسط ادمین/لیدر
+// حذف پیام چت
 function deleteMessage(msgId) {
-    if (confirm("🗑️ پیام توسط ادمین حذف شود؟")) {
+    if (confirm("پیام حذف شود؟")) {
         document.getElementById(msgId).remove();
-        alert("پیام مورد نظر پاک شد.");
     }
 }
 
-// ۹. ارسال پیام با پشتیبانی کامل از ایموجی‌های کیبورد
+// ارسال پیام با ایموجی کیبورد
 function sendMessage() {
     let input = document.getElementById('chatMessage');
     let text = input.value.trim();
@@ -104,14 +110,13 @@ function sendMessage() {
     let msgDiv = document.createElement('div');
     msgDiv.className = 'chat-msg';
     msgDiv.id = msgId;
-    msgDiv.innerHTML = `<span><b>مدیر/عضو:</b> ${escapeHtml(text)}</span> <button onclick="deleteMessage('${msgId}')" class="btn-action btn-delete">حذف پیام 🗑️</button>`;
+    msgDiv.innerHTML = `<span><b>مدیر:</b> ${escapeHtml(text)}</span> <button onclick="deleteMessage('${msgId}')" class="btn-action btn-delete">حذف 🗑️</button>`;
 
     chatBox.appendChild(msgDiv);
     input.value = "";
     chatBox.scrollTop = chatBox.scrollHeight;
 }
 
-// تابع امنیتی برای جلوگیری از تگ‌های اضافی
 function escapeHtml(text) {
     return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
