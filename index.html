@@ -8,7 +8,6 @@
 </head>
 <body>
 
-    <!-- هدر اصلی سایت -->
     <header class="main-header">
         <div class="announcement-bar">
             📢 عضویگری فصل جدید کلن ŁK¹ • INVICTUS با شرایط ویژه آغاز شد!
@@ -25,29 +24,42 @@
                 <a href="index.html" class="active">🏠 خانه</a>
                 <a href="#">⭐ رتبه‌بندی</a>
                 <a href="#">🎯 وارها و ایونت‌ها</a>
-                <a href="admin.html" class="btn-login-nav">🔐 ورود به پنل ادمین / لیدر</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <!-- بنر خوش آمدگویی -->
         <section class="hero-section">
-            <div class="status-indicator">
-                <span class="dot"></span> پورتال رسمی کلن • ارتباط زنده با سرور
-            </div>
+            <div class="status-indicator"><span class="dot"></span> پورتال رسمی کلن</div>
             <h1>ŁK¹ • INVICTUS</h1>
             <h2>شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</h2>
-            <p>تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
+            <p>تجمع بازیکنان نخبه و رقابتی. از طریق دکمه‌های زیر وارد پنل خود شوید یا درخواست تست دهید.</p>
             
             <div class="clan-tag-box">
                 <span>کپی سریع تگ کلن</span>
                 <code>ŁK¹ • </code>
                 <button class="btn-copy" onclick="alert('تگ کلن کپی شد!')">📋</button>
             </div>
-            <button class="btn-gold">⚔️ درخواست تست عضویت</button>
+
+            <!-- بخش درگاه‌های ورود و تست (سبک و مرتب) -->
+            <div class="login-options-grid">
+                <button onclick="openModal('memberLoginModal')" class="btn-gold-outline">👤 ورود ممبر کلن</button>
+                <button onclick="location.href='admin.html'" class="btn-gold">🛡️ ورود لیدر و ادمین</button>
+                <button onclick="alert('فرم درخواست تست عضویت باز شد.')" class="btn-gold-dark">⚔️ درخواست تست</button>
+            </div>
         </section>
     </main>
 
+    <!-- مودال ساده ورود ممبر کلن -->
+    <div id="memberLoginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('memberLoginModal')">&times;</span>
+            <h3 style="color: #ffb703;">👤 ورود اعضای کلن</h3>
+            <input type="text" placeholder="شناسه یا نام کاربری..." class="search-input" style="margin-bottom: 10px;">
+            <button onclick="alert('خوش آمدید ممبر عزیز!')" class="btn-gold" style="width:100%;">ورود به تالار ممبرها</button>
+        </div>
+    </div>
+
+    <script src="script.logics.js"></script>
 </body>
 </html>
