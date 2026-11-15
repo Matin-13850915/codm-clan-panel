@@ -39,4 +39,4 @@ header { background: var(--card-bg); border-bottom: 1px solid rgba(243, 186, 47,
 .clan-table th { color: var(--gold-primary); background: rgba(243, 186, 47, 0.05); }
 .grid-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 .mini-card { background: var(--card-bg); border: 1px solid rgba(243, 186, 47, 0.2); border-radius: 15px; padding: 18px 15px; text-align: center; }
-            
+                                                       
