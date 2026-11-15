@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تالار گفتگو | łK¹ • INVICTUS</title>
+    <title>تالار گفتگو | IK¹ • INVICTUS</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .chat-box { background: rgba(0,0,0,0.4); border: 1px solid rgba(243,186,47,0.2); border-radius: 12px; height: 320px; overflow-y: auto; padding: 15px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
@@ -14,7 +14,7 @@
 <body>
     <header>
         <div class="logo-area">
-            <div class="clan-logo">łK¹</div>
+            <div class="clan-logo">IK¹</div>
             <div class="clan-title"><h1>تالار گفتگو</h1><span>ارتباط زنده اعضا</span></div>
         </div>
         <div class="nav-buttons">
@@ -50,7 +50,7 @@
         const BIN_ID = "6af9c49eac6210605a89891b";
         const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
 
-        async function loadCloudData(callback) {
+        async function loadChatFromCloud() {
             try {
                 let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
                 let data = await res.json();
@@ -61,7 +61,7 @@
                     localStorage.setItem('chat_locked', rec.chat_locked ? 'true' : 'false');
                 }
             } catch(e) {}
-            if(callback) callback();
+            initChatPage();
         }
 
         async function saveCloudData() {
@@ -83,40 +83,43 @@
             } catch(e) {}
         }
 
-        window.onload = function() {
-            loadCloudData(() => {
-                let loggedMember = localStorage.getItem('logged_member');
-                let role = localStorage.getItem('logged_role');
-                let locked = localStorage.getItem('chat_locked') === 'true';
-                
-                let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
-                let isBanned = false;
-                if(loggedMember && banList[loggedMember]) {
-                    if(new Date().getTime() < banList[loggedMember]) {
-                        isBanned = true;
-                    } else {
-                        delete banList[loggedMember];
-                        localStorage.setItem('chat_bans', JSON.stringify(banList));
-                    }
+        function initChatPage() {
+            let loggedMember = localStorage.getItem('logged_member');
+            let role = localStorage.getItem('logged_role');
+            let locked = localStorage.getItem('chat_locked') === 'true';
+            
+            let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
+            let isBanned = false;
+            if(loggedMember && banList[loggedMember]) {
+                if(new Date().getTime() < banList[loggedMember]) {
+                    isBanned = true;
+                } else {
+                    delete banList[loggedMember];
+                    localStorage.setItem('chat_bans', JSON.stringify(banList));
                 }
+            }
 
-                if(locked && role !== 'admin' && role !== 'leader') {
-                    document.getElementById('chatStatus').innerText = "وضعیت: قفل است 🔒";
-                    document.getElementById('chatStatus').style.color = "var(--danger-color)";
-                    document.getElementById('loginNotice').innerText = "🔒 تالار گفتگو توسط ادمین قفل شده است.";
-                    document.getElementById('loginNotice').style.display = 'block';
-                } else if(isBanned) {
-                    document.getElementById('chatStatus').innerText = "وضعیت: بن شده‌اید 🚫";
-                    document.getElementById('chatStatus').style.color = "var(--danger-color)";
-                    document.getElementById('loginNotice').innerText = "🚫 شما توسط لیدر از چت بن شده‌اید.";
-                    document.getElementById('loginNotice').style.display = 'block';
-                } else if(loggedMember || role) {
-                    document.getElementById('chatFormArea').style.display = 'block';
-                    document.getElementById('loginNotice').style.display = 'none';
-                }
-                loadChat();
-            });
+            if(locked && role !== 'admin' && role !== 'leader') {
+                document.getElementById('chatStatus').innerText = "وضعیت: قفل است 🔒";
+                document.getElementById('chatStatus').style.color = "var(--danger-color)";
+                document.getElementById('loginNotice').innerText = "🔒 تالار گفتگو توسط ادمین قفل شده است.";
+                document.getElementById('loginNotice').style.display = 'block';
+            } else if(isBanned) {
+                document.getElementById('chatStatus').innerText = "وضعیت: بن شده‌اید 🚫";
+                document.getElementById('chatStatus').style.color = "var(--danger-color)";
+                document.getElementById('loginNotice').innerText = "🚫 شما توسط لیدر از چت بن شده‌اید.";
+                document.getElementById('loginNotice').style.display = 'block';
+            } else if(loggedMember || role) {
+                document.getElementById('chatFormArea').style.display = 'block';
+                document.getElementById('loginNotice').style.display = 'none';
+            }
+            loadChat();
         }
+
+        window.onload = function() {
+            loadChatFromCloud();
+        }
+
         function loadChat() {
             let msgs = JSON.parse(localStorage.getItem('chat_messages') || '[{"sender":"System", "text":"به تالار گفتگو خوش آمدید."}]');
             let box = document.getElementById('chatContainer');
@@ -136,6 +139,7 @@
             });
             box.scrollTop = box.scrollHeight;
         }
+
         async function sendMsg() {
             let sender = localStorage.getItem('logged_member') || localStorage.getItem('logged_role') || 'عضو';
             let text = document.getElementById('msgText').value.trim();
@@ -147,6 +151,7 @@
             await saveCloudData();
             loadChat();
         }
+
         async function deleteMsg(idx) {
             if(confirm("پیام حذف شود؟")) {
                 let msgs = JSON.parse(localStorage.getItem('chat_messages') || '[]');
