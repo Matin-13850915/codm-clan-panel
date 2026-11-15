@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل ادمین و لیدر • ŁK¹</title>
+    <title>پنل مدیریت • ŁK¹</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -13,73 +13,65 @@
             <div class="logo-area">
                 <span class="clan-logo-badge">ŁK¹</span>
                 <div class="clan-title">
-                    <h2>پنل مدیریت لیدر و ادمین</h2>
+                    <h2 id="panelTitle">پنل مدیریت کلن</h2>
+                    <p id="panelRoleSub">در حال بررسی دسترسی...</p>
                 </div>
             </div>
             <nav class="nav-links">
-                <a href="index.html">⬅️ بازگشت به خانه</a>
+                <a href="index.html">🚪 خروج / بازگشت به خانه</a>
             </nav>
         </div>
     </header>
 
     <main class="container">
-        <!-- فرم لاگین ادمین -->
-        <div id="loginSection" class="panel-card" style="max-width: 400px; margin: 40px auto; text-align: center;">
-            <h3 style="color: #ffb703;">🔐 احراز هویت لیدر / ادمین</h3>
-            <input type="password" id="adminPassword" placeholder="رمز عبور (پیش‌فرض: admin)..." class="search-input" style="margin-bottom: 15px;">
-            <button onclick="checkLogin()" class="btn-gold" style="width: 100%;">ورود به پنل</button>
-        </div>
-
-        <!-- محتوای پنل مدیریت پس از لاگین -->
-        <div id="adminPanelContent" style="display: none;">
+        <div id="adminPanelContent">
             <div class="panel-header-bar">
-                <h2>🛡️ ابزارهای مدیریتی</h2>
+                <h2>🛡️ ابزارهای مدیریت و تالار گفتگو</h2>
                 <button onclick="refreshData()" class="btn-refresh">🔄 به‌روزرسانی اطلاعات</button>
             </div>
 
-            <!-- سرچ و مدیریت ممبرها -->
+            <!-- مدیریت اعضا و ویرایش آیدی و رمز -->
             <div class="panel-card">
-                <h3>👥 مدیریت ممبرها</h3>
+                <h3>👥 مدیریت اعضا، آیدی و رمز عبور</h3>
                 <input type="text" id="searchMember" onkeyup="filterMembers()" placeholder="🔍 جستجوی ممبر..." class="search-input">
                 <div class="table-responsive">
                     <table id="membersTable">
                         <thead>
                             <tr>
-                                <th>نام ممبر</th>
+                                <th>آیدی / نام</th>
+                                <th>نقش</th>
                                 <th>وضعیت</th>
-                                <th>عملیات (ویرایش، حذف، بن)</th>
+                                <th>عملیات (ویرایش آیدی/رمز، حذف، بن)</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr data-id="1">
-                                <td>علی ŁK¹</td>
-                                <td><span id="status-1" style="color: #28a745;">فعال ✅</span></td>
-                                <td>
-                                    <button onclick="editMember(1)" class="btn-action btn-edit">ویرایش ✏️</button>
-                                    <button onclick="deleteMember(1)" class="btn-action btn-delete">حذف 🗑️</button>
-                                    <button id="banBtn-1" onclick="toggleBan(1)" class="btn-action btn-ban">بن ⛔</button>
-                                </td>
-                            </tr>
+                        <tbody id="membersTableBody">
+                            <!-- بارگذاری پویا -->
                         </tbody>
                     </table>
                 </div>
             </div>
 
-            <!-- تالار گفتگوی مدیران -->
+            <!-- تالار گفتگو و ابزارها -->
             <div class="panel-card">
-                <h3>💬 تالار گفتگوی لیدرها</h3>
+                <h2>
+                    <span>💬 تالار گفتگوی کلن</span>
+                    <button id="lockChatBtn" onclick="toggleChatLock()" class="btn-action btn-edit" style="padding: 6px 12px;">🔓 قفل کردن تالار</button>
+                </h2>
+
                 <div id="announcementArea" class="announcement-box">
-                    <span>📢 <b>اطلاعیه لیدر:</b> قوانین کلن رعایت شود! 😊</span>
-                    <button onclick="deleteAnnouncement()" class="btn-action btn-delete">حذف ❌</button>
+                    <span>📢 <b>اطلاعیه رسمی:</b> قوانین کلن رعایت شود و از ایموجی کیبورد آزادانه استفاده کنید! 😊🔥</span>
+                    <button onclick="deleteAnnouncement()" class="btn-action btn-delete">حذف اطلاعیه ❌</button>
                 </div>
+
                 <div class="chat-box" id="chatBox">
                     <div class="chat-msg" id="msg-101">
-                        <span><b>لیدر:</b> هماهنگی وارها انجام شد 🎮</span>
+                        <span><b>Vexor (ادمین):</b> سلام بچه‌ها، آماده وار باشید 🎮</span>
                         <button onclick="deleteMessage('msg-101')" class="btn-action btn-delete">حذف 🗑️</button>
                     </div>
                 </div>
+
                 <div class="chat-input-area">
-                    <input type="text" id="chatMessage" placeholder="پیام خود را بنویسید (کیبورد ایموجی فعال)...">
+                    <input type="text" id="chatMessage" placeholder="پیام خود را بنویسید (ایموجی کیبورد فعال 😃)...">
                     <button onclick="sendMessage()" class="btn-gold-sm">ارسال 🚀</button>
                 </div>
             </div>
