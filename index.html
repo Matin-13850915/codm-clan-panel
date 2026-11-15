@@ -1,0 +1,342 @@
+```html
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ŁK¹・INVICTUS | پورتال رسمی کلن کالاف دیوتی موبایل</title>
+
+    <!-- فونت‌های فارسی و انگلیسی گیمینگ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@600;700&family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- آیکون‌های FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                        gaming: ['Orbitron', 'Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        obsidian: '#08080a',
+                        charcoal: '#111115',
+                        gold: {
+                            light: '#F3E5AB',
+                            DEFAULT: '#D4AF37',
+                            bright: '#FFD700',
+                            dark: '#996515',
+                            glow: 'rgba(212, 175, 55, 0.35)'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* پالت رنگی و استایل‌های اختصاصی تم لاکچری مشکی و طلایی */
+        body {
+            background-color: #08080a;
+            color: #f4f4f5;
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.14) 0%, transparent 55%),
+                linear-gradient(to bottom, rgba(8, 8, 10, 0.94), #08080a);
+        }
+
+        /* گرادیان متالیک طلایی برای تیترها */
+        .gold-text-gradient {
+            background: linear-gradient(135deg, #F3E5AB 0%, #FFD700 35%, #D4AF37 65%, #996515 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 32px rgba(212, 175, 55, 0.28);
+        }
+
+        /* دکمه طلایی درخشان */
+        .btn-gold {
+            background: linear-gradient(135deg, #FFD700 0%, #D4AF37 55%, #AA771C 100%);
+            color: #08080a;
+            box-shadow: 0 4px 22px rgba(212, 175, 55, 0.38);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(255, 215, 0, 0.55);
+            filter: brightness(1.06);
+        }
+
+        /* کارت‌های شیشه‌ای HUD گیمینگ */
+        .tactical-card {
+            background: linear-gradient(155deg, rgba(22, 22, 28, 0.92), rgba(11, 11, 14, 0.96));
+            border: 1px solid rgba(212, 175, 55, 0.22);
+            box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.85);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .tactical-card:hover {
+            border-color: rgba(212, 175, 55, 0.58);
+            box-shadow: 0 15px 35px -10px rgba(212, 175, 55, 0.16);
+        }
+
+        /* الگوی شبکه تاکتیکی پس‌زمینه */
+        .bg-grid-pattern {
+            background-size: 42px 42px;
+            background-image:
+                linear-gradient(to right, rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+        }
+
+        /* استایل اسکرول‌بار سفارشی */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #08080a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #996515;
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* انیمیشن پالس طلایی */
+        @keyframes pulseGold {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.6); }
+            50% { box-shadow: 0 0 0 8px rgba(255, 215, 0, 0); }
+        }
+        .pulse-dot {
+            animation: pulseGold 2s infinite;
+        }
+
+        /* مخفی‌سازی اسکرول‌بار تب‌های موبایل */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-gold selection:text-obsidian bg-grid-pattern min-h-screen flex flex-col">
+
+    <!-- اعلان شناور (Toast Notification) -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] pointer-events-none opacity-0 transition-all duration-300 translate-y-4">
+        <div class="bg-charcoal/95 border border-gold text-gold-light px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 backdrop-blur-md">
+            <i id="toast-icon" class="fa-solid fa-circle-check text-gold text-lg"></i>
+            <span id="toast-message" class="font-semibold text-xs sm:text-sm">انجام شد!</span>
+        </div>
+    </div>
+
+    <!-- نوار اطلاعیه ویژه کلن (قابل ویرایش توسط ادمین) -->
+    <div id="announcement-bar" class="bg-gradient-to-r from-obsidian via-gold-dark/30 to-obsidian border-b border-gold/25 py-2 px-4 text-center text-xs sm:text-sm text-gold-light flex items-center justify-center gap-2">
+        <i class="fa-solid fa-bullhorn text-gold animate-bounce"></i>
+        <span id="announcement-text">عضوگیری فصل جدید کلن ŁK¹・INVICTUS با شرایط ویژه آغاز شد!</span>
+    </div>
+
+    <!-- هدر و منوی ناوبری اصلی -->
+    <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-xl border-b border-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 h-18 py-3 flex items-center justify-between gap-3">
+            <!-- لوگو کلن -->
+            <button onclick="switchTab('home')" class="flex items-center gap-3 group text-right cursor-pointer shrink-0">
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-gold-bright via-gold to-gold-dark flex items-center justify-center text-obsidian font-gaming font-black text-lg sm:text-xl shadow-lg shadow-gold/25 group-hover:scale-105 transition-transform">
+                    ŁK¹
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-gaming font-extrabold text-base sm:text-xl tracking-wider gold-text-gradient" dir="ltr">
+                        ŁK¹・INVICTUS
+                    </span>
+                    <span class="text-[10px] sm:text-[11px] text-zinc-400 tracking-wider">ELITE CODM CLAN</span>
+                </div>
+            </button>
+
+            <!-- تب‌های ناوبری دسکتاپ -->
+            <nav class="hidden lg:flex items-center gap-1.5 bg-charcoal/80 p-1.5 rounded-2xl border border-gold/15">
+                <button onclick="switchTab('home')" data-tab="home" class="nav-tab active-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-house"></i> خانه
+                </button>
+                <button onclick="switchTab('roster')" data-tab="roster" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-ranking-star"></i> رتبه‌بندی اعضا
+                </button>
+                <button onclick="switchTab('wars')" data-tab="wars" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-fire-flame-curved"></i> وارها و ایونت‌ها
+                </button>
+                <button onclick="switchTab('recruit')" data-tab="recruit" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus"></i> عضویت و تست
+                </button>
+                <button onclick="switchTab('tools')" data-tab="tools" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> ساخت اسم گیمینگ
+                </button>
+                <button onclick="switchTab('chat')" data-tab="chat" class="nav-tab px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2">
+                    <i class="fa-solid fa-comments"></i> چت با ادمین
+                </button>
+            </nav>
+
+            <!-- دکمه‌های سمت چپ هدر (تگ کلن + ورود ادمین) -->
+            <div class="flex items-center gap-2 shrink-0">
+                <button onclick="copyText('łK¹・', 'تگ کلن (łK¹・) کپی شد!')" class="hidden sm:flex items-center gap-2 bg-charcoal hover:bg-zinc-900 border border-gold/35 px-3 py-2 rounded-xl text-xs text-gold font-gaming font-bold cursor-pointer transition-all" dir="ltr">
+                    <i class="fa-regular fa-copy"></i>
+                    <span>łK¹・</span>
+                </button>
+
+                <button id="admin-nav-btn" onclick="handleAdminButtonClick()" class="bg-charcoal hover:bg-gold/15 border border-gold/40 text-gold-light px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all cursor-pointer">
+                    <i id="admin-nav-icon" class="fa-solid fa-shield-halved text-gold"></i>
+                    <span id="admin-nav-label">پنل ادمین</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- نوار تب‌های اسکرول‌پذیر مخصوص موبایل و تبلت -->
+        <div class="lg:hidden border-t border-gold/10 bg-obsidian/95 px-3 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('home')" data-tab="home" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-house"></i> خانه
+            </button>
+            <button onclick="switchTab('roster')" data-tab="roster" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-ranking-star"></i> رتبه‌بندی
+            </button>
+            <button onclick="switchTab('wars')" data-tab="wars" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-fire-flame-curved"></i> وارها و ایونت‌ها
+            </button>
+            <button onclick="switchTab('recruit')" data-tab="recruit" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-user-plus"></i> ثبت‌نام تست
+            </button>
+            <button onclick="switchTab('tools')" data-tab="tools" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles"></i> ساخت اسم
+            </button>
+            <button onclick="switchTab('chat')" data-tab="chat" class="nav-tab shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-comments"></i> چت آنلاین
+            </button>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی صفحات (SPA Views) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- =========================================================
+             بخش ۱: خانه (HOME & HERO)
+        ========================================================== -->
+        <section id="view-home" class="tab-view space-y-12">
+            <!-- بنر اصلی کلن -->
+            <div class="relative rounded-3xl tactical-card p-6 sm:p-12 overflow-hidden text-center border-gold/35">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] sm:w-[550px] h-[300px] sm:h-[550px] bg-gold/10 rounded-full blur-[110px] pointer-events-none"></div>
+
+                <div class="relative z-10 max-w-3xl mx-auto">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-obsidian/90 border border-gold/35 text-gold-light text-xs font-semibold mb-6">
+                        <span class="w-2.5 h-2.5 rounded-full bg-gold-bright pulse-dot"></span>
+                        <span>پورتال رسمی کلن • ارتباط زنده با سرور</span>
+                    </div>
+
+                    <h1 class="font-gaming font-black text-4xl sm:text-6xl md:text-7xl tracking-wider gold-text-gradient mb-4" dir="ltr">
+                        ŁK¹・INVICTUS
+                    </h1>
+
+                    <p class="text-base sm:text-2xl font-extrabold text-white mb-3">
+                        شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل
+                    </p>
+                    <p class="text-xs sm:text-base text-zinc-400 max-w-xl mx-auto leading-relaxed mb-8">
+                        تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.
+                    </p>
+
+                    <!-- دکمه‌های عملیاتی سریع -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 max-w-xl mx-auto">
+                        <button onclick="copyText('łK¹・', 'تگ کلن (łK¹・) با موفقیت کپی شد!')" class="w-full sm:w-auto flex-1 bg-obsidian hover:bg-zinc-900 border border-gold/45 hover:border-gold px-5 py-3.5 rounded-2xl flex items-center justify-between gap-3 transition-all cursor-pointer group">
+                            <div class="text-right">
+                                <span class="block text-[10px] text-zinc-400">کپی سریع تگ کلن</span>
+                                <span class="font-gaming font-bold text-lg text-gold" dir="ltr">łK¹・</span>
+                            </div>
+                            <div class="w-9 h-9 rounded-xl bg-gold/10 text-gold group-hover:bg-gold group-hover:text-obsidian flex items-center justify-center transition-colors">
+                                <i class="fa-regular fa-copy"></i>
+                            </div>
+                        </button>
+
+                        <button onclick="switchTab('recruit')" class="w-full sm:w-auto flex-1 btn-gold px-6 py-4 rounded-2xl font-black text-sm sm:text-base flex items-center justify-center gap-2.5 cursor-pointer">
+                            <i class="fa-solid fa-crosshairs"></i>
+                            <span>درخواست تست عضویت</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت‌های آمار زنده کلن (متصل به پایگاه داده) -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+                <div class="tactical-card p-5 rounded-2xl text-center">
+                    <div class="w-11 h-11 mx-auto rounded-xl bg-gold/10 border border-gold/30 text-gold flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <div id="stat-total-members" class="font-gaming font-black text-2xl sm:text-3xl text-white">0</div>
+                    <div class="text-xs text-zinc-400 mt-1">اعضای فعال کلن</div>
+                </div>
+
+                <div class="tactical-card p-5 rounded-2xl text-center">
+                    <div class="w-11 h-11 mx-auto rounded-xl bg-gold/10 border border-gold/30 text-gold flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div id="stat-clan-rank" class="font-gaming font-black text-2xl sm:text-3xl text-gold">LEGENDARY</div>
+                    <div class="text-xs text-zinc-400 mt-1">رنک و سطح کلن</div>
+                </div>
+
+                <div class="tactical-card p-5 rounded-2xl text-center">
+                    <div class="w-11 h-11 mx-auto rounded-xl bg-gold/10 border border-gold/30 text-gold flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-fire"></i>
+                    </div>
+                    <div id="stat-war-points" class="font-gaming font-black text-2xl sm:text-3xl text-white">0</div>
+                    <div class="text-xs text-zinc-400 mt-1">مجموع امتیاز کلن‌وار</div>
+                </div>
+
+                <div class="tactical-card p-5 rounded-2xl text-center">
+                    <div class="w-11 h-11 mx-auto rounded-xl bg-gold/10 border border-gold/30 text-gold flex items-center justify-center text-lg mb-3">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <div id="stat-mvp-name" class="font-gaming font-bold text-lg sm:text-xl text-gold-light truncate" dir="ltr">---</div>
+                    <div class="text-xs text-zinc-400 mt-1">برترین بازیکن هفته (MVP)</div>
+                </div>
+            </div>
+
+            <!-- تالار افتخارات (MVP هفته) و دسترسی سریع به بخش‌ها -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- کارت MVP هفته -->
+                <div class="tactical-card p-6 rounded-3xl border-gold/40 bg-gradient-to-br from-gold/10 via-charcoal to-obsidian flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-full bg-gold text-obsidian font-black text-[11px] flex items-center gap-1.5">
+                                <i class="fa-solid fa-crown"></i> MVP OF THE WEEK
+                            </span>
+                            <span class="text-xs text-gold-light font-gaming">SEASON ELITE</span>
+                        </div>
+                        <h3 id="mvp-card-name" class="font-gaming font-black text-2xl sm:text-3xl gold-text-gradient mb-2" dir="ltr">łK¹・PHOENIX</h3>
+                        <p id="mvp-card-details" class="text-xs sm:text-sm text-zinc-300 leading-relaxed mb-4">
+                            بیشترین امتیاز کلن‌وار و عملکرد درخشان در مسابقات هفتگی کلن.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-gold/20 flex items-center justify-between text-xs">
+                        <span class="text-zinc-400">امتیاز هفتگی:</span>
+                        <span id="mvp-card-points" class="font-gaming font-bold text-gold text-base">0 PTS</span>
+                    </div>
+                </div>
+
+                <!-- کارت میانبرهای سریع -->
+                <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div onclick="switchTab('roster')" class="tactical-card p-6 rounded-2xl cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gold/10 text-gold flex items-center justify-center text-xl group-hover:bg-gold group-hover:text-obsidian transition-colors">
+                                <i class="fa-solid fa-ranking-star"></i>
+                            </div>
+                            <i class="fa-solid fa-arrow-left text-zinc-500 group-hover:text-gold transition-colors"></i>
+                        </div>
+                        <h3 class="font-extrabold text-lg text-white mb-1">جدول رتبه‌بندی اعضای کلن</h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed">مشاهده امتیازات کلن‌وار، لول، تخصص و رتبه لحظه‌ای تمامی اعضای کلن.</p>
+                    </div>
+
+                    <div onclick="switchTab('wars')" class="tactical-card p-6 rounded-2xl cursor-pointer group">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="w-12 h-12 rounded-2xl bg-gold
