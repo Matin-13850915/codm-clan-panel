@@ -24,18 +24,72 @@
         </div>
     </header>
     <div class="main-container">
+        <div class="panel-card" id="adminWarBox" style="display:none; border-color:var(--gold-primary);">
+            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:10px;">➕ افزودن وار جدید (مخصوص ادمین/لیدر)</h3>
+            <div class="form-group"><label>تاریخ</label><input type="text" id="warDate" class="form-control" placeholder="1404/09/20"></div>
+            <div class="form-group"><label>کلن حریف</label><input type="text" id="warEnemy" class="form-control" placeholder="نام کلن مقابل"></div>
+            <div class="form-group"><label>نتیجه</label><select id="warResult" class="form-control"><option value="برد (Win)">برد (Win)</option><option value="باخت (Lose)">باخت (Lose)</option><option value="مساوی (Draw)">مساوی (Draw)</option></select></div>
+            <div class="form-group"><label>توضیحات</label><input type="text" id="warDesc" class="form-control" placeholder="توضیحات نتیجه..."></div>
+            <button onclick="addWar()" class="btn-submit">ثبت وار</button>
+        </div>
+
         <div class="panel-card">
             <h2 class="hero-title" style="font-size: 18px;">⚔️ لیست نتایج وارها</h2>
-            <p class="hero-desc">تاریخچه مسابقات رسمی کلن.</p>
             <div class="table-responsive">
                 <table class="clan-table">
-                    <thead><tr><th>تاریخ</th><th>کلن حریف</th><th>نتیجه</th><th>توضیحات</th></tr></thead>
-                    <tbody>
-                        <tr><td>1404/09/20</td><td>PERSIAN LEGEND</td><td style="color:var(--success-color); font-weight:bold;">برد (Win)</td><td>اختلاف اسکور بالا</td></tr>
-                    </tbody>
+                    <thead><tr><th>تاریخ</th><th>کلن حریف</th><th>نتیجه</th><th>توضیحات</th><th id="thAction" style="display:none;">عملیات</th></tr></thead>
+                    <tbody id="warsTableBody"></tbody>
                 </table>
             </div>
         </div>
     </div>
+    <script>
+        window.onload = function() {
+            loadWars();
+            let role = localStorage.getItem('logged_role');
+            if(role === 'admin' || role === 'leader') {
+                document.getElementById('adminWarBox').style.display = 'block';
+                document.getElementById('thAction').style.display = '';
+            }
+        }
+        function loadWars() {
+            let wars = JSON.parse(localStorage.getItem('clan_wars') || '[{"date":"1404/09/20","enemy":"PERSIAN LEGEND","result":"برد (Win)","desc":"اختلاف اسکور بالا"}]');
+            let tbody = document.getElementById('warsTableBody');
+            let role = localStorage.getItem('logged_role');
+            tbody.innerHTML = '';
+            wars.forEach((w, i) => {
+                let actionBtn = (role === 'admin' || role === 'leader') ? `<td><button onclick="deleteWar(${i})" class="btn" style="background:var(--danger-color); color:#fff; padding:2px 6px; border:none;">حذف</button></td>` : '';
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${w.date}</td>
+                        <td>${w.enemy}</td>
+                        <td style="color:${w.result.includes('برد')?'var(--success-color)':'var(--danger-color)'}; font-weight:bold;">${w.result}</td>
+                        <td>${w.desc}</td>
+                        ${actionBtn}
+                    </tr>
+                `;
+            });
+        }
+        function addWar() {
+            let date = document.getElementById('warDate').value.trim();
+            let enemy = document.getElementById('warEnemy').value.trim();
+            let result = document.getElementById('warResult').value;
+            let desc = document.getElementById('warDesc').value.trim();
+            if(!date || !enemy) { alert("تاریخ و نام کلن حریف الزامی است."); return; }
+            let wars = JSON.parse(localStorage.getItem('clan_wars') || '[]');
+            wars.push({ date, enemy, result, desc });
+            localStorage.setItem('clan_wars', JSON.stringify(wars));
+            alert("وار ثبت شد!");
+            loadWars();
+        }
+        function deleteWar(i) {
+            if(confirm("حذف شود؟")) {
+                let wars = JSON.parse(localStorage.getItem('clan_wars') || '[]');
+                wars.splice(i, 1);
+                localStorage.setItem('clan_wars', JSON.stringify(wars));
+                loadWars();
+            }
+        }
+    </script>
 </body>
 </html>
