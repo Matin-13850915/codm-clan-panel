@@ -27,14 +27,16 @@
         
         <!-- خانه -->
         <div id="home" class="section active">
-            <h2>🔥 خانه رسمی الیت کلن ŁK¹</h2>
-            <p>به پورتال رسمی و حرفه‌ای قدرتمندترین تیم Call of Duty Mobile خوش آمدید.</p>
-            <p><strong>شرایط ورود:</strong></p>
-            <ul style="margin-right: 20px; color: #b0b0b0; line-height: 1.9;">
-                <li>حداقل لول اکانت: ۳۰۰</li>
-                <li>دیسیپلین بالا و حضور منظم در کلن‌وار</li>
-                <li>قبولی در تست ورودی حضوری</li>
-            </ul>
+            <h2 id="homeTitleDisplay">🔥 خانه رسمی الیت کلن ŁK¹</h2>
+            <div id="homeDescDisplay">
+                <p>به پورتال رسمی و حرفه‌ای قدرتمندترین تیم Call of Duty Mobile خوش آمدید.</p>
+                <p><strong>شرایط ورود:</strong></p>
+                <ul style="margin-right: 20px; color: #b0b0b0; line-height: 1.9;">
+                    <li>حداقل لول اکانت: ۳۰۰</li>
+                    <li>دیسیپلین بالا و حضور منظم در کلن‌وار</li>
+                    <li>قبولی در تست ورودی حضوری</li>
+                </ul>
+            </div>
             <button class="btn-gold" onclick="switchTab('apply')">شروع ثبت‌نام و درخواست تست</button>
         </div>
 
@@ -100,8 +102,8 @@
             <h2>🛡️ پنل مدیریت کلن</h2>
             
             <div id="loginSection">
-                <p>لطفاً اطلاعات ورود مدیریتی خود را وارد کنید:</p>
-                <input type="text" id="loginUser" placeholder="نام کاربری (مثلا Vexor)">
+                <p>لطفاً اطلاعات ورود مدیریتی خود را وارد کنید (ادمین: Vexor):</p>
+                <input type="text" id="loginUser" placeholder="نام کاربری...">
                 <input type="password" id="loginPass" placeholder="رمز عبور...">
                 <button class="btn-gold" onclick="performLogin()">ورود به پنل</button>
             </div>
@@ -111,6 +113,13 @@
 
                 <h3 style="color:var(--gold); margin: 15px 0 10px; font-size: 1.1rem;">📥 درخواست‌های تست ورودی</h3>
                 <div id="pendingApplicationsList"></div>
+
+                <div style="border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
+                    <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">✏️ ویرایش محتوای صفحه خانه</h3>
+                    <input type="text" id="editHomeTitle" placeholder="عنوان جدید خانه...">
+                    <textarea id="editHomeDesc" placeholder="متن جدید صفحه خانه..." rows="3"></textarea>
+                    <button class="btn-gold" onclick="updateHomeContent()">بروزرسانی صفحه خانه</button>
+                </div>
 
                 <div id="superAdminTools" style="display:none; border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
                     <h3 style="color:var(--gold); margin-bottom: 10px; font-size: 1.1rem;">👑 ابزارهای ادمین کل (Vexor)</h3>
@@ -124,12 +133,12 @@
                     </select>
                     <button class="btn-gold" onclick="createNewUser()">ایجاد اکانت در سیستم</button>
 
-                    <h4 style="font-size:0.9rem; color:#ccc; margin-top:15px;">ثبت امتیاز و رنک پلیر</h4>
+                    <h4 style="font-size:0.9rem; color:#ccc; margin-top:15px;">ثبت امتیاز و مدیریت رنک پلیر</h4>
                     <input type="text" id="rankPlayerName" placeholder="نام پلیر...">
                     <input type="number" id="rankPlayerScore" placeholder="امتیاز کلن‌وار...">
                     <input type="number" id="rankPlayerWinRate" placeholder="وین‌ریت (%) مثلا 85...">
                     <input type="text" id="rankPlayerRoleTitle" placeholder="مقام (مثلا استارتر)...">
-                    <button class="btn-gold" onclick="savePlayerRank()">ثبت رنک پلیر</button>
+                    <button class="btn-gold" onclick="savePlayerRank()">ثبت یا ویرایش رنک پلیر</button>
                 </div>
 
                 <div style="border-top: 1px solid var(--border); margin-top: 20px; padding-top: 15px;">
@@ -153,5 +162,4 @@
 
     <script src="script.js"></script>
 </body>
-    </html>
-    
+</html>
