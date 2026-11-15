@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>łK¹ • INVICTUS | کلن رسمی کالاف دیوتی موبایل</title>
+    <title>IK¹ • INVICTUS | کلن رسمی کالاف دیوتی موبایل</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="top-notice" id="topNoticeBar">📢 عضوگیری فصل جدید کلن łK¹ • INVICTUS با شرایط ویژه آغاز شد!</div>
+    <div class="top-notice" id="topNoticeBar">📢 عضوگیری فصل جدید کلن IK¹ • INVICTUS با شرایط ویژه آغاز شد!</div>
     <header>
         <div class="logo-area">
-            <div class="clan-logo">łK¹</div>
-            <div class="clan-title"><h1>łK¹ • INVICTUS</h1><span>ELITE CODM CLAN</span></div>
+            <div class="clan-logo">IK¹</div>
+            <div class="clan-title"><h1>IK¹ • INVICTUS</h1><span>ELITE CODM CLAN</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn active">🏠 خانه</a>
@@ -27,15 +27,15 @@
     <div class="main-container">
         <div class="panel-card">
             <div class="server-status"><span class="status-dot"></span>پورتال رسمی کلن • سرور ابری آنلاین</div>
-            <h2 class="hero-title">łK¹ • INVICTUS</h2>
+            <h2 class="hero-title">IK¹ • INVICTUS</h2>
             <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
             <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
             <div style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
                     <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن</div>
-                    <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">ŁK¹ •</div>
+                    <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">IK¹ •</div>
                 </div>
-                <button onclick="navigator.clipboard.writeText('łK¹・'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
+                <button onclick="navigator.clipboard.writeText('IK¹'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
             </div>
             <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">⚔️ درخواست تست عضویت</a>
         </div>
@@ -48,25 +48,31 @@
         const BIN_ID = "6af9c49eac6210605a89891b";
         const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
 
-        async function loadCloudData(callback) {
+        async function initHome() {
             try {
-                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: { "X-Master-Key": API_KEY }
-                });
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
                 let data = await res.json();
                 if (data && data.record) {
                     let rec = data.record;
-                    if(rec.clan_notice) localStorage.setItem('clan_notice', rec.clan_notice);
+                    if(rec.clan_notice) {
+                        localStorage.setItem('clan_notice', rec.clan_notice);
+                        document.getElementById('topNoticeBar').innerText = rec.clan_notice;
+                    }
+                    if(rec.clan_members) localStorage.setItem('clan_members', JSON.stringify(rec.clan_members));
+                    if(rec.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(rec.clan_applications));
+                    if(rec.clan_wars) localStorage.setItem('clan_wars', JSON.stringify(rec.clan_wars));
+                    if(rec.chat_messages) localStorage.setItem('chat_messages', JSON.stringify(rec.chat_messages));
+                    if(rec.chat_bans) localStorage.setItem('chat_bans', JSON.stringify(rec.chat_bans));
+                    localStorage.setItem('chat_locked', rec.chat_locked ? 'true' : 'false');
                 }
-            } catch(e) {}
-            if(callback) callback();
+            } catch(e) {
+                let n = localStorage.getItem('clan_notice');
+                if(n) document.getElementById('topNoticeBar').innerText = n;
+            }
         }
 
         window.onload = function() {
-            loadCloudData(() => {
-                let n = localStorage.getItem('clan_notice');
-                if(n) document.getElementById('topNoticeBar').innerText = n;
-            });
+            initHome();
         }
     </script>
 </body>
