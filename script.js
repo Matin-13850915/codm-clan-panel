@@ -18,7 +18,20 @@ let chatMessages = JSON.parse(localStorage.getItem('lk1_chats')) || [
     { author: "Vexor (ادمین)", text: "خوش آمدید به کلن اینویکتوس 🔥" }
 ];
 
+let homeData = JSON.parse(localStorage.getItem('lk1_home')) || {
+    title: "🔥 خانه رسمی الیت کلن ŁK¹",
+    desc: `<p>به پورتال رسمی و حرفه‌ای قدرتمندترین تیم Call of Duty Mobile خوش آمدید.</p><p><strong>شرایط ورود:</strong></p><ul style="margin-right: 20px; color: #b0b0b0; line-height: 1.9;"><li>حداقل لول اکانت: ۳۰۰</li><li>دیسیپلین بالا و حضور منظم در کلن‌وار</li><li>قبولی در تست ورودی حضوری</li></ul>`
+};
+
 let currentActiveUser = null;
+
+function initSite() {
+    renderMembers();
+    renderNews();
+    renderChat();
+    renderApplications();
+    loadHomeContent();
+}
 
 function switchTab(tabId) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -29,6 +42,26 @@ function switchTab(tabId) {
     
     const btn = document.querySelector(`.nav-btn[data-target="${tabId}"]`);
     if(btn) btn.classList.add('active');
+}
+
+function loadHomeContent() {
+    document.getElementById('homeTitleDisplay').innerHTML = homeData.title;
+    document.getElementById('homeDescDisplay').innerHTML = homeData.desc;
+    document.getElementById('editHomeTitle').value = homeData.title;
+    document.getElementById('editHomeDesc').value = homeData.desc;
+}
+
+function updateHomeContent() {
+    const newTitle = document.getElementById('editHomeTitle').value.trim();
+    const newDesc = document.getElementById('editHomeDesc').value.trim();
+    if(!newTitle || !newDesc) {
+        alert('فیلدها نباید خالی باشند!');
+        return;
+    }
+    homeData = { title: newTitle, desc: newDesc };
+    localStorage.setItem('lk1_home', JSON.stringify(homeData));
+    loadHomeContent();
+    alert('صفحه خانه با موفقیت بروزرسانی و ویرایش شد!');
 }
 
 function submitApplication() {
@@ -63,7 +96,7 @@ function renderApplications() {
             <div class="req-box">
                 <div>
                     <strong style="color:var(--gold);">${app.name}</strong> (لول: ${app.level})<br>
-                    <span style="font-size:0.85rem; color:#aaa;">ارتباط: ${app.contact}</span>
+                    <span style="font-size:0.85rem; color:#aaa;">ارتباط: ${app.contact} | ${app.bio}</span>
                 </div>
                 <div>
                     <button class="btn-success" onclick="approveApp(${index})">تایید</button>
@@ -254,10 +287,5 @@ function renderNews() {
 }
 
 // اجرای اولیه هنگام لود کامل صفحه
-window.addEventListener('DOMContentLoaded', () => {
-    renderMembers();
-    renderNews();
-    renderChat();
-    renderApplications();
-});
-                         
+window.addEventListener('DOMContentLoaded', initSite);
+    
