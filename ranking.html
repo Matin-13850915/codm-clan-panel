@@ -64,47 +64,6 @@
                         <td>${rankIcon}</td>
                         <td style="color:var(--gold-light); font-weight:bold;">${m.name}</td>
                         <td>${m.role}</td>
-                        <td>${m.level || '-'} / ${m.rank || '-'}</td>
-                        <td style="color:var(--gold-primary); font-weight:bold;">${m.totalScore} امتیاز</td>
-                    </tr>
-                `;
-            });
-        }
-        function calcPts(results) {
-            if(!results) return 0;
-            let pts = 0;
-            results.forEach(r => {
-                if(r === 'win') pts += 3;
-                else if(r === 'lose') pts -= 1;
-            });
-            return pts;
-        }
-        function showDetails(m) {
-            let mw = (m.multiResults || []).filter(r=>r==='win').length;
-            let ml = (m.multiResults || []).filter(r=>r==='lose').length;
-            let md = (m.multiResults || []).filter(r=>r==='draw'||r==='quit').length;
-            let bw = (m.battleResults || []).filter(r=>r==='win').length;
-            let bl = (m.battleResults || []).filter(r=>r==='lose').length;
-            let bd = (m.battleResults || []).filter(r=>r==='draw'||r==='quit').length;
-
-            document.getElementById('modalName').innerText = m.name + ' (' + m.role + ')';
-            document.getElementById('modalDetails').innerHTML = `
-                🆔 یوآیدی: <b>${m.uid || 'ثبت نشده'}</b><br>
-                ⭐ لول: ${m.level || '-'} | رنک: ${m.rank || '-'}<br>
-                🎯 تعداد لجند: ${m.legendCount || '0'}<br>
-                <hr style="border-color:rgba(243,186,47,0.2); margin:8px 0;">
-                🎮 <b>۱۰ دست آخر مولتی:</b> برد: ${mw} | باخت: ${ml} | مساوی/خروج: ${md}<br>
-                🛡️ <b>۱۰ دست آخر بتل:</b> برد: ${bw} | باخت: ${bl} | مساوی/خروج: ${bd}
-            `;
-            document.getElementById('playerModal').style.display = 'flex';
-        }
-        function filterRanking() {
-            let kw = document.getElementById('searchMember').value.toLowerCase();
-            let rows = document.getElementById('rankingTableBody').getElementsByTagName('tr');
-            for(let r of rows) {
-                r.style.display = r.innerText.toLowerCase().includes(kw) ? '' : 'none';
-            }
-        }
-    </script>
-</body>
-</html>
+                        <td>${m.level \vert{}\vert{} '-'} /${m.rank || '-'}</td>
+                        <td
+        
