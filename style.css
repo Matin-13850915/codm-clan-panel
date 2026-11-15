@@ -1,60 +1,262 @@
-body { background-color: #0b0b0b; color: #f1f1f1; font-family: Tahoma, sans-serif; margin: 0; padding: 0; }
-.announcement-bar { background: #ffb703; color: #000; text-align: center; padding: 8px; font-size: 13px; font-weight: bold; }
-.main-header { background: #141414; border-bottom: 2px solid #332701; }
-.nav-container { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; flex-wrap: wrap; gap: 15px; }
-.logo-area { display: flex; align-items: center; gap: 12px; }
-.clan-logo-badge { background: #ffb703; color: #000; font-weight: bold; padding: 10px 14px; border-radius: 8px; font-size: 18px; }
-.clan-title h2 { margin: 0; color: #ffb703; font-size: 18px; }
-.clan-title p { margin: 0; font-size: 10px; color: #888; }
-.nav-links { display: flex; gap: 15px; flex-wrap: wrap; align-items: center; }
-.nav-links a { color: #ccc; text-decoration: none; font-size: 13px; padding: 6px 12px; border-radius: 6px; transition: 0.2s; }
-.nav-links a:hover, .nav-links a.active { background: #ffb703; color: #000; font-weight: bold; }
-.container { max-width: 950px; margin: 20px auto; padding: 0 15px; }
-.hero-section { background: #161616; border: 1px solid #332701; border-radius: 16px; padding: 30px; text-align: center; margin-bottom: 30px; }
-.status-indicator { display: inline-flex; align-items: center; gap: 8px; background: #1e1b0c; border: 1px solid #ffb703; padding: 6px 15px; border-radius: 20px; font-size: 12px; color: #ffb703; margin-bottom: 15px; }
-.dot { width: 8px; height: 8px; background: #ffb703; border-radius: 50%; box-shadow: 0 0 8px #ffb703; }
-.hero-section h1 { color: #ffb703; font-size: 32px; margin: 10px 0; }
-.hero-section h2 { font-size: 16px; color: #ddd; margin-bottom: 15px; }
-.hero-section p { color: #999; font-size: 13px; line-height: 1.6; max-width: 600px; margin: 0 auto 20px auto; }
-.clan-tag-box { background: #0f0f0f; border: 1px solid #332701; display: inline-flex; align-items: center; gap: 15px; padding: 10px 20px; border-radius: 10px; margin-bottom: 20px; font-size: 14px; }
-.clan-tag-box code { color: #ffb703; font-weight: bold; }
-.btn-copy { background: none; border: none; cursor: pointer; font-size: 16px; }
+:root {
+    --bg-color: #0b0b0e;
+    --card-bg: #141419;
+    --gold-primary: #f3ba2f;
+    --gold-light: #ffdf7e;
+    --gold-dark: #b8860b;
+    --text-main: #ffffff;
+    --text-muted: #9ca3af;
+    --danger-color: #ef4444;
+    --success-color: #22c55e;
+}
 
-.login-options-grid { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
-.btn-gold { background: linear-gradient(135deg, #ffb703, #d49600); color: #000; border: none; padding: 12px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 13px; }
-.btn-gold-outline { background: transparent; color: #ffb703; border: 1px solid #ffb703; padding: 12px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 13px; }
-.btn-gold-dark { background: #332701; color: #ffb703; border: 1px solid #ffb703; padding: 12px 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 13px; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Tahoma, sans-serif;
+}
 
-.modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.75); justify-content: center; align-items: center; }
-.modal-content { background: #141414; border: 1px solid #ffb703; padding: 25px; border-radius: 12px; width: 90%; max-width: 350px; text-align: center; }
-.close { color: #aaa; float: left; font-size: 24px; font-weight: bold; cursor: pointer; }
-.close:hover { color: #fff; }
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    padding-bottom: 40px;
+}
 
-.panel-header-bar { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #222; padding-bottom: 15px; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
-.panel-header-bar h2 { color: #ffb703; margin: 0; font-size: 18px; }
-.btn-refresh { background: #28a745; color: #fff; border: none; padding: 8px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; }
-.panel-card { background: #141414; border: 1px solid #332701; border-radius: 12px; padding: 15px; margin-bottom: 20px; }
-.panel-card h2 { color: #ffb703; margin-top: 0; font-size: 16px; display: flex; justify-content: space-between; align-items: center; }
-.panel-card h3 { color: #ffb703; margin-top: 0; font-size: 15px; }
-.search-input { width: 100%; padding: 10px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; box-sizing: border-box; margin-bottom: 12px; }
-.table-responsive { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; }
-th, td { border: 1px solid #2b2b2b; padding: 10px; text-align: center; font-size: 13px; }
-th { background: #221a00; color: #ffb703; }
-.badge { padding: 3px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
-.role-admin { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
-.role-leader { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
-.role-member { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+/* نوار اطلاع‌رسانی */
+.top-notice {
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-primary));
+    color: #000;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 10px;
+}
 
-.btn-action { padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: bold; margin: 2px; }
-.btn-edit { background: #ffc107; color: #000; }
-.btn-delete { background: #dc3545; color: #fff; }
-.btn-ban { background: #6c757d; color: #fff; }
-.btn-unban { background: #28a745; color: #fff; }
+/* هدر */
+header {
+    background: var(--card-bg);
+    border-bottom: 1px solid rgba(243, 186, 47, 0.2);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
 
-.announcement-box { background: #262000; border: 1px solid #ffb703; padding: 12px; border-radius: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 12px; }
-.chat-box { background: #0b0b0b; border: 1px solid #2b2b2b; height: 220px; border-radius: 8px; overflow-y: auto; padding: 10px; margin-bottom: 12px; }
-.chat-msg { background: #161616; border: 1px solid #2b2b2b; padding: 8px 12px; border-radius: 6px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
-.chat-input-area { display: flex; gap: 8px; }
-.chat-input-area input { flex: 1; padding: 10px; background: #0b0b0b; border: 1px solid #333; color: #fff; border-radius: 6px; }
-.btn-gold-sm { background: #ffb703; color: #000; border: none; padding: 0 20px; font-weight: bold; border-radius: 6px; cursor: pointer; }
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.clan-logo {
+    width: 45px;
+    height: 45px;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #000;
+    font-size: 18px;
+    box-shadow: 0 0 15px rgba(243, 186, 47, 0.3);
+}
+
+.clan-title h1 {
+    font-size: 16px;
+    color: var(--gold-primary);
+}
+
+.clan-title span {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(243, 186, 47, 0.3);
+    color: var(--text-main);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn:hover, .btn.active {
+    background: var(--gold-primary);
+    color: #000;
+    border-color: var(--gold-primary);
+}
+
+.btn-admin {
+    background: rgba(243, 186, 47, 0.15);
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+}
+
+/* کانتینرها */
+.main-container {
+    max-width: 650px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+.hero-card, .panel-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(243, 186, 47, 0.25);
+    border-radius: 20px;
+    padding: 25px 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.server-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(243, 186, 47, 0.3);
+    padding: 6px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--success-color);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--success-color);
+}
+
+.hero-title {
+    font-size: 26px;
+    color: var(--gold-primary);
+    margin-bottom: 10px;
+    font-weight: 900;
+}
+
+.hero-subtitle {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.hero-desc {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* فرم‌ها و اینپوت‌ها */
+.form-group {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    color: var(--gold-light);
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(243, 186, 47, 0.3);
+    border-radius: 10px;
+    padding: 12px;
+    color: var(--text-main);
+    font-size: 14px;
+}
+
+.form-control:focus {
+    border-color: var(--gold-primary);
+    outline: none;
+}
+
+.btn-submit {
+    width: 100%;
+    background: linear-gradient(135deg, var(--gold-primary), var(--gold-dark));
+    color: #000;
+    font-weight: bold;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-submit:hover {
+    opacity: 0.9;
+}
+
+/* جدول‌ها */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+.clan-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    text-align: center;
+}
+
+.clan-table th, .clan-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(243, 186, 47, 0.15);
+}
+
+.clan-table th {
+    color: var(--gold-primary);
+    background: rgba(243, 186, 47, 0.05);
+}
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.mini-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(243, 186, 47, 0.2);
+    border-radius: 15px;
+    padding: 20px 15px;
+    text-align: center;
+}
+
+.mini-card h3 {
+    font-size: 14px;
+    color: var(--gold-primary);
+    margin-bottom: 5px;
+}
+
+.mini-card p {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+      
