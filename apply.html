@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درخواست تست عضویت | ŁK¹ • INVICTUS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <div class="clan-logo">ŁK¹</div>
+            <div class="clan-title">
+                <h1>درخواست تست عضویت</h1>
+                <span>پیوستن به جمع ارتش ŁK¹</span>
+            </div>
+        </div>
+        <div class="nav-buttons">
+            <a href="index.html" class="btn">🏠 خانه</a>
+            <a href="apply.html" class="btn active">📝 ثبت‌نام تست</a>
+            <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="panel-card">
+            <h2 class="hero-title" style="font-size: 18px;">📝 فرم ثبت‌نام تست کلن</h2>
+            <p class="hero-desc">اطلاعات خود را دقیق وارد کنید تا درخواست شما مستقیماً به پنل لیدر و ادمین ارسال شود.</p>
+
+            <div class="form-group">
+                <label>نام در گیم (همراه با تگ)</label>
+                <input type="text" id="applyName" class="form-control" placeholder="مثال: ŁK¹ • Player">
+            </div>
+            <div class="form-group">
+                <label>کالاف یوآیدی (UID)</label>
+                <input type="text" id="applyUid" class="form-control" placeholder="کد عددی اکانت">
+            </div>
+            <div class="grid-cards" style="margin-bottom:12px;">
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>لول اکانت</label>
+                    <input type="number" id="applyLevel" class="form-control" placeholder="مثال: 150">
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                    <label>رنک فعلی (مولتی/بتل)</label>
+                    <input type="text" id="applyRank" class="form-control" placeholder="مثال: Legendary">
+                </div>
+            </div>
+            <button onclick="submitApplication()" class="btn-submit">ارسال درخواست تست به لیدر کلن</button>
+        </div>
+    </div>
+
+    <script>
+        function submitApplication() {
+            let name = document.getElementById('applyName').value.trim();
+            let uid = document.getElementById('applyUid').value.trim();
+            let level = document.getElementById('applyLevel').value.trim();
+            let rank = document.getElementById('applyRank').value.trim();
+
+            if(!name || !uid) {
+                alert("لطفاً نام و یوآیدی خود را وارد کنید.");
+                return;
+            }
+
+            let applications = JSON.parse(localStorage.getItem('clan_applications') || '[]');
+            applications.push({ name, uid, level, rank, date: new Date().toLocaleDateString() });
+            localStorage.setItem('clan_applications', JSON.stringify(applications));
+
+            alert("درخواست شما با موفقیت ثبت شد و به پنل لیدر ارسال گردید. منتظر پاسخ باشید.");
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
