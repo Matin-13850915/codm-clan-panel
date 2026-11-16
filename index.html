@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="ghost-bg-animation"></div>
-    <div class="top-notice" id="topNoticeBar">📢 ایونت وار بزرگ با وحشی‌ترین کلن ایران! آماده نبرد باشید!</div>
+    <div class="war-bg-effects">
+        <div class="ghost-glow" style="top: 10%; left: 10%;"></div>
+        <div class="ghost-glow" style="bottom: 20%; right: 10%; animation-delay: 3s;"></div>
+    </div>
+    
+    <div class="top-notice" id="topNoticeBar">🔥 هشدار وار: آماده‌باش کامل برای نبرد با وحشی‌ترین کلن ایران! IK¹ • INVICTUS</div>
+    
     <header>
         <div class="logo-area">
             <div class="clan-logo">IK¹</div>
-            <div class="clan-title"><h1>IK¹ • INVICTUS</h1><span>GHOST ELITE CODM CLAN</span></div>
+            <div class="clan-title"><h1>IK¹ • INVICTUS</h1><span>ELITE CODM CLAN • GHOST WAR EVENT</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn active">🏠 خانه</a>
@@ -25,26 +30,37 @@
             <a href="admin.html" class="btn btn-admin">🛡️ پنل ادمین</a>
         </div>
     </header>
+
     <div class="main-container">
-        <div class="panel-card" style="border: 1px solid rgba(239,68,68,0.5); box-shadow: 0 0 25px rgba(239,68,68,0.2);">
-            <div class="server-status"><span class="status-dot"></span>ایونت وار مرگبار • حالت ترای‌هارد فعال</div>
-            <h2 class="hero-title" id="homeTitle">IK¹ • INVICTUS</h2>
-            <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #ff6b6b;" id="homeSubTitle">نبرد با وحشی‌ترین و ترای‌هاردترین کلن ایران!</div>
-            <p class="hero-desc" id="homeDesc">روحِ گاست در میدان حاکم است! بازیکنان نخبه IK¹، این یک جنگ تمام‌عیار برای اثبات قدرت مطلق ماست. آمار خود را بالا ببرید و حریف را در هم بشکنید.</p>
-            <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div class="panel-card" style="border: 2px solid var(--danger-color);">
+            <div class="server-status"><span class="status-dot"></span>ایونت وار سنگین • وضعیت: آماده‌باش جنگی</div>
+            <h2 class="hero-title" id="homeMainTitle">IK¹ • INVICTUS</h2>
+            <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: var(--gold-light);" id="homeSubTitle">شکارچیان میدان نبرد • روبه‌رو با سرسخت‌ترین حریفان ایران</div>
+            <p class="hero-desc" id="homeDescText">ما برای اثبات قدرت واقعی آمده‌ایم. ارتش IK¹ آماده است تا در این ایونت وار بزرگ، اقتدار خودش را به رخ بکشد. ترای‌هاردها آماده باشید؛ پیروزی مال ماست!</p>
+            
+            <div style="background: rgba(0,0,0,0.5); border: 1px dashed var(--danger-color); border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
-                    <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن</div>
-                    <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">IK¹ •</div>
+                    <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن جهت حضور در وار</div>
+                    <div style="font-weight: bold; color: var(--danger-color); font-size: 14px;">IK¹ •</div>
                 </div>
-                <button onclick="navigator.clipboard.writeText('IK¹'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
+                <button onclick="navigator.clipboard.writeText('IK¹'); alert('تگ کلن کپی شد! آماده نبرد باش.');" style="background: rgba(239,68,68,0.2); border: 1px solid var(--danger-color); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; font-weight: bold;">کپی تگ کلن</button>
             </div>
-            <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">💀 ورود به میدان جنگ و تست عضویت</a>
+            
+            <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">⚔️ ثبت‌نام تست و ورود به ترکیب وار</a>
         </div>
+
         <div class="grid-cards">
-            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">👻 GHOST VIBE</h3><p style="font-size:11px; color:var(--text-muted);">تم دارک و ترای‌هارد</p></div>
-            <div class="mini-card"><h3 style="color:var(--danger-color); font-size:13px;">🔥 وار سنگین</h3><p style="font-size:11px; color:var(--text-muted);">آماده باش ۱۰۰ درصدی</p></div>
+            <div class="mini-card">
+                <h3 style="color:var(--danger-color); font-size:13px;">💀 GHOST SQUAD</h3>
+                <p style="font-size:11px; color:var(--text-muted);">تک تیراندازان و ترای‌هاردها</p>
+            </div>
+            <div class="mini-card">
+                <h3 style="color:var(--gold-primary); font-size:13px;">🔥 100% TRYHARD</h3>
+                <p style="font-size:11px; color:var(--text-muted);">بدون عقب‌نشینی در میدان</p>
+            </div>
         </div>
     </div>
+
     <script>
         const BIN_ID = "6af9c49eac6210605a89891b";
         const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
@@ -56,9 +72,13 @@
                 if (data && data.record) {
                     let rec = data.record;
                     if(rec.clan_notice) document.getElementById('topNoticeBar').innerText = rec.clan_notice;
-                    if(rec.home_title) document.getElementById('homeTitle').innerText = rec.home_title;
-                    if(rec.home_subtitle) document.getElementById('homeSubTitle').innerText = rec.home_subtitle;
-                    if(rec.home_desc) document.getElementById('homeDesc').innerText = rec.home_desc;
+                    
+                    // بارگذاری متن‌های سفارشی صفحه خانه اگر توسط ادمین/لیدر ثبت شده باشد
+                    if(rec.home_texts) {
+                        if(rec.home_texts.title) document.getElementById('homeMainTitle').innerText = rec.home_texts.title;
+                        if(rec.home_texts.subtitle) document.getElementById('homeSubTitle').innerText = rec.home_texts.subtitle;
+                        if(rec.home_texts.desc) document.getElementById('homeDescText').innerText = rec.home_texts.desc;
+                    }
 
                     if(rec.clan_members) localStorage.setItem('clan_members', JSON.stringify(rec.clan_members));
                     if(rec.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(rec.clan_applications));
@@ -72,7 +92,10 @@
                 if(n) document.getElementById('topNoticeBar').innerText = n;
             }
         }
-        window.onload = function() { initHome(); }
+
+        window.onload = function() {
+            initHome();
+        }
     </script>
 </body>
 </html>
