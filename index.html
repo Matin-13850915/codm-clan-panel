@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="top-notice" id="topNoticeBar">📢 عضوگیری فصل جدید کلن IK¹ • INVICTUS با شرایط ویژه آغاز شد!</div>
+    <div class="ghost-bg-animation"></div>
+    <div class="top-notice" id="topNoticeBar">📢 ایونت وار بزرگ با وحشی‌ترین کلن ایران! آماده نبرد باشید!</div>
     <header>
         <div class="logo-area">
             <div class="clan-logo">IK¹</div>
-            <div class="clan-title"><h1>IK¹ • INVICTUS</h1><span>ELITE CODM CLAN</span></div>
+            <div class="clan-title"><h1>IK¹ • INVICTUS</h1><span>GHOST ELITE CODM CLAN</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn active">🏠 خانه</a>
@@ -25,23 +26,23 @@
         </div>
     </header>
     <div class="main-container">
-        <div class="panel-card">
-            <div class="server-status"><span class="status-dot"></span>پورتال رسمی کلن • سرور ابری آنلاین</div>
-            <h2 class="hero-title">IK¹ • INVICTUS</h2>
-            <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px;">شکست‌ناپذیر در میدان نبرد کالاف دیوتی موبایل</div>
-            <p class="hero-desc">تجمع بازیکنان نخبه، منظم و رقابتی. آمار زنده اعضای کلن را ببینید، در کاستوم‌ها و وارها شرکت کنید و برای تست عضویت اقدام نمایید.</p>
-            <div style="background: rgba(0,0,0,0.3); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+        <div class="panel-card" style="border: 1px solid rgba(239,68,68,0.5); box-shadow: 0 0 25px rgba(239,68,68,0.2);">
+            <div class="server-status"><span class="status-dot"></span>ایونت وار مرگبار • حالت ترای‌هارد فعال</div>
+            <h2 class="hero-title" id="homeTitle">IK¹ • INVICTUS</h2>
+            <div style="font-size: 14px; font-weight: bold; margin-bottom: 8px; color: #ff6b6b;" id="homeSubTitle">نبرد با وحشی‌ترین و ترای‌هاردترین کلن ایران!</div>
+            <p class="hero-desc" id="homeDesc">روحِ گاست در میدان حاکم است! بازیکنان نخبه IK¹، این یک جنگ تمام‌عیار برای اثبات قدرت مطلق ماست. آمار خود را بالا ببرید و حریف را در هم بشکنید.</p>
+            <div style="background: rgba(0,0,0,0.4); border: 1px dashed rgba(243,186,47,0.4); border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                 <div>
                     <div style="font-size: 11px; color: var(--text-muted);">کپی سریع تگ کلن</div>
                     <div style="font-weight: bold; color: var(--gold-primary); font-size: 14px;">IK¹ •</div>
                 </div>
                 <button onclick="navigator.clipboard.writeText('IK¹'); alert('تگ کپی شد!');" style="background: rgba(243,186,47,0.1); border: 1px solid var(--gold-primary); color: var(--gold-primary); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px;">کپی تگ</button>
             </div>
-            <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">⚔️ درخواست تست عضویت</a>
+            <a href="apply.html" class="btn-submit" style="display: block; text-align: center; text-decoration: none;">💀 ورود به میدان جنگ و تست عضویت</a>
         </div>
         <div class="grid-cards">
-            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">🏆 LEGENDARY</h3><p style="font-size:11px; color:var(--text-muted);">رنگ و سطح کلن</p></div>
-            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">👥 اعضای فعال</h3><p style="font-size:11px; color:var(--text-muted);">تست‌شده و حرفه‌ای</p></div>
+            <div class="mini-card"><h3 style="color:var(--gold-primary); font-size:13px;">👻 GHOST VIBE</h3><p style="font-size:11px; color:var(--text-muted);">تم دارک و ترای‌هارد</p></div>
+            <div class="mini-card"><h3 style="color:var(--danger-color); font-size:13px;">🔥 وار سنگین</h3><p style="font-size:11px; color:var(--text-muted);">آماده باش ۱۰۰ درصدی</p></div>
         </div>
     </div>
     <script>
@@ -54,10 +55,11 @@
                 let data = await res.json();
                 if (data && data.record) {
                     let rec = data.record;
-                    if(rec.clan_notice) {
-                        localStorage.setItem('clan_notice', rec.clan_notice);
-                        document.getElementById('topNoticeBar').innerText = rec.clan_notice;
-                    }
+                    if(rec.clan_notice) document.getElementById('topNoticeBar').innerText = rec.clan_notice;
+                    if(rec.home_title) document.getElementById('homeTitle').innerText = rec.home_title;
+                    if(rec.home_subtitle) document.getElementById('homeSubTitle').innerText = rec.home_subtitle;
+                    if(rec.home_desc) document.getElementById('homeDesc').innerText = rec.home_desc;
+
                     if(rec.clan_members) localStorage.setItem('clan_members', JSON.stringify(rec.clan_members));
                     if(rec.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(rec.clan_applications));
                     if(rec.clan_wars) localStorage.setItem('clan_wars', JSON.stringify(rec.clan_wars));
@@ -70,10 +72,7 @@
                 if(n) document.getElementById('topNoticeBar').innerText = n;
             }
         }
-
-        window.onload = function() {
-            initHome();
-        }
+        window.onload = function() { initHome(); }
     </script>
 </body>
 </html>
