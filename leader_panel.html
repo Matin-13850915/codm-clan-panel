@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="ghost-bg-animation"></div>
+    <div class="war-bg-effects"><div class="ghost-glow" style="top: 20%; right: 20%;"></div></div>
     <header>
         <div class="logo-area">
             <div class="clan-logo">IK¹</div>
-            <div class="clan-title"><h1>پنل مدیریت لیدرها</h1><span>مدیریت ایونت و تست‌ها</span></div>
+            <div class="clan-title"><h1>پنل مدیریت لیدرها</h1><span>اعلان تست‌ها، بن چت و ویرایش صفحه خانه</span></div>
         </div>
         <div class="nav-buttons">
             <a href="index.html" class="btn">🏠 خانه</a>
@@ -31,21 +31,23 @@
             <div class="form-group"><label>رمز عبور</label><input type="password" id="lPass" class="form-control" placeholder="رمز عبور..."></div>
             <button onclick="lLogin()" class="btn-submit">ورود به پنل لیدر</button>
         </div>
+        
         <div class="panel-card" id="lDash" style="display:none;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="font-size:16px; color:var(--gold-primary);">⚔️ بخش مدیریت ایونت و تست‌ها</h2>
+                <h2 style="font-size:16px; color:var(--gold-primary);">⚔️ بخش مدیریت و ایونت وار</h2>
                 <button onclick="localStorage.removeItem('leader_logged'); localStorage.removeItem('logged_role'); location.reload();" class="btn" style="background:var(--danger-color); color:#fff; border:none;">خروج</button>
             </div>
-            
-            <div style="background:rgba(0,0,0,0.3); padding:12px; border-radius:10px; margin-bottom:20px; border:1px solid rgba(243,186,47,0.3);">
-                <h3 style="font-size:13px; color:var(--gold-light); margin-bottom:8px;">✏️ ویرایش متن‌های صفحه خانه (ایونت وار)</h3>
-                <div class="form-group"><label>عنوان اصلی صفحه خانه</label><input type="text" id="editHomeTitle" class="form-control" value="IK¹ • INVICTUS"></div>
-                <div class="form-group"><label>عنوان دوم (زیرتیتر)</label><input type="text" id="editHomeSub" class="form-control" value="نبرد با وحشی‌ترین و ترای‌هاردترین کلن ایران!"></div>
-                <div class="form-group"><label>توضیحات و متن انگیزشی</label><input type="text" id="editHomeDesc" class="form-control" value="روحِ گاست در میدان حاکم است..."></div>
-                <button onclick="updateHomeTexts()" class="btn-submit" style="padding:8px; font-size:12px;">ذخیره و آپدیت صفحه خانه</button>
+
+            <!-- بخش ویرایش متن‌های صفحه خانه -->
+            <div style="background:rgba(0,0,0,0.4); padding:15px; border-radius:12px; border:1px solid rgba(243,186,47,0.3); margin-bottom:20px;">
+                <h3 style="font-size:14px; color:var(--gold-primary); margin-bottom:10px;">✏️ ویرایش متن‌های صفحه خانه</h3>
+                <div class="form-group"><label>عنوان اصلی کلن</label><input type="text" id="editHomeTitle" class="form-control" value="IK¹ • INVICTUS"></div>
+                <div class="form-group"><label>زیرعنوان / شعار جنگی</label><input type="text" id="editHomeSub" class="form-control" value="شکارچیان میدان نبرد • روبه‌رو با سرسخت‌ترین حریفان ایران"></div>
+                <div class="form-group"><label>توضیحات اصلی صفحه خانه</label><textarea id="editHomeDesc" class="form-control" rows="3">ما برای اثبات قدرت واقعی آمده‌ایم. ارتش IK¹ آماده است تا در این ایونت وار بزرگ، اقتدار خودش را به رخ بکشد. ترای‌هاردها آماده باشید؛ پیروزی مال ماست!</textarea></div>
+                <button onclick="saveHomeTexts()" class="btn-submit" style="background:var(--gold-primary); color:#000;">ذخیره و آپدیت متن‌های صفحه خانه</button>
             </div>
 
-            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:10px;">📢 درخواست‌های تست عضویت</h3>
+            <h3 style="font-size:14px; color:var(--gold-light); margin-bottom:10px;">📢 اعلان درخواست‌های تست عضویت</h3>
             <div id="lApps" style="font-size:12px; color:var(--text-muted); margin-bottom:25px;"></div>
             
             <hr style="border-color:rgba(243,186,47,0.2); margin-bottom:20px;">
@@ -61,20 +63,8 @@
         const BIN_ID = "6af9c49eac6210605a89891b";
         const API_KEY = "$2a$10$DZPpILN4/v8w7.tBcNSfJew7piPdaWRBuhr2mQSamEzkqhkIBrdpO";
 
-        async function saveCloudData() {
+        async function saveCloudDataPayload(payload) {
             try {
-                let payload = {
-                    clan_members: JSON.parse(localStorage.getItem('clan_members') || '[]'),
-                    clan_applications: JSON.parse(localStorage.getItem('clan_applications') || '[]'),
-                    clan_wars: JSON.parse(localStorage.getItem('clan_wars') || '[]'),
-                    chat_messages: JSON.parse(localStorage.getItem('chat_messages') || '[]'),
-                    chat_bans: JSON.parse(localStorage.getItem('chat_bans') || '{}'),
-                    chat_locked: localStorage.getItem('chat_locked') === 'true',
-                    clan_notice: localStorage.getItem('clan_notice') || '',
-                    home_title: localStorage.getItem('home_title') || 'IK¹ • INVICTUS',
-                    home_subtitle: localStorage.getItem('home_subtitle') || 'نبرد با وحشی‌ترین و ترای‌هاردترین کلن ایران!',
-                    home_desc: localStorage.getItem('home_desc') || 'روحِ گاست در میدان حاکم است!'
-                };
                 await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                     method: 'PUT',
                     headers: { "Content-Type": "application/json", "X-Master-Key": API_KEY },
@@ -95,13 +85,7 @@
                 if((u === "leader" && p === "1234") || foundLeader) {
                     localStorage.setItem('leader_logged', 'true');
                     localStorage.setItem('logged_role', 'leader');
-                    if(data.record) {
-                        if(data.record.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(data.record.clan_applications));
-                        if(data.record.clan_members) localStorage.setItem('clan_members', JSON.stringify(data.record.clan_members));
-                        if(data.record.home_title) localStorage.setItem('home_title', data.record.home_title);
-                        if(data.record.home_subtitle) localStorage.setItem('home_subtitle', data.record.home_subtitle);
-                        if(data.record.home_desc) localStorage.setItem('home_desc', data.record.home_desc);
-                    }
+                    localStorage.setItem('logged_member', foundLeader ? foundLeader.name : 'لیدر اصلی');
                     showLDash();
                 } else { alert("اطلاعات ورود لیدر اشتباه است!"); }
             } catch(e) { alert("خطا در اتصال به سرور ابری!"); }
@@ -110,9 +94,20 @@
         async function showLDash() {
             document.getElementById('lLoginBox').style.display = 'none';
             document.getElementById('lDash').style.display = 'block';
-            document.getElementById('editHomeTitle').value = localStorage.getItem('home_title') || 'IK¹ • INVICTUS';
-            document.getElementById('editHomeSub').value = localStorage.getItem('home_subtitle') || 'نبرد با وحشی‌ترین و ترای‌هاردترین کلن ایران!';
-            document.getElementById('editHomeDesc').value = localStorage.getItem('home_desc') || 'روحِ گاست در میدان حاکم است!';
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                if(data && data.record) {
+                    if(data.record.clan_applications) localStorage.setItem('clan_applications', JSON.stringify(data.record.clan_applications));
+                    if(data.record.clan_members) localStorage.setItem('clan_members', JSON.stringify(data.record.clan_members));
+                    if(data.record.home_texts) {
+                        let ht = data.record.home_texts;
+                        if(ht.title) document.getElementById('editHomeTitle').value = ht.title;
+                        if(ht.subtitle) document.getElementById('editHomeSub').value = ht.subtitle;
+                        if(ht.desc) document.getElementById('editHomeDesc').value = ht.desc;
+                    }
+                }
+            } catch(e) {}
 
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             let box = document.getElementById('lApps');
@@ -131,12 +126,19 @@
             });
         }
 
-        async function updateHomeTexts() {
-            localStorage.setItem('home_title', document.getElementById('editHomeTitle').value.trim());
-            localStorage.setItem('home_subtitle', document.getElementById('editHomeSub').value.trim());
-            localStorage.setItem('home_desc', document.getElementById('editHomeDesc').value.trim());
-            await saveCloudData();
-            alert("متن‌های صفحه خانه با موفقیت آپدیت و در سرور ابری ذخیره شدند!");
+        async function saveHomeTexts() {
+            let title = document.getElementById('editHomeTitle').value.trim();
+            let subtitle = document.getElementById('editHomeSub').value.trim();
+            let desc = document.getElementById('editHomeDesc').value.trim();
+
+            try {
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                let record = data.record || {};
+                record.home_texts = { title, subtitle, desc };
+                await saveCloudDataPayload(record);
+                alert("متن‌های صفحه خانه با موفقیت روی سرور ابری آپدیت شد!");
+            } catch(e) { alert("خطا در ذخیره اطلاعات!"); }
         }
 
         async function apApp(i) {
@@ -146,7 +148,13 @@
             localStorage.setItem('clan_members', JSON.stringify(members));
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
-            await saveCloudData();
+            
+            let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+            let data = await res.json();
+            let record = data.record || {};
+            record.clan_members = members;
+            record.clan_applications = apps;
+            await saveCloudDataPayload(record);
             alert("تایید شد!"); showLDash();
         }
 
@@ -154,7 +162,11 @@
             let apps = JSON.parse(localStorage.getItem('clan_applications') || '[]');
             apps.splice(i, 1);
             localStorage.setItem('clan_applications', JSON.stringify(apps));
-            await saveCloudData();
+            let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+            let data = await res.json();
+            let record = data.record || {};
+            record.clan_applications = apps;
+            await saveCloudDataPayload(record);
             alert("رد شد."); showLDash();
         }
 
@@ -164,8 +176,13 @@
             let banList = JSON.parse(localStorage.getItem('chat_bans') || '{}');
             banList[uname] = new Date().getTime() + (mins * 60 * 1000);
             localStorage.setItem('chat_bans', JSON.stringify(banList));
-            await saveCloudData();
-            alert("کاربر بن شد.");
+            
+            let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+            let data = await res.json();
+            let record = data.record || {};
+            record.chat_bans = banList;
+            await saveCloudDataPayload(record);
+            alert("کاربر " + uname + " بن شد.");
         }
 
         async function unbanMemberChat() {
@@ -174,7 +191,11 @@
             if(banList[uname]) {
                 delete banList[uname];
                 localStorage.setItem('chat_bans', JSON.stringify(banList));
-                await saveCloudData();
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { "X-Master-Key": API_KEY } });
+                let data = await res.json();
+                let record = data.record || {};
+                record.chat_bans = banList;
+                await saveCloudDataPayload(record);
                 alert("رفع بن شد.");
             } else { alert("این کاربر بن نبود."); }
         }
